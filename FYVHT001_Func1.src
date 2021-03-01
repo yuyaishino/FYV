@@ -1,0 +1,130 @@
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+'    各個別アプリケーションで使用する関数を記載するファイル
+'       関数群の前方に必要な関数を記載
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+
+' リスト表示用グローバル配列
+	Public SIList.Cursor&		'配列内のカーソルの行
+	Public SIList.TopPos&		'スクリーンのTOP行
+
+'>********************************************************************************
+' リスト表示(SIList$())中に何かしたければこの中でどうぞ
+'	引数：	DataList$()		リスト表示中のデータ
+'			DataListCnt&	リスト表示の配列数
+'	リスト表示用グローバル配列が使用可能
+'		SIList.Cursor&		'配列内のカーソルの行
+'		SIList.TopPos&		'スクリーンのTOP行
+'	※フォントは変更しないことまたは、戻すこと(リスト表示が変わってしまいます)
+'********************************************************************************
+ Sub SIListSub(ByRef DataList$(), DataListCnt&)
+
+ End Sub
+'*******************************************************************************
+'********************************************************************************
+' eかんばん分割
+'	引数：QR情報
+
+'********************************************************************************
+ Sub EkanbanSplit(strQR$)
+	'集荷実績'
+	g.SYJISK.4$ = Mid$(strQR$,67,10)	'部品番号
+	g.SYJISK.5$ = Mid$(strQR$,77,10)	'デンソー品番
+	g.SYJISK.6$ = Mid$(strQR$,87,2)		'包装
+	g.SYJISK.7$ = Mid$(strQR$,89,3)		'数量
+	g.SYJISK.8$ = Mid$(strQR$,98,4)		'整理番号
+	g.SYJISK.9$ = Mid$(strQR$,102,2)	'受入
+	g.SYJISK.10$ = Mid$(strQR$,104,8)	'納入日
+	g.SYJISK.11$ = Mid$(strQR$,112,4)	'納入便
+	g.SYJISK.12$ = Mid$(strQR$,116,4)	'背番号
+
+
+ End Sub
+
+'********************************************************************************
+' 社内かんばん分割
+'	引数：QR情報
+'********************************************************************************
+ Sub kanbanSplit(strQR$)
+
+	g.SYJISK.13$ = SIDensoQR.Decode$(strQR$,"100",2,1)		'かんばん種類
+	g.SYJISK.14$ = SIDensoQR.Decode$(strQR$,"101",18,1)	'得意先品番
+	g.SYJISK.15$ = SIDensoQR.Decode$(strQR$,"102",14,1)	'得意先品番識別－１
+	g.SYJISK.16$ = SIDensoQR.Decode$(strQR$,"104",10,1)	'ﾃﾞﾝｿｰ品番
+	g.SYJISK.17$ = SIDensoQR.Decode$(strQR$,"111",2,1)	'包装区分
+	g.SYJISK.18$ = SIDensoQR.Decode$(strQR$,"112",3,1)	'収容数
+	g.SYJISK.19$ = SIDensoQR.Decode$(strQR$,"121",6,1)	'組付区(又は組付ﾗｲﾝ)
+	g.SYJISK.20$ = SIDensoQR.Decode$(strQR$,"132",1,1)	'実績計上区分
+	g.SYJISK.21$ = SIDensoQR.Decode$(strQR$,"152",4,1)	'整理№
+
+ End Sub
+
+'********************************************************************************
+' トレースカード分割
+'	引数：QR情報
+'********************************************************************************
+ Sub TraceCardSplit(strQR$)
+
+	g.SYJISK.22$ = SIDensoQR.Decode$(strQR$,"101",18,1)		'得意先品番
+	g.SYJISK.23$ = SIDensoQR.Decode$(strQR$,"102",14,1)		'得意先品番識別－１
+	g.SYJISK.24$ = SIDensoQR.Decode$(strQR$,"104",10,1)		'ﾃﾞﾝｿｰ品番
+	g.SYJISK.25$ = SIDensoQR.Decode$(strQR$,"111",2,1)		'包装区分
+	g.SYJISK.26$ = SIDensoQR.Decode$(strQR$,"112",3,1)		'収容数
+	g.SYJISK.27$ = SIDensoQR.Decode$(strQR$,"121",6,1)		'組付区(又は組付ﾗｲﾝ)
+	g.SYJISK.28$ = SIDensoQR.Decode$(strQR$,"132",1,1)		'実績計上区分
+	g.SYJISK.29$ = SIDensoQR.Decode$(strQR$,"151",5,1)		'製品ロケーション№
+	g.SYJISK.30$ = SIDensoQR.Decode$(strQR$,"152",4,1)		'整理№
+	g.SYJISK.31$ = SIDensoQR.Decode$(strQR$,"543",8,1)		'ﾄﾚｰｽID
+	g.SYJISK.32$ = SIDensoQR.Decode$(strQR$,"561",14,1)		'発行年月日時
+
+
+ End Sub
+
+'********************************************************************************
+' 指示書実績分割
+'	引数：QR情報
+'********************************************************************************
+ Sub SijiSplit(strQR$)
+
+	'指示書実績'
+	If  Len(strQR$) = 119 THEN
+		'eかんばん'
+		g.SIJISK.1$ = Mid$(strQR$,77,10)		'デンソー品番
+		g.SIJISK.2$ = Mid$(strQR$,87,2)			'包装
+		g.SIJISK.3$ = Mid$(strQR$,89,3)			'収容数
+		g.SIJISK.4$ = ""		'組付区
+		g.SIJISK.5$ = Mid$(strQR$,98,4)		'整理No
+		g.SIJISK.6$ = Mid$(strQR$,104,8)		'納入日
+		g.SIJISK.7$ = ""		'かんばん種類
+
+	ELSE
+		'社内かんばん'
+		g.SIJISK.1$ = SIDensoQR.Decode$(strQR$,"104",10,1)		'デンソー品番
+		g.SIJISK.2$ = SIDensoQR.Decode$(strQR$,"111",2,1)			'包装
+		g.SIJISK.3$ = SIDensoQR.Decode$(strQR$,"112",3,1)			'収容数
+		g.SIJISK.4$ = SIDensoQR.Decode$(strQR$,"121",6,1)		'組付区
+		g.SIJISK.5$ = SIDensoQR.Decode$(strQR$,"152",4,1)		'整理No
+		g.SIJISK.6$ = ""		'納入日
+		g.SIJISK.7$ = SIDensoQR.Decode$(strQR$,"100",2,1)		'かんばん種類
+
+	endif
+
+ End Sub
+
+'********************************************************************************
+' 集荷実績書き込み
+'	引数：
+'				パターン(0：集荷照合/1：指示集荷/2：欠品登録/3：欠品集荷)
+'				照合結果(OK/NG)
+'				NG理由(0:品番NG/1:包装NG/2:数量NG)
+'********************************************************************************
+ Sub SyukaWrite(strPattern$,strResult$,strNG$)
+
+	g.SYJISK.1$ = g.strWorkUser$	'担当者'
+	g.SYJISK.2$ = Sysdate$("")	'照合日時'
+	g.SYJISK.3$ = strPattern$		'パターン'
+	g.SYJISK.41$ = strResult$		'照合結果'
+	g.SYJISK.42$ = strNG$				'NG理由'
+	SYJISK.Put(0)
+
+
+ End Sub

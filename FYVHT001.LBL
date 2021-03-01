@@ -1,0 +1,51 @@
+          BHT-BASIC 4.0 Compiler Version 1.04
+          Copyright (C) DENSO WAVE INCORPORATED 2004 all right reserved
+
+          source = C:\software\FYV\SRC\BHT\FYVHT001\FYVHT001.src
+
+LBLKGR.FTPCOMMAND            0000750C
+YTP.CDSYS.ERR                000120C4
+FTP.GET.ERR                  00007BFD
+FTP.RENAME.ERR               00007DBA
+FTP.CLOSE.ERR                00007A4B
+LB08                         00004C90
+LB09                         00004DA1
+CMDREP.RECV.ERR              00011DFF
+LB11                         00008DA4
+LB12                         00008DB1
+LB13                         00008EA5
+LB15                         00004B59
+FTXTBEND                     0000CE93
+FNUMTXTBEND                  0000DE03
+FTP.CD.ERR                   00007AAC
+YTP.DEL.ERR                  00012677
+DATE.GET                     000054F7
+FTP.PUT.ERR                  00007CAB
+FTP.OPEN.ERR                 00007839
+YTP.DIR.ERR                  000129C2
+LBLKGRYTP                    0001115E
+DEFINE                       00000000
+DBG                          00016085
+SIXFILEERR                   0000480A
+YTP.GET.ERR                  000122CC
+YTP.EXECUTE.ERR              00012B58
+FTP.OPEN.ERR1                00007830
+FTP.CDSYS.ERR                00007B4C
+FTXTREND                     0000D6B0
+LBLSIRSFILEBT                0000488B
+YTP.RENAME.ERR               00012826
+DATE.DSP                     000056F1
+YMODEMFILE.RECV.ERR          00011ED7
+INIT                         00015F42
+SOUND41                      00009406
+SOUND51                      00009480
+YTP.CD.ERR                   00012066
+F                            00012B64
+SOUND42                      00009462
+SOUND52                      000094C9
+YTP.PUT.ERR                  000124E4
+SOUND53                      00009517
+MAIN                         00015F6F
+FTP.DEL.ERR                  00007D4D
+LBLKGR.TCPIP.SYS             00007238
+ERRSUB                       00015FB6

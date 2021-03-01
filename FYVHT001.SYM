@@ -1,0 +1,1424 @@
+          BHT-BASIC 4.0 Compiler Version 1.04
+          Copyright (C) DENSO WAVE INCORPORATED 2004 all right reserved
+
+          source = C:\software\FYV\SRC\BHT\FYVHT001\FYVHT001.src
+
+STRLISTDATA$                : SCRN.MAINMENU                46A804
+G.SYJISK.18$                                               360000
+G.SYJISK.28$                                               360001
+G.SYJISK.38$                                               360002
+F.SYJISK.19$                : FYVHT001-                    360003
+F.SYJISK.29$                : FYVHT001-                    360004
+F.SYJISK.39$                : FYVHT001-                    360005
+YEARS                       : DATECONV$                    432808
+G.INTRECSIJI&                                              320000
+INPFILE$                    : SIDRAW.PICTURE               460805
+STRDATA$                    : SISYSSGET$                   462802
+STRDATA$                    : TCPIP.SYSGET.STR$            462803
+STRDATA$                    : TCPIP.SYSSET.STR             460802
+INPTIME%                    : SLEEP                        410801
+STRDATA$                    : SIDIQR.DECODE$               46280A
+STRDATA$                    : SITOYOTADIQR.DECODE$         46280A
+FONTY%                      : SIFONT.SET                   412805
+FONTY%                      : SIFONT.SIZE                  410802
+FONTY%                      : SIFONT.GETSIZE               411802
+FONTY%                      : SITEXT.CPRINT                410807
+FONTY%                      : SIBOX.DRAW                   412808
+FONTY%                      : SIPROGRESSBAR                41280A
+FONTY%                      : SIBUTTON.DRAW                41280B
+FONTY%                      : SITEXTBOX.DRAW               412807
+FONTY%                      : SIWINDOW.DRAW                412807
+FONTY%                      : SIMSGBOX.POPUP$              41280D
+CHRM43$                     : SILICENSE.GET&               462802
+IDISPMODE%                  : FTP.GET%                     410806
+IDISPMODE%                  : FTP.PUT%                     410805
+IDISPMODE%                  : YTP.GET%                     410806
+IDISPMODE%                  : YTP.PUT%                     410805
+FLGFND%                     : SITOYOTADIQR.DECODE$         41280D
+YTPCMD.FILENM$                                             360006
+IMPMAX&                     : SIPROGRESSBAR                420802
+IUP.MODE%                   : FTP.PUT%                     410804
+IUP.MODE%                   : YTP.PUT%                     410804
+CODETYPE$                   : SIMULTCODESPLIT%             469801
+G.YTP.PROCESS$                                             360007
+LC.COL.CYAN                                                330000
+G.SYJISK.19$                                               360008
+G.SYJISK.29$                                               360009
+INTBOOLEAN%                 : IIF$                         410801
+INTBOOLEAN%                 : IIF&                         410801
+G.SYJISK.39$                                               36000A
+NEXTDATAARYNO%              : SUBSETNBS.LISTPOS            412806
+DBGLIST$                                                   36000B
+LRECCNT&                    : SILOG.SRCH&                  422806
+LRECCNT&                    : SYJISK.SRCH&                 422806
+LRECCNT&                    : SYJSKWK.SRCH&                422806
+LRECCNT&                    : KEJISK.SRCH&                 422806
+LRECCNT&                    : SIJISK.SRCH&                 422806
+LRECCNT&                    : YTPCMD.SRCH&                 422806
+LRECCNT&                    : YTPREP.SRCH&                 422806
+INTOPENDATALEN%             : SISQRC.CHECK%                411802
+STRDI$                      : SITOYOTADIQR.DECODE$         46280C
+WYEAR%                      : DATEADD$                     412808
+INSTR$                      : SPACEUME$                    460802
+INSTR$                      : UCASE$                       460801
+INSTR$                      : LCASE$                       460801
+T1$                         : TTOT%                        460801
+T2$                         : TTOT%                        460802
+FTP.LOGIN%                  : FYVHT001-                    310001
+STRSURYO$                   : SCRN.READKANBANSIJI          46280D
+STRSURYO$                   : SCRN.READTRACECARD           46280C
+STRWHERESIJI$               : SCRN.CREATEKANBAN            46A806
+STRWHERESIJI$               : SCRN.CREATECOMPKANBAN        46A805
+INTREVATT%                  : SITEXT.PRINT                 410804
+INTREVATT%                  : SITEXT.CPRINT                410804
+PARA%                       : FREEMEMORY%                  410801
+PARA%                       : SETRESUME                    412802
+PARA%                       : GETRESUME%                   412802
+PARA%                       : CONPATIBLERESET              412801
+PARA%                       : CONPATIBLESET                412802
+PARA%                       : IP.GET$                      412801
+PARA%                       : FTP.SYSGET                   412804
+PARA%                       : FTP.SYSSET                   412804
+PARA%                       : TCPIP.SYSGET.NUM%            412802
+PARA%                       : TCPIP.SYSGET.STR$            412802
+PARA%                       : TCPIP.SYSSET.NUM             412803
+PARA%                       : TCPIP.SYSSET.STR             412803
+PARA%                       : FTP.OPEN%                    412806
+PARA%                       : FTP.OPEN2%                   412805
+PARA%                       : FTP.CDSYS%                   412802
+PARA%                       : FUNLOGOSET$                  412802
+PARA%                       : FUNLOGOGET$                  412802
+PARA%                       : YTP.CDSYS%                   412802
+ISEQNO%                     : SILOG.WRITE&                 410802
+IGYO%                       : SIDENSOQR.DECODE$            410804
+IGYO%                       : SIDIQR.DECODE$               410804
+IGYO%                       : SIDIQR.TWG.DECODE$           410804
+IGYO%                       : SIDIQR.TWG.DN.DECODE$        410804
+G.STRSET.FUNNUM$                                           36000C
+ILISTLEN%                   : SPLIT%                       410803
+INTTIMES%                   : SITOYOTADIQR.DECODE$         410804
+LC.COL.ELEPHANT                                            330001
+STRPRVSYORIHENSU$                                          36000D
+STRWHERESYUKA$              : SCRN.CREATEKANBAN            46A805
+STRWHERESYUKA$              : SCRN.CREATECOMPKANBAN        46A804
+G.FTP.ERRMESSAGE$                                          36000E
+ITEMNUM%                    : SISETINI%                    410802
+ITEMNUM%                    : SIGETINI$                    410802
+INTKUGIRILEN%               : SPLIT%                       412809
+IFUNCTION$                  : SILOG.WRITE&                 460801
+IFIELD$                     : FTP.GET%                     460803
+IFIELD$                     : SIVERCTL.FILEVERSION.SET     460803
+IFIELD$                     : YMODEMFILE.RECV%             460802
+IFIELD$                     : YTP.GET%                     460803
+PATH$                       : NUMBERNAME$                  460802
+CHGSTR$                     : TRIM$                        460801
+CHGSTR$                     : RTRIM$                       460801
+CHGSTR$                     : LTRIM$                       460801
+CHGSTR$                     : MOJICOUNT%                   460801
+CHGSTR$                     : REPLACE$                     460803
+STRDNQRDATA$                : SISQRC.DNCARDCHECK%          469802
+POSX%                       : SIMSGBOX.POPUP$              41280A
+FILENAME$                   : APP.EXENAME$                 462801
+FILENAME$                   : FILE.EXIST%                  460801
+FILENAME$                   : FILE.COUNT&                  460801
+FILENAME$                   : SIRECVFILE%                  460801
+FILENAME$                   : SISENDFILE%                  460801
+FILENAME$                   : FRECCOUNT&                   460801
+POSY%                       : SIMSGBOX.POPUP$              41280B
+FILENAME$                   : CMDREPFILE.RECV%             462801
+FILENAME$                   : YMODEMFILE.RECV%             462805
+POSX%                       : SETTITLE                     410804
+POSY%                       : SETTITLE                     410805
+POSX%                       : SETTITLE2                    410804
+POSY%                       : SETTITLE2                    410805
+BASEBYTE&                   : FREEMEMORY%                  422803
+STRLARGE$                   : UCASE$                       462805
+STRLARGE$                   : LCASE$                       462805
+T1M%                        : TTOT%                        412804
+T2M%                        : TTOT%                        412807
+CRLF.MODE%                  : CMDREPFILE.RECV%             412807
+CRLF.MODE%                  : YMODEMFILE.RECV%             41280B
+IWHERECNT2&                 : SCRN.CREATEKANBAN            42280B
+IWHERECNT2&                 : SCRN.CREATECOMPKANBAN        42280B
+IWHERECNT2&                 : SCRN.READKANBAN              422809
+LC.COL.BROWN                                               330002
+FORECOLOR&                  : SIFONT.GETCOLOR              421801
+FORECOLOR&                  : SIFONT.RESET                 422801
+FORECOLOR&                  : SIFONT.BUTTON                422801
+FORECOLOR&                  : SETTITLE                     420802
+FORECOLOR&                  : SETTITLE2                    420802
+STRQRDATA$                  : SISQRC.CHECK%                460801
+STRQRDATA$                  : SISQRC.DNCARDCHECK%          460801
+SYJSKWK.FIELD$                                             36000F
+LOCROW%                     : SILIST$                      410801
+LOCROW%                     : SILISTQR$                    410801
+LOCROW%                     : SISELECTLIST2%               410801
+LOCROW%                     : SILISTNSB$                   410801
+LC.COL.DARKRED                                             330003
+INPCAPTION$                 : SIBUTTON.DRAW                460805
+INPCAPTION$                 : SISYSTEMSTATUS.DISP          460803
+LC.COL.YUZU                                                330004
+NEWNAME$                    : FILE.RENAME                  460802
+G.STRSIZIKUMITSUKEKU$                                      360010
+G.STRSETNAME$                                              360011
+STRBASE$                    : FUNTEXTBOX$                  46280C
+STRBASE$                    : FUNTEXTBOXR$                 46280C
+STRBASE$                    : FUNNUMTEXTBOX$               462809
+INTTIME%                    : SUBBEEPMUSIC                 412809
+INTTIME%                    : SUBBEEPMUSIC2                412809
+IFNAMEBHT$                  : FTP.GET%                     460801
+IFNAMEBHT$                  : FTP.PUT%                     460801
+INTBIGBUTTON%               : SIBUTTON.DRAW                410809
+IFNAMEBHT$                  : YMODEMFILE.RECV%             460801
+IFNAMEBHT$                  : YTP.GET%                     460801
+IFNAMEBHT$                  : YTP.PUT%                     460801
+G.FTP.MESSAGE$                                             360012
+BOXHEIGHT%                  : SIMSGBOX.POPUP$              412811
+IWHERECNT&                  : SCRN.CREATEKANBAN            42280A
+IWHERECNT&                  : SCRN.CREATECOMPKANBAN        42280A
+IWHERECNT&                  : SCRN.READKANBAN              422808
+STRTAIKEI$                  : SIDENSOQR.DECODE$            462805
+SQRC%                       : SISQRC.CHECK%                412804
+STRMASKMOJI$                : FUNTEXTBOX$                  46280A
+STRMASKMOJI$                : FUNTEXTBOXR$                 46280A
+IINIKILL%                   : ALLFILE.KILL                 410801
+INTKMODE%                   : FUNTEXTBOX$                  410808
+INTKMODE%                   : FUNTEXTBOXR$                 410808
+INTKMODE%                   : FUNNUMTEXTBOX$               410807
+INPX1%                      : SIBOX.DRAW                   410801
+INPY1%                      : SIBOX.DRAW                   410802
+INPX1%                      : SIPROGRESSBAR                410803
+INPY1%                      : SIPROGRESSBAR                410804
+INPX1%                      : SIDRAW.PICTURE               410801
+INPY1%                      : SIDRAW.PICTURE               410802
+INPX1%                      : SIDRAW.LINE                  410801
+INPY1%                      : SIDRAW.LINE                  410802
+INPX1%                      : SIDRAW.RECT                  410801
+INPY1%                      : SIDRAW.RECT                  410802
+INPX1%                      : SIBUTTON.DRAW                410801
+INPY1%                      : SIBUTTON.DRAW                410802
+INPX1%                      : SITEXTBOX.DRAW               410801
+INPY1%                      : SITEXTBOX.DRAW               410802
+INPX1%                      : SIWINDOW.DRAW                410801
+INPY1%                      : SIWINDOW.DRAW                410802
+POS%                        : SIFORMAT$                    412809
+POS%                        : SITEXTFORMAT$                412807
+POS%                        : REPLACE$                     412805
+POS%                        : UCASE$                       412803
+POS%                        : LCASE$                       412803
+POS%                        : INSTRCNT%                    412804
+POS%                        : SISETINI%                    412807
+POS%                        : SIGETINI$                    412806
+POS%                        : SIGETMSG$                    412803
+POS%                        : SIDIQR.DECODE$               412807
+LC.COL.PIKACHU                                             330005
+POS%                        : SIDIQR.CNT%                  412803
+POS%                        : SITOYOTADIQR.DECODE$         412807
+POS%                        : SIFIXEDLENQR.DECODE$         412804
+POS%                        : SIFIXEDLENQR.CHECK%          412803
+G.STRWORKUSER$                                             360013
+POS%                        : FUNNUMTEXTBOX$               412810
+STRCHECKNO$                 : SCRN.CREATEKANBAN            462807
+STRCHECKNO$                 : SCRN.CREATECOMPKANBAN        462806
+STRCHECKNO$                 : SCRN.READKANBAN              462806
+STRCHECKNO$                 : SCRN.READKANBANSIJI          462809
+STRCHECKNO$                 : SCRN.READTRACECARD           462808
+G.INTQRPRVPOS%                                             310002
+FLGLOOP%                    : SCRN.READKANBANSIJI          412805
+FLGLOOP%                    : SCRN.READTRACECARD           412805
+INTSU%                      : SIDENSOQR.DECODE$            41280C
+INPFORECOLOR&               : SISYSTEMSTATUS.DISP          420804
+KEJISK.FILENM$                                             360014
+INTREPEAT%                  : SIDENSOQR.DECODE$            41280A
+IWIDTHATT%                  : SIFONT.SET                   410801
+IWIDTHATT%                  : SIFONT.SIZE                  410803
+IWIDTHATT%                  : SITEXT.CPRINT                410808
+FILENO%                     : SILOG.DEL                    412802
+FILENO%                     : SILOG.SRCH&                  412808
+FILENO%                     : SYJISK.DEL                   412802
+FILENO%                     : SYJISK.SRCH&                 412808
+FILENO%                     : SYJSKWK.DEL                  412802
+FILENO%                     : SYJSKWK.SRCH&                412808
+FILENO%                     : KEJISK.DEL                   412802
+FILENO%                     : KEJISK.SRCH&                 412808
+FILENO%                     : SIJISK.DEL                   412802
+FILENO%                     : SIJISK.SRCH&                 412808
+FILENO%                     : YTPCMD.DEL                   412802
+FILENO%                     : YTPCMD.SRCH&                 412808
+FILENO%                     : YTPREP.DEL                   412802
+FILENO%                     : YTPREP.SRCH&                 412808
+PSWD$                       : FTP.OPEN2%                   46280E
+TEST$                       : FUNNUMTEXTBOX$               462812
+IDATA$                      : SISETSYSINI%                 460802
+IPARA%                      : TCPIP.SYSGET.NUM%            410801
+IPARA%                      : TCPIP.SYSGET.STR$            410801
+IPARA%                      : TCPIP.SYSSET.NUM             410801
+IPARA%                      : TCPIP.SYSSET.STR             410801
+INPX2%                      : SIBOX.DRAW                   410803
+INPY2%                      : SIBOX.DRAW                   410804
+INPX2%                      : SIPROGRESSBAR                410805
+INPY2%                      : SIPROGRESSBAR                410806
+INPX2%                      : SIDRAW.PICTURE               410803
+INPY2%                      : SIDRAW.PICTURE               410804
+INPX2%                      : SIDRAW.LINE                  410803
+INPY2%                      : SIDRAW.LINE                  410804
+INPX2%                      : SIDRAW.RECT                  410803
+INPY2%                      : SIDRAW.RECT                  410804
+INPX2%                      : SIBUTTON.DRAW                410803
+INPY2%                      : SIBUTTON.DRAW                410804
+INPX2%                      : SITEXTBOX.DRAW               410803
+INPY2%                      : SITEXTBOX.DRAW               410804
+INPX2%                      : SIWINDOW.DRAW                410803
+INPY2%                      : SIWINDOW.DRAW                410804
+IPARA$                      : YTP.EXECUTE%                 460802
+SHUTTER.KEY%                : BHTPHOTO                     412804
+TMP$                        : SIMULTCODESPLIT%             462806
+USRNAME$                    : FTP.OPEN2%                   46280D
+ISTRING$                    : SISTRINGCHK%                 460801
+X1%                         : PICTUREBOX                   410801
+X2%                         : PICTUREBOX                   410803
+X1%                         : RECTANGLE                    410801
+IDATE1$                     : DATEDEFF&                    460801
+IDATE2$                     : DATEDEFF&                    460802
+X2%                         : RECTANGLE                    410803
+X1%                         : SIMSGBOX.POPUP$              412806
+X2%                         : SIMSGBOX.POPUP$              412808
+YY$                         : DATEADD$                     462803
+LC.COL.BRIGHTGREEN                                         330006
+G.STRSIZISYUYO$                                            360015
+INPVALUE&                   : SIPROGRESSBAR                420801
+INTERVAL%                   : DATEADD$                     410801
+INTERVAL%                   : CMDREPFILE.RECV%             412809
+INTERVAL%                   : YMODEMFILE.RECV%             41280D
+MONTHCNT$                   : DATEADD$                     462809
+CHECKDATA$                  : MOJICOUNT%                   462805
+BTN.M1.TEXT$                : SIMSGBOX.POPUP$              462812
+BTN.M2.TEXT$                : SIMSGBOX.POPUP$              462813
+INTMBSTYLE%                 : SIMSGBOX.POPUP$              412818
+INPFILL%                    : SIBOX.DRAW                   410806
+INPFILL%                    : SIDRAW.RECT                  410806
+Y1%                         : PICTUREBOX                   410802
+Y2%                         : PICTUREBOX                   410804
+Y1%                         : RECTANGLE                    410802
+Y2%                         : RECTANGLE                    410804
+Y1%                         : SIMSGBOX.POPUP$              412807
+Y2%                         : SIMSGBOX.POPUP$              412809
+INPWAKUCOLOR&               : SIPROGRESSBAR                420807
+LWHERECNT%                  : SILOG.SRCH&                  410803
+LWHERECNT%                  : SYJISK.SRCH&                 410803
+LWHERECNT%                  : SYJSKWK.SRCH&                410803
+LWHERECNT%                  : KEJISK.SRCH&                 410803
+LWHERECNT%                  : SIJISK.SRCH&                 410803
+LWHERECNT%                  : YTPCMD.SRCH&                 410803
+LWHERECNT%                  : YTPREP.SRCH&                 410803
+G.SOCK.STATUS%                                             310003
+INTLEN%                     : SUBBEEPMUSIC                 41280B
+INTLEN%                     : SUBBEEPMUSIC2                41280B
+INPFIT%                     : SIDRAW.PICTURE               410806
+INTREP%                     : SIDENSOQR.DECODE$            412809
+INTRET%                     : INSTRCNT%                    412805
+INTRET%                     : SIPOWER                      412804
+INTRET%                     : SISQRC.CHECK%                412805
+INTRET%                     : SISQRC.DNCARDCHECK%          412804
+INTRET%                     : YTP.CD%                      412802
+INTRET%                     : YTP.GET%                     412807
+INTRET%                     : YTP.PUT%                     412806
+INTRET%                     : YTP.DEL%                     412802
+INTRET%                     : YTP.RENAME%                  412803
+INTRET%                     : YTP.DIR%                     412803
+INTRET%                     : YTP.EXECUTE%                 412803
+INTRET%                     : SCRN.READKANBANSIJI          412804
+INTRET%                     : SCRN.READTRACECARD           412804
+LC.COL.LIGHTYELLOW                                         330007
+PMSGBOX.TITLE.FORECOLOR&                                   320001
+W$                          : SCRN.MAINMENU                462801
+W$                          : SCRN.INPUTWORKUSER           462801
+W$                          : SCRN.CREATEKANBAN            462801
+DISPLINE%                   : SILIST$                      410803
+DISPLINE%                   : SILISTQR$                    410803
+DISPLINE%                   : SISELECTLIST2%               410803
+DISPLINE%                   : SUBSETNBS.STARTLISTPOS       410801
+DISPLINE%                   : SUBSETNBS.LISTPOS            410802
+DISPLINE%                   : SILISTNSB$                   410803
+W$                          : SCRN.CREATECOMPKANBAN        462801
+W$                          : SCRN.READKANBAN              462801
+W$                          : SCRN.READKANBANSIJI          462801
+W$                          : SCRN.READTRACECARD           462801
+TMPKEYIN$                   : SILIST$                      46280A
+TMPKEYIN$                   : SILISTQR$                    46280C
+TMPKEYIN$                   : SILISTNSB$                   462809
+INTTIMEOUT%                 : FUNINPGET.ONTIMER$           410804
+IEXIT$                      : FUNINPGET$                   460801
+REFPSWD$                    : FTP.SYSGET                   461803
+IEXIT%                      : SIWAITKEY                    412802
+IEXIT%                      : FUNINPGET$                   412805
+IEXIT$                      : FUNINPGET.ONTIMER$           460801
+IEXIT%                      : FUNINPGET.ONTIMER$           412806
+IEXIT$                      : SILIST$                      460807
+IEXIT$                      : SILISTQR$                    460807
+IEXIT$                      : SISELECTLIST2%               460806
+IEXIT$                      : SILISTNSB$                   460807
+ITITLE.TEXT$                : SIMSGBOX.POPUP$              460802
+INPVALUE                    : SIFORMAT$                    430801
+STRHINBAN$                  : SCRN.READKANBANSIJI          46280C
+STRHINBAN$                  : SCRN.READTRACECARD           46280B
+IMSG.ARRAYCNT%              : SIMSGBOX.POPUP$              410804
+ISRVIP$                     : FTP.SYSSET                   460801
+INTVALUELEN%                : SPLIT%                       412808
+ISRCHCNT&                   : SCRN.CREATEKANBAN            422808
+ISRCHCNT&                   : SCRN.CREATECOMPKANBAN        422807
+ISRCHCNT&                   : SCRN.READKANBAN              422807
+G.YTP.REPLYCD%                                             310004
+ISRCHCNT&                   : SCRN.READKANBANSIJI          42280A
+ISRCHCNT&                   : SCRN.READTRACECARD           422809
+REFSRVIP$                   : FTP.SYSGET                   461801
+T1S%                        : TTOT%                        412805
+T2S%                        : TTOT%                        412808
+SCREEN.WIDE%                                               310005
+INTBOLD%                    : SITEXT.PRINT                 410805
+INTBOLD%                    : SITEXT.CPRINT                410805
+M43&                        : SILICENSE.GET&               422806
+LEDCTL%                     : SISETLED%                    410801
+F.SYJSKWK.10$               : FYVHT001-                    360016
+F.SYJSKWK.11$               : FYVHT001-                    360017
+F.SYJSKWK.12$               : FYVHT001-                    360018
+F.SYJSKWK.13$               : FYVHT001-                    360019
+F.SYJSKWK.14$               : FYVHT001-                    36001A
+F.SYJSKWK.15$               : FYVHT001-                    36001B
+F.SYJSKWK.16$               : FYVHT001-                    36001C
+F.SYJSKWK.17$               : FYVHT001-                    36001D
+F.SYJSKWK.18$               : FYVHT001-                    36001E
+WORK&                       : DATECONV$                    422805
+F.SYJSKWK.19$               : FYVHT001-                    36001F
+DATALISTCNT&                : SILISTSUB                    420802
+DATALISTCNT&                : SILIST$                      420806
+DATALISTCNT&                : SILISTQR$                    420806
+DATALISTCNT&                : SUBSETNBS.STARTLISTPOS       420803
+DATALISTCNT&                : SUBSETNBS.LISTPOS            420804
+DATALISTCNT&                : SILISTNSB$                   420806
+IDATE$                      : FUNDATECHK%                  460801
+INAME$                      : SISETSYSINI%                 460801
+INAME$                      : SIGETSYSINI$                 460801
+INUM1&                      : MOD&                         420801
+G.STRSIZIHINBAN$                                           360020
+INPTXTBACKCOLOR&            : SISYSTEMSTATUS.DISP          420805
+T1T%                        : TTOT%                        412803
+T2T%                        : TTOT%                        412806
+STRTRACEID$                 : SCRN.READTRACECARD           46280F
+INTMODE%                    : SIXFILE&                     410802
+CHAR$                       : STRING$                      460802
+INTMODE%                    : SIRSFILEBT%                  410802
+INTMODE%                    : SIRSFILE%                    410802
+INTMODE%                    : FUNTEXTBOX$                  410807
+INTMODE%                    : FUNTEXTBOXR$                 410807
+INTPASS%                    : FUNTEXTBOX$                  410805
+INTPASS%                    : FUNTEXTBOXR$                 410805
+STRMASK$                    : FUNTEXTBOX$                  460804
+STRMASK$                    : FUNTEXTBOXR$                 460804
+IRETURN%                    : SIMULTCODESPLIT%             412807
+G.YTP.TRNERR%                                              310006
+STRQR$                                                     360021
+STRQR$                      : EKANBANSPLIT                 460801
+STRQR$                      : KANBANSPLIT                  460801
+STRQR$                      : TRACECARDSPLIT               460801
+F.KEJISK.1$                 : FYVHT001-                    360022
+F.KEJISK.2$                 : FYVHT001-                    360023
+F.KEJISK.3$                 : FYVHT001-                    360024
+F.KEJISK.4$                 : FYVHT001-                    360025
+F.KEJISK.5$                 : FYVHT001-                    360026
+F.KEJISK.6$                 : FYVHT001-                    360027
+F.KEJISK.7$                 : FYVHT001-                    360028
+STRQR$                      : SIJISPLIT                    460801
+INTBIGBOX%                  : SITEXTBOX.DRAW               410805
+INTBIGBOX%                  : SIWINDOW.DRAW                410805
+INTCHR%                     : UCASE$                       412809
+INTCHR%                     : LCASE$                       412809
+INTCHR%                     : SISTRINGCHK%                 412805
+INTCHR%                     : SIMGCUT$                     412806
+G.SYJSKWK.10$                                              360029
+G.SYJSKWK.11$                                              36002A
+G.SYJSKWK.12$                                              36002B
+G.SYJSKWK.13$                                              36002C
+G.SYJSKWK.14$                                              36002D
+G.SYJSKWK.15$                                              36002E
+G.SYJSKWK.16$                                              36002F
+G.SYJSKWK.17$                                              360030
+G.SYJSKWK.18$                                              360031
+G.SYJSKWK.19$                                              360032
+F.SYJSKWK.20$               : FYVHT001-                    360033
+F.SYJSKWK.21$               : FYVHT001-                    360034
+F.SYJSKWK.22$               : FYVHT001-                    360035
+F.SYJSKWK.23$               : FYVHT001-                    360036
+F.SYJSKWK.24$               : FYVHT001-                    360037
+F.SYJSKWK.25$               : FYVHT001-                    360038
+F.SYJSKWK.26$               : FYVHT001-                    360039
+F.SYJSKWK.27$               : FYVHT001-                    36003A
+F.SYJSKWK.28$               : FYVHT001-                    36003B
+F.SYJSKWK.29$               : FYVHT001-                    36003C
+KEJISK.FIELD$                                              36003D
+INUM2&                      : MOD&                         420802
+DISP.MODE%                  : CMDREPFILE.RECV%             41280A
+DISP.MODE%                  : YMODEMFILE.RECV%             41280E
+INTSETTIME%                 : SIPOWER                      412803
+F.SILOG.10$                 : FYVHT001-                    36003E
+F.SILOG.11$                 : FYVHT001-                    36003F
+F.SILOG.12$                 : FYVHT001-                    360040
+F.SILOG.13$                 : FYVHT001-                    360041
+G.KEJISK.1$                                                360042
+G.KEJISK.2$                                                360043
+G.KEJISK.3$                                                360044
+G.KEJISK.4$                                                360045
+G.KEJISK.5$                                                360046
+G.KEJISK.6$                                                360047
+G.KEJISK.7$                                                360048
+YTPREP.FILENM$                                             360049
+INTVIB%                     : SUB01.SOUND                  410802
+INTVIB%                     : SUB02.SOUND                  410802
+INTVIB%                     : SUB03.SOUND                  410802
+INTVIB%                     : OK.SOUND                     410802
+INTVIB%                     : OK2.SOUND                    410802
+INTVIB%                     : NG.SOUND                     410802
+INTVIB%                     : AOKBAR                       410802
+INTVIB%                     : SOUND1                       410802
+INTVIB%                     : SOUND2                       410802
+INTVIB%                     : SOUND3                       410802
+INTVIB%                     : SOUND4                       410802
+INTVIB%                     : SOUND5                       410802
+INTVIB%                     : SOUND7                       410802
+INTVIB%                     : SUBBEEPMUSIC                 410802
+INTVIB%                     : SUBBEEPMUSIC2                410802
+G.SYJSKWK.20$                                              36004A
+G.SYJSKWK.21$                                              36004B
+G.SYJSKWK.22$                                              36004C
+G.SYJSKWK.23$                                              36004D
+G.SYJSKWK.24$                                              36004E
+G.SYJSKWK.25$                                              36004F
+G.SYJSKWK.26$                                              360050
+G.SYJSKWK.27$                                              360051
+G.SYJSKWK.28$                                              360052
+G.SYJSKWK.29$                                              360053
+F.SYJSKWK.30$               : FYVHT001-                    360054
+F.SYJSKWK.31$               : FYVHT001-                    360055
+F.SYJSKWK.32$               : FYVHT001-                    360056
+F.SYJSKWK.33$               : FYVHT001-                    360057
+F.SYJSKWK.34$               : FYVHT001-                    360058
+F.SYJSKWK.35$               : FYVHT001-                    360059
+F.SYJSKWK.36$               : FYVHT001-                    36005A
+F.SYJSKWK.37$               : FYVHT001-                    36005B
+F.SYJSKWK.38$               : FYVHT001-                    36005C
+F.SYJSKWK.39$               : FYVHT001-                    36005D
+ORGNLDTE$                   : DATEADD$                     460802
+LC.COL.MIKAN                                               330008
+STRTISHO$                   : INSTRCNT%                    460802
+INEWFNAME$                  : FTP.RENAME%                  460802
+INEWFNAME$                  : YTP.RENAME%                  460802
+INP.LEN%                    : SITEXTFORMAT$                412804
+DATANUM%                    : SISETINI%                    410803
+DATANUM%                    : SIGETINI$                    410803
+G.SILOG.10$                                                36005E
+G.SILOG.11$                                                36005F
+G.SILOG.12$                                                360060
+G.SILOG.13$                                                360061
+SRVIP$                      : FTP.OPEN2%                   46280C
+SOCK.ETHER%                 : FYVHT001-                    310007
+SIZE%                       : BHTPHOTO                     410802
+G.SYJSKWK.30$                                              360062
+G.SYJSKWK.31$                                              360063
+G.SYJSKWK.32$                                              360064
+G.SYJSKWK.33$                                              360065
+G.SYJSKWK.34$                                              360066
+G.SYJSKWK.35$                                              360067
+G.SYJSKWK.36$                                              360068
+G.SYJSKWK.37$                                              360069
+G.SYJSKWK.38$                                              36006A
+G.SYJSKWK.39$                                              36006B
+F.SYJSKWK.40$               : FYVHT001-                    36006C
+LC.COL.DARKBLUISHGREEN                                     330009
+DATALIST$                   : SILISTSUB                    469801
+DATALIST$                   : SILIST$                      469805
+DATALIST$                   : SILISTQR$                    469805
+IFNAMESV$                   : FTP.GET%                     460802
+IFNAMESV$                   : FTP.PUT%                     460802
+IFNAMESV$                   : FTP.DEL%                     460801
+DEFNETDEVICE%               : FTP.OPEN2%                   412809
+DATALIST$                   : SISELECTLIST2%               469804
+DATALIST$                   : SUBSETNBS.STARTLISTPOS       469802
+DATALIST$                   : SUBSETNBS.LISTPOS            469803
+DATALIST$                   : SILISTNSB$                   469805
+IFNAMESV$                   : YTP.GET%                     460802
+LC.COL.CHOCO                                               33000A
+IUSRNAME$                   : FTP.SYSSET                   460802
+IFNAMESV$                   : YTP.PUT%                     460802
+IFNAMESV$                   : YTP.DEL%                     460801
+IFNAMESV$                   : YTP.DIR%                     460801
+IFNAMESV$                   : YTP.EXECUTE%                 460801
+DRIVE$                      : CMDREPFILE.RECV%             462803
+DRIVE$                      : YMODEMFILE.RECV%             462807
+ICRLF.TYPE%                 : FTP.GET%                     410804
+ICRLF.TYPE%                 : FTP.PUT%                     410803
+ICRLF.TYPE%                 : YMODEMFILE.RECV%             410803
+ICRLF.TYPE%                 : YTP.GET%                     410804
+ICRLF.TYPE%                 : YTP.PUT%                     410803
+MIPADDRESS$                 : IP.GET$                      462805
+LC.COL.MAGENTA                                             33000B
+DATALISTNO%                 : SISELECTLIST2%               419805
+CRLF.TYPE%                  : CMDREPFILE.RECV%             412806
+CRLF.TYPE%                  : YMODEMFILE.RECV%             41280A
+REFUSRNAME$                 : FTP.SYSGET                   461802
+G.INTQRPOS%                                                310008
+F.SYJSKWK.1$                : FYVHT001-                    36006D
+LC.COL.BLUEGRAY                                            33000C
+CODE$                       : SCRN.INPUTWORKUSER           462804
+CHKDATA1$                   : SIQR.CHECK%                  462803
+CHKDATA2$                   : SIQR.CHECK%                  462804
+CHKDATA1$                   : SIDIQR.DECODE$               462808
+CHKDATA2$                   : SIDIQR.DECODE$               462809
+CHKDATA1$                   : SIDIQR.CNT%                  462804
+CHKDATA2$                   : SIDIQR.CNT%                  462805
+CHKDATA1$                   : SITOYOTADIQR.DECODE$         462808
+CHKDATA2$                   : SITOYOTADIQR.DECODE$         462809
+QUALITY%                    : BHTPHOTO                     410803
+SIJISK.FILENM$                                             36006E
+SYJISK.FILENM$                                             36006F
+QRDATA$                     : SIMULTCODESPLIT%             469802
+LC.COL.20GRAY                                              33000D
+ARYCNT%                     : QR.OPN                       412804
+LC.COL.40GRAY                                              33000E
+LC.COL.50GRAY                                              33000F
+G.SYJSKWK.40$                                              360070
+LC.COL.80GRAY                                              330010
+FTP.PARA$                   : FTP.SYSGET                   462805
+FTP.PARA$                   : FTP.SYSSET                   462805
+LC.COL.BEIGE                                               330011
+INTPROTOCOL%                : SIXFILE&                     412807
+INTPROTOCOL%                : SIRSFILE%                    412808
+FTP.SYNC%                   : FYVHT001-                    310009
+INTPROTOCOL%                : YTPCOM.OPN                   412805
+CHECK%                      : SCRN.CREATEKANBAN            41280C
+CHECK%                      : SCRN.CREATECOMPKANBAN        412809
+BOXWIDTH%                   : SIMSGBOX.POPUP$              412810
+STRINKEY$                   : SILICENSE.SCREEN             462801
+STRINKEY$                   : SCRN.MAINMENU                462803
+STRINKEY$                   : SCRN.CREATEKANBAN            462803
+STRINKEY$                   : SCRN.CREATECOMPKANBAN        462803
+STRINKEY$                   : SCRN.READKANBAN              462803
+STRINKEY$                   : SCRN.READKANBANSIJI          462803
+STRINKEY$                   : SCRN.READTRACECARD           462803
+PMSGBOX.BTN.BACKCOLOR&                                     320002
+G.SYJSKWK.1$                                               360071
+F.SYJSKWK.2$                : FYVHT001-                    360072
+ITIME1$                     : TIMEDEFF&                    460801
+ITIME2$                     : TIMEDEFF&                    460802
+ISTRVALUE$                  : SYSDATE$                     460801
+INTFLG%                     : FUNTEXTBOX$                  412812
+INTFLG%                     : FUNTEXTBOXR$                 412815
+INTFLG%                     : FUNNUMTEXTBOX$               41280F
+STRDEF$                     : FUNTEXTBOX$                  460803
+STRDEF$                     : FUNTEXTBOXR$                 460803
+STRDEF$                     : FUNNUMTEXTBOX$               460805
+STRLEN$                     : SIFIXEDLENQR.DECODE$         462809
+STRLEN$                     : SIFIXEDLENQR.CHECK%          462808
+ICURRENTREC%                : SILOG.WRITE&                 412804
+SRCSTR$                     : REPLACE$                     460802
+STRKEY$                                                    360073
+INTBUFF1%                   : SISQRC.DNCARDCHECK%          412805
+STRRET$                     : BHTMODEL$                    462803
+STRRET$                     : SIMGCUT$                     462807
+STRSET$                     : SIXFILE&                     462808
+STRSET$                     : SIRSFILEBT%                  462804
+STRSET$                     : SIRSFILE%                    462809
+INTBUFF2%                   : SISQRC.DNCARDCHECK%          412806
+STRKEY$                     : SIMSGBOX.POPUP$              462815
+STRKEY$                     : SILICENSE.SET                460801
+STRSET$                     : YTPCOM.OPN                   462806
+F.SILOG.1$                  : FYVHT001-                    360074
+INPCOLOR&                   : SIBOX.DRAW                   420805
+INPCOLOR&                   : SIPROGRESSBAR                420808
+INPCOLOR&                   : SIDRAW.LINE                  420805
+INPCOLOR&                   : SIDRAW.RECT                  420805
+INPCOLOR&                   : SIBACKCOLOR.SET              420801
+IFILENAME$                  : SIVERCTL.FILEVERSION.SET     460801
+ITITLE.BACKCOLOR&           : SIMSGBOX.SETCOLOR            420802
+INTCONPATIBLEMODE%          : CONPATIBLESET                410801
+STRKENSAKU$                 : INSTRCNT%                    460803
+G.SYJSKWK.2$                                               360075
+F.SYJSKWK.3$                : FYVHT001-                    360076
+STRPRDCTNO$                 : SILICENSE.GET&               462801
+ICHKSTR$                    : SISTRINGCHK%                 460802
+IMSGBOXSTYLE%               : SIMSGBOX.POPUP$              410805
+LC.COL.LIME                                                330012
+STRRET%                     : DISPMODE%                    412803
+G.SILOG.1$                                                 360077
+F.SILOG.2$                  : FYVHT001-                    360078
+STRSPEED$                   : SIXFILE&                     462806
+STRSPEED$                   : SIRSFILE%                    462807
+STRSPEED$                   : FTP.OPEN%                    462805
+STRSPEED$                   : YTPCOM.OPN                   462804
+BHT.OPTION%                 : CMDREPFILE.RECV%             41280C
+BHT.OPTION%                 : YMODEMFILE.RECV%             412810
+STRGRAFILE$                 : FUNLOGOSET$                  462801
+STRGRAFILE$                 : FUNLOGOGET$                  462801
+INTLOOPFLG%                 : SUBBEEPMUSIC                 412808
+INTLOOPFLG%                 : SUBBEEPMUSIC2                412808
+G.SYJSKWK.3$                                               360079
+F.SYJSKWK.4$                : FYVHT001-                    36007A
+INTLISTCNT%                 : SCRN.MAINMENU                412805
+STRM43$                     : SILICENSE.GET&               462803
+F.YTPREP.1$                 : FYVHT001-                    36007B
+F.YTPREP.2$                 : FYVHT001-                    36007C
+F.YTPREP.3$                 : FYVHT001-                    36007D
+F.YTPREP.4$                 : FYVHT001-                    36007E
+F.YTPREP.5$                 : FYVHT001-                    36007F
+INTARYCNT%                  : SISQRC.DNCARDCHECK%          412803
+F.YTPREP.6$                 : FYVHT001-                    360080
+INTEND%                     : SILICENSE.SCREEN             412802
+INTCNT%                     : SIMSGBOX.POPUP$              412816
+IDUMMY%                     : SIVERCTL.APPVERSION.SET      412801
+IDUMMY%                     : SIVERCTL.FILEVERSION.SET     412804
+IDUMMY%                     : SILICENSE.SET                412802
+G.SILOG.2$                                                 360081
+LC.COL.BLACK                                               330013
+F.SILOG.3$                  : FYVHT001-                    360082
+YTPREP.FIELD$                                              360083
+STRVALUE$                   : SPLIT%                       460801
+STRVALUE$                   : SETTITLE                     460801
+STRVALUE$                   : SETTITLE2                    460801
+IFTP.PASS$                  : FTP.OPEN2%                   460804
+STRMSGFILE$                 : SIGETMSG$                    462808
+RESUME.TIME                                                330014
+G.SYJSKWK.4$                                               360084
+F.SYJSKWK.5$                : FYVHT001-                    360085
+INTCHRS%                    : FUNTEXTBOXR$                 412811
+SYJSKWK.FILENM$                                            360086
+STRKEIN$                    : SILIST$                      46280B
+STRKEIN$                    : SILISTQR$                    46280D
+STRKEIN$                    : SISELECTLIST2%               462809
+STRKEIN$                    : SILISTNSB$                   46280A
+LNGLEN&                                                    320003
+G.YTPREP.1$                                                360087
+D1D%                        : DTOD2%                       412805
+D2D%                        : DTOD2%                       412808
+G.YTPREP.2$                                                360088
+G.YTPREP.3$                                                360089
+STRLARGEZ$                  : UCASE$                       462807
+STRLARGEZ$                  : LCASE$                       462807
+G.YTPREP.4$                                                36008A
+G.YTPREP.5$                                                36008B
+G.YTPREP.6$                                                36008C
+INTPOS%                     : SPLIT%                       412806
+INTPOS%                     : SIMGCUT$                     412803
+INPSTR$                     : SITEXTFORMAT$                460801
+INPSTR$                     : REPLACE$                     460801
+INTPOS%                     : IP.GET$                      412804
+INTPOS%                     : SIDENSOQR.DECODE$            41280B
+INTPOS%                     : SUBBEEPMUSIC2                41280C
+INTPOS%                     : SILIST$                      412809
+INTPOS%                     : SILISTQR$                    41280B
+INTPOS%                     : SISELECTLIST2%               412808
+INTPOS%                     : SCRN.INPUTWORKUSER           412802
+G.TRNERR%                                                  31000A
+G.SILOG.3$                                                 36008D
+F.SILOG.4$                  : FYVHT001-                    36008E
+INTCOLOR%                   : SUB01.SOUND                  410801
+INTCOLOR%                   : SUB02.SOUND                  410801
+INTCOLOR%                   : SUB03.SOUND                  410801
+ASSOC%                      : FTP.OPEN%                    412804
+INTCOLOR%                   : OK.SOUND                     410801
+INTCOLOR%                   : OK2.SOUND                    410801
+INTCOLOR%                   : NG.SOUND                     410801
+INTCOLOR%                   : AOKBAR                       410801
+INTCOLOR%                   : SOUND1                       410801
+INTCOLOR%                   : SOUND2                       410801
+INTCOLOR%                   : SOUND3                       410801
+INTCOLOR%                   : SOUND4                       410801
+INTCOLOR%                   : SOUND5                       410801
+INTCOLOR%                   : SOUND7                       410801
+INTCOLOR%                   : SUBBEEPMUSIC                 410801
+INTCOLOR%                   : SUBBEEPMUSIC2                410801
+STRINIDATA$                 : SIPOWER                      462802
+SOCK.SYNC%                  : FYVHT001-                    31000B
+PMSGBOX.MSG.BACKCOLOR&                                     320004
+G.SYJSKWK.5$                                               36008F
+F.SYJSKWK.6$                : FYVHT001-                    360090
+STRCODE$                    : NEXTSCREEN.SET               460801
+STRCODE$                    : QR.OPN                       460801
+STRCODE$                    : FUNINPGET$                   460803
+STRCODE$                    : FUNINPGET.ONTIMER$           460803
+STRCODE$                    : FUNTEXTBOX$                  460809
+STRCODE$                    : FUNTEXTBOXR$                 460809
+STRCODE$                    : SILISTQR$                    460809
+STRMODE$                    : QR.OPN                       462802
+STRROKE$                    : SCRN.READTRACECARD           46280E
+LC.COL.LIGHTORANGE                                         330015
+F.SIJISK.1$                 : FYVHT001-                    360091
+F.SIJISK.2$                 : FYVHT001-                    360092
+F.SIJISK.3$                 : FYVHT001-                    360093
+F.SIJISK.4$                 : FYVHT001-                    360094
+F.SIJISK.5$                 : FYVHT001-                    360095
+F.SIJISK.6$                 : FYVHT001-                    360096
+F.SIJISK.7$                 : FYVHT001-                    360097
+F.SYJISK.1$                 : FYVHT001-                    360098
+F.SYJISK.2$                 : FYVHT001-                    360099
+F.SYJISK.3$                 : FYVHT001-                    36009A
+F.SYJISK.4$                 : FYVHT001-                    36009B
+F.SYJISK.5$                 : FYVHT001-                    36009C
+F.SYJISK.6$                 : FYVHT001-                    36009D
+F.SYJISK.7$                 : FYVHT001-                    36009E
+F.SYJISK.8$                 : FYVHT001-                    36009F
+F.SYJISK.9$                 : FYVHT001-                    3600A0
+G.STRSIZISEIRINO$                                          3600A1
+LC.COL.CARP                                                330016
+LC.COL.BLUE                                                330017
+STRDIR$                     : FTP.CDSYS%                   462801
+STRDIR$                     : YTP.CDSYS%                   462801
+INTYPE%                     : SPACEUME$                    410801
+STRDEFINKEY$                : SCRN.MAINMENU                462802
+STRDEFINKEY$                : SCRN.CREATEKANBAN            462802
+STRDEFINKEY$                : SCRN.CREATECOMPKANBAN        462802
+STRDEFINKEY$                : SCRN.READKANBAN              462802
+STRDEFINKEY$                : SCRN.READKANBANSIJI          462802
+STRDEFINKEY$                : SCRN.READTRACECARD           462802
+SIJISK.FIELD$                                              3600A2
+G.SILOG.4$                                                 3600A3
+F.SILOG.5$                  : FYVHT001-                    3600A4
+OFNAMESV$                   : YTP.DIR%                     461802
+SYJISK.FIELD$                                              3600A5
+INCOL%                      : SPACEUME$                    410803
+INCOL%                      : ZEROUME$                     410802
+SOCK.CONN%                  : FYVHT001-                    31000C
+IOLDFNAME$                  : FTP.RENAME%                  460801
+IOLDFNAME$                  : YTP.RENAME%                  460801
+RECVFNAME$                  : CMDREPFILE.RECV%             462802
+RECVFNAME$                  : YMODEMFILE.RECV%             462806
+G.SYJSKWK.6$                                               3600A6
+F.SYJSKWK.7$                : FYVHT001-                    3600A7
+STRPATTERN$                 : SYUKAWRITE                   460801
+STRTEMP$                    : SPLIT%                       46280A
+G.SIJISK.1$                                                3600A8
+G.SIJISK.2$                                                3600A9
+G.SIJISK.3$                                                3600AA
+G.SIJISK.4$                                                3600AB
+G.SIJISK.5$                                                3600AC
+G.SIJISK.6$                                                3600AD
+G.SIJISK.7$                                                3600AE
+INPFORMAT$                  : SIFORMAT$                    460802
+INPFORMAT$                  : SITEXTFORMAT$                460802
+G.SYJISK.1$                                                3600AF
+G.SYJISK.2$                                                3600B0
+G.SYJISK.3$                                                3600B1
+G.SYJISK.4$                                                3600B2
+G.SYJISK.5$                                                3600B3
+G.SYJISK.6$                                                3600B4
+G.SYJISK.7$                                                3600B5
+G.SYJISK.8$                                                3600B6
+G.SYJISK.9$                                                3600B7
+G.FTP.REPLY%                                               31000D
+LC.COL.AQUA                                                330018
+FLD$                        : CMDREPFILE.RECV%             462805
+FLD$                        : YMODEMFILE.RECV%             462809
+SILIST.TOPPOS&                                             320005
+G.SILOG.5$                                                 3600B8
+F.SILOG.6$                  : FYVHT001-                    3600B9
+LC.COL.TIGERS                                              330019
+STRSMALL$                   : UCASE$                       462804
+STRSMALL$                   : LCASE$                       462804
+PROTOCOL%                   : SIRECVFILE%                  410803
+PROTOCOL%                   : SISENDFILE%                  410803
+INTERRNO%                   : FTP.OPEN2%                   412807
+SOCK.OPEN%                  : FYVHT001-                    31000E
+G.SYJSKWK.7$                                               3600BA
+F.SYJSKWK.8$                : FYVHT001-                    3600BB
+LEAP%                       : DATECONV$                    412807
+INTKETADECI%                : FUNNUMTEXTBOX$               410804
+BTFONT.XSIZE                                               33001A
+BTFONT.YSIZE                                               33001B
+LC.COL.GOLD                                                33001C
+LENGTH&                     : FREEMEMORY%                  420802
+INTERR%                     : SIMGCUT$                     412804
+DSPMOJISU.X%                : SIMSGBOX.POPUP$              41280E
+IFTP.SRVIP$                 : FTP.OPEN2%                   460802
+LC.COL.LAVENDER                                            33001D
+G.SILOG.6$                                                 3600BC
+F.SILOG.7$                  : FYVHT001-                    3600BD
+ICOMB%                      : SILOG.SRCH&                  410801
+ICOMB%                      : SYJISK.SRCH&                 410801
+ICOMB%                      : SYJSKWK.SRCH&                410801
+ICOMB%                      : KEJISK.SRCH&                 410801
+ICOMB%                      : SIJISK.SRCH&                 410801
+ICOMB%                      : YTPCMD.SRCH&                 410801
+ICOMB%                      : YTPREP.SRCH&                 410801
+SRCID$                      : SIFIXEDLENQR.DECODE$         460803
+STRWORK2$                   : FUNTEXTBOXR$                 46280F
+STRWHERE$                   : SILOG.SRCH&                  469802
+STRWHERE$                   : SYJISK.SRCH&                 469802
+STRWHERE$                   : SYJSKWK.SRCH&                469802
+STRWHERE$                   : KEJISK.SRCH&                 469802
+STRWHERE$                   : SIJISK.SRCH&                 469802
+STRWHERE$                   : YTPCMD.SRCH&                 469802
+STRWHERE$                   : YTPREP.SRCH&                 469802
+STRWHERE$                   : SCRN.CREATEKANBAN            46A804
+STRWHERE$                   : SCRN.READKANBAN              46A805
+STRWHERE$                   : SCRN.READKANBANSIJI          46A808
+STRWHERE$                   : SCRN.READTRACECARD           46A807
+LC.COL.LIGHTGREEN                                          33001E
+ISRCHCNT2&                  : SCRN.CREATEKANBAN            422809
+ISRCHCNT2&                  : SCRN.CREATECOMPKANBAN        422808
+VAL.LEN%                    : SIFORMAT$                    412804
+IMSG.TEXT$                                                 368000
+IMSG.TEXT$                  : SIMSGBOX.POPUP$              469803
+G.SYJSKWK.8$                                               3600BE
+F.SYJSKWK.9$                : FYVHT001-                    3600BF
+LC.COL.SKYBLUE                                             33001F
+PARAMNM$                    : SIGETMSG$                    460801
+STRSYORIHENSU$                                             3600C0
+ILEN%                       : INSTRCNT%                    412806
+ILEN%                       : SIDENSOQR.DECODE$            410803
+ILEN%                       : SIDIQR.DECODE$               410803
+ILEN%                       : SIDIQR.TWG.DECODE$           410803
+ILEN%                       : SIMULTCODESPLIT%             412804
+INTLOOP%                    : SIMGCUT$                     412805
+INTLOOP%                    : SUBBEEPMUSIC                 410805
+INTLOOP%                    : SUBBEEPMUSIC2                410805
+IRET%                       : SISTRINGCHK%                 412804
+IRET%                       : FUNDATECHK%                  412802
+IRET%                       : SCRN.INPUTWORKUSER           412803
+LIGHT.KEY%                  : BHTPHOTO                     412805
+LAYERMODE%                  : FTP.OPEN%                    412803
+PSTRVALUE$                  : SIMGCUT$                     460801
+STRERRMSG$                  : FTP.OPEN2%                   462808
+LC.COL.PINK                                                330020
+LC.COL.RED                                                 330021
+LC.COL.ROSE                                                330022
+RESULT$                     : SPACE$                       462803
+RESULT$                     : STRING$                      462804
+RESULT$                     : SIFORMAT$                    46280C
+RESULT$                     : SITEXTFORMAT$                462806
+RESULT$                     : REPLACE$                     462806
+RESULT$                     : UCASE$                       462808
+RESULT$                     : LCASE$                       462808
+RESULT$                     : SIGETINI$                    462807
+RESULT$                     : SIGETMSG$                    462804
+RESULT$                     : SIDIQR.DECODE$               46280B
+RESULT$                     : SITOYOTADIQR.DECODE$         46280B
+RESULT$                     : SIDIQR.TWG.DECODE$           462805
+RESULT$                     : SIDIQR.TWG.DN.DECODE$        462805
+RESULT$                     : SIFIXEDLENQR.DECODE$         462806
+DSPMOJISU.Y%                : SIMSGBOX.POPUP$              41280F
+STRHAKKOUTIME$              : SCRN.READTRACECARD           462810
+LC.COL.DARKBLUE                                            330023
+G.SILOG.7$                                                 3600C1
+F.SILOG.8$                  : FYVHT001-                    3600C2
+LC.COL.LEMON                                               330024
+G.SYJSKWK.9$                                               3600C3
+DATESTR$                    : STD.DAYS&                    460801
+INTFTP.MODE%                : FTP.OPEN2%                   410801
+LC.COL.SWALLOWS                                            330025
+STRFILLER$                  : SISETINI%                    462809
+STRFILLER$                  : SIGETINI$                    462809
+STRFILLER$                  : SIGETMSG$                    462806
+STRKUGIRI$                  : SPLIT%                       460802
+IID$                        : SIDENSOQR.DECODE$            460802
+FLG%                        : SIFORMAT$                    41280A
+INTRUE$                     : IIF$                         460802
+IPWORK$                     : IP.GET$                      462802
+RESULT%                     : SIRECVFILE%                  412804
+RESULT%                     : SISENDFILE%                  412804
+RESULT%                     : SIQR.CHECK%                  412802
+RESULT%                     : SIDIQR.CNT%                  412806
+RESULT%                     : SIFIXEDLENQR.CHECK%          412805
+G.SILOG.8$                                                 3600C4
+F.SILOG.9$                  : FYVHT001-                    3600C5
+SPEED$                      : SIRECVFILE%                  460802
+SPEED$                      : SISENDFILE%                  460802
+ITITLE.FORECOLOR&           : SIMSGBOX.SETCOLOR            420801
+INP.STR$                    : SITEXTFORMAT$                462805
+MODE$                       : SUBSETCOLOR.SIMSGBOX         460801
+DUMW$                       : SOUND4                       462803
+DUMW$                       : SOUND5                       462803
+DUMW$                       : SOUND7                       462803
+DUMW$                       : SUBBEEPMUSIC                 462806
+DUMW$                       : SUBBEEPMUSIC2                462806
+G.YTP.MESSAGE$                                             3600C6
+LC.COL.SEAGREEN                                            330026
+LC.COL.ORANGE                                              330027
+ICODE%                      : GETFTPERRMSG$                410801
+G.SILOG.9$                                                 3600C7
+ICODE%                      : GETYTPERRMSG$                410801
+IMODE%                      : FUNINPGET$                   410802
+IMODE%                      : FUNINPGET.ONTIMER$           410802
+IMODE%                      : SILISTQR$                    410808
+IMODE%                      : SUBSETNBS.LISTPOS            410801
+IVER                        : SIVERCTL.FILEVERSION.SET     430802
+STRSUCHI$                   : SIDENSOQR.DECODE$            46280F
+VAL.LENGTH%                 : SIFORMAT$                    412807
+VAL.INT                     : SIFORMAT$                    432806
+BACKCOLOR&                  : SIFONT.GETCOLOR              421802
+BACKCOLOR&                  : SIFONT.RESET                 422802
+BACKCOLOR&                  : SIFONT.BUTTON                422802
+SOCK.INIT%                  : FYVHT001-                    31000F
+BACKCOLOR&                  : SETTITLE                     420803
+BACKCOLOR&                  : SETTITLE2                    420803
+SILOG.FIELD$                                               3600C8
+FILE$                       : BHTPHOTO                     460801
+FILE$                       : PICTUREBOX                   460805
+MODE%                       : CMDREPFILE.RECV%             412804
+MODE%                       : YMODEMFILE.RECV%             412808
+IDIR$                       : FTP.CD%                      460801
+IDIR$                       : YTP.CD%                      460801
+STRWORK$                    : FUNTEXTBOX$                  46280E
+STRWORK$                    : FUNTEXTBOXR$                 46280E
+STRWORK$                    : FUNNUMTEXTBOX$               46280B
+STRWORK$                    : SIMSGBOX.POPUP$              462817
+F.YTPCMD.1$                 : FYVHT001-                    3600C9
+F.YTPCMD.2$                 : FYVHT001-                    3600CA
+F.YTPCMD.3$                 : FYVHT001-                    3600CB
+F.YTPCMD.4$                 : FYVHT001-                    3600CC
+F.YTPCMD.5$                 : FYVHT001-                    3600CD
+INPPARAM$                   : SISETINI%                    460805
+INF$                        : FILE.EXIST%                  462802
+INF$                        : FILE.COUNT&                  462802
+INPFORMATFILE$              : SIFIXEDLENQR.DECODE$         460801
+INPFORMATFILE$              : SIFIXEDLENQR.CHECK%          460801
+INF$                        : FRECCOUNT&                   462802
+STRCOM$                     : SIXFILE&                     462805
+INTRUE&                     : IIF&                         420802
+STRCOM$                     : SIRSFILE%                    462806
+STRCOM$                     : YTPCOM.OPN                   462803
+LSTART&                     : SILOG.SRCH&                  420804
+LSTART&                     : SYJISK.SRCH&                 420804
+LSTART&                     : SYJSKWK.SRCH&                420804
+LSTART&                     : KEJISK.SRCH&                 420804
+LSTART&                     : SIJISK.SRCH&                 420804
+LSTART&                     : YTPCMD.SRCH&                 420804
+LSTART&                     : YTPREP.SRCH&                 420804
+STRPOS$                     : SIFIXEDLENQR.DECODE$         462808
+STRPOS$                     : SIFIXEDLENQR.CHECK%          462807
+LC.COL.INDIGO                                              330028
+YTPCMD.FIELD$                                              3600CE
+LC.COL.GREEN                                               330029
+D1$                         : DTOD2%                       460801
+D2$                         : DTOD2%                       460802
+STRMUSIC$                   : SUBBEEPMUSIC                 460804
+STRMUSIC$                   : SUBBEEPMUSIC2                460804
+DD$                         : DATEADD$                     462805
+INTIDKETA%                  : SIDENSOQR.DECODE$            412807
+DISPGRAPH%                  : SIDEFRAG%                    410801
+LC.COL.KIKKORO                                             33002A
+INTFREQ%                    : SUBBEEPMUSIC                 41280A
+DANS%                       : DTOD2%                       412809
+DANS%                       : TTOT%                        412809
+INTFREQ%                    : SUBBEEPMUSIC2                41280A
+STRBUFF$                    : FUNINPGET$                   462804
+STRBUFF$                    : FUNINPGET.ONTIMER$           462805
+STRBUFF$                    : FUNTEXTBOX$                  46280B
+STRBUFF$                    : FUNTEXTBOXR$                 46280B
+STRBUFF$                    : FUNNUMTEXTBOX$               462808
+STRBUFF$                    : SIMSGBOX.POPUP$              462814
+DISPROW%                    : SILIST$                      410804
+DISPROW%                    : SILISTQR$                    410804
+DISPROW%                    : SILISTNSB$                   410804
+STRHINBANCOUNT$             : SCRN.READKANBAN              462804
+OUTLIST$                    : SPLIT%                       469804
+STRHINBANCOUNT$             : SCRN.READKANBANSIJI          462807
+A&                          : SILICENSE.GET&               422804
+G.YTPCMD.1$                                                3600CF
+G.YTPCMD.2$                                                3600D0
+G.YTPCMD.3$                                                3600D1
+G.YTPCMD.4$                                                3600D2
+G.YTPCMD.5$                                                3600D3
+G.STRSET.SETNUM$                                           3600D4
+LC.COL.THINLIGHTBLUE                                       33002B
+GETPARAMNM$                 : SIGETINI$                    460804
+G.STRSET.FUNCTION$                                         3600D5
+OLDNAME$                    : FILE.RENAME                  460801
+SRCDI$                      : SITOYOTADIQR.DECODE$         460802
+TWGID$                      : SIDIQR.TWG.DECODE$           462807
+LC.COL.MORIZO                                              33002C
+LC.COL.JUSCO                                               33002D
+INTSTART%                   : INSTRCNT%                    410801
+INTSTART%                   : SIDENSOQR.DECODE$            41280D
+FLGQRREAD%                  : SIMSGBOX.POPUP$              412819
+LC.COL.DRAGONS                                             33002E
+F.NO$                       : NUMBERNAME$                  462804
+B&                          : SILICENSE.GET&               422805
+D1M%                        : DTOD2%                       412804
+D2M%                        : DTOD2%                       412807
+LC.COL.PLUM                                                33002F
+G.STRSET.VALUE$                                            3600D6
+LC.COL.YELLOW                                              330030
+IPSWD$                      : FTP.SYSSET                   460803
+F.NO%                       : NUMBERNAME$                  410801
+C&                          : SILICENSE.GET&               422807
+STRCHKKEY$                  : SIWAITKEY                    460801
+IDI$                        : SIDIQR.DECODE$               460802
+IDI$                        : SIDIQR.CNT%                  460802
+IDI$                        : SIDIQR.TWG.DECODE$           460802
+IDI$                        : SIDIQR.TWG.DN.DECODE$        460802
+SILIST.CURSOR&                                             320006
+IMSG.BACKCOLOR&             : SIMSGBOX.SETCOLOR            420804
+INPFRONTCOLOR&              : SIBUTTON.DRAW                420806
+INTMOTORESUME%              : SIMSGBOX.POPUP$              41281A
+POWEROFFTIME                : SIPOWER                      431801
+LC.COL.VIOLET                                              330031
+MDAYS%                      : STD.DAYS&                    41A807
+MDAYS%                      : DATECONV$                    41A809
+COLOR&                      : SIFONT.COLOR                 420801
+COLOR&                      : RECTANGLE                    420805
+LC.COL.DARKGREEN                                           330032
+INTCNGSETTING.FTP%          : FTP.OPEN2%                   41280B
+REC1%                       : FILE.COUNT&                  412803
+REC2%                       : FILE.COUNT&                  412804
+REC3%                       : FILE.COUNT&                  412805
+REC4%                       : FILE.COUNT&                  412806
+REC1%                       : FRECCOUNT&                   412803
+REC2%                       : FRECCOUNT&                   412804
+REC3%                       : FRECCOUNT&                   412805
+REC4%                       : FRECCOUNT&                   412806
+IFLG%                       : SIFORMAT$                    41280B
+PINTMAX%                    : SIMGCUT$                     410802
+STRFILENAME$                : SIXFILE&                     460801
+STRFILENAME$                : SIRSFILEBT%                  460801
+STRFILENAME$                : SIRSFILE%                    460801
+CODEDATA$                   : MOJICOUNT%                   462804
+PMSGBOX.TITLE.BACKCOLOR&                                   320007
+D&                          : SILICENSE.GET&               422808
+INTPRVPOS%                  : SPLIT%                       412805
+INTPRVPOS%                  : IP.GET$                      412803
+STRDSP$                     : SITEXT.PRINT                 460803
+STRDSP$                     : SITEXT.CPRINT                460803
+STRMSG$                     : SIRSFILEBT%                  461803
+STRMSG$                     : SIRSFILE%                    461803
+STRDSP$                     : SUBYTP.CURSYORIDSP           460801
+IBTN.BACKCOLOR&             : SIMSGBOX.SETCOLOR            420806
+STRDEF2$                    : FUNTEXTBOXR$                 462816
+LC.COL.GIANTS                                              330033
+STRHOUSO$                   : SCRN.READKANBANSIJI          46280B
+STRHOUSO$                   : SCRN.READTRACECARD           46280A
+STRKANBANSYURUI$            : SCRN.READTRACECARD           46280D
+G.STRSET.KATA$                                             3600D7
+LINK.TOUT%                  : CMDREPFILE.RECV%             412808
+LINK.TOUT%                  : YMODEMFILE.RECV%             41280C
+E                           : GETERRMSG$                   430801
+INTDATA1%                   : SIXFILE&                     412803
+INTDATA2%                   : SIXFILE&                     412804
+INTDATA1%                   : SIRSFILE%                    412804
+INTDATA2%                   : SIRSFILE%                    412805
+INTDATA1%                   : YTPCOM.OPN                   412801
+INTDATA2%                   : YTPCOM.OPN                   412802
+E&                          : SILICENSE.GET&               422809
+STRRESULT$                  : SYUKAWRITE                   460802
+LC.COL.UMI                                                 330034
+G.STRCHAINAP$                                              3600D8
+IQRDATA$                    : SIDENSOQR.DECODE$            460801
+IQRDATA$                    : SIDIQR.DECODE$               460801
+IQRDATA$                    : SIDIQR.CNT%                  460801
+IQRDATA$                    : SIDIQR.TWG.DECODE$           460801
+IQRDATA$                    : SIDIQR.TWG.DN.DECODE$        460801
+LOCLINE%                    : SILIST$                      410802
+LOCLINE%                    : SILISTQR$                    410802
+LOCLINE%                    : SISELECTLIST2%               410802
+LOCLINE%                    : SILISTNSB$                   410802
+LOCLINE%                    : SIMSGBOX.POPUP$              410801
+LC.COL.WHITE                                               330035
+NOWMONTH$                   : FUNLOGOSET$                  462803
+MONTH%                      : STD.DAYS&                    412803
+MONTH%                      : DATECONV$                    412803
+LC.COL.DARKYELLOW                                          330036
+ICNT%                       : MOJICOUNT%                   412803
+PPOPRET$                    : SCRN.READKANBANSIJI          462806
+PPOPRET$                    : SCRN.READTRACECARD           462806
+LC.COL.BLUISHGREEN                                         330037
+G.STRSIZIHOUSO$                                            3600D9
+F&                          : SILICENSE.GET&               42280A
+REC&                        : SILOG.GET                    420801
+REC&                        : SILOG.PUT                    420801
+REC&                        : SILOG.DEL                    420801
+REC&                        : SYJISK.GET                   420801
+F.SYJISK.10$                : FYVHT001-                    3600DA
+F.SYJISK.20$                : FYVHT001-                    3600DB
+F.SYJISK.30$                : FYVHT001-                    3600DC
+F.SYJISK.40$                : FYVHT001-                    3600DD
+REC&                        : SYJISK.PUT                   420801
+REC&                        : SYJISK.DEL                   420801
+REC&                        : SYJSKWK.GET                  420801
+REC&                        : SYJSKWK.PUT                  420801
+REC&                        : SYJSKWK.DEL                  420801
+REC&                        : KEJISK.GET                   420801
+REC&                        : KEJISK.PUT                   420801
+REC&                        : KEJISK.DEL                   420801
+REC&                        : SIJISK.GET                   420801
+REC&                        : SIJISK.PUT                   420801
+REC&                        : SIJISK.DEL                   420801
+REC&                        : YTPCMD.GET                   420801
+REC&                        : YTPCMD.PUT                   420801
+REC&                        : YTPCMD.DEL                   420801
+REC&                        : YTPREP.GET                   420801
+REC&                        : YTPREP.PUT                   420801
+REC&                        : YTPREP.DEL                   420801
+INNUM&                      : ZEROUME$                     420801
+INIFILENM$                  : SISETINI%                    460801
+INIFILENM$                  : SIGETINI$                    460801
+INTCLOSEDDATALEN%           : SISQRC.CHECK%                411803
+IW%                         : FUNTEXTBOX$                  412811
+IW%                         : FUNTEXTBOXR$                 412814
+IW%                         : FUNNUMTEXTBOX$               41280E
+INPQRDATA$                  : SIQR.CHECK%                  460801
+INPQRDATA$                  : SITOYOTADIQR.DECODE$         460801
+INPQRDATA$                  : SIFIXEDLENQR.DECODE$         460802
+INPQRDATA$                  : SIFIXEDLENQR.CHECK%          460802
+G.INTERFACE%                                               310010
+DATA%                       : SETRESUME                    410801
+DATA%                       : GETRESUME%                   412801
+DATA%                       : CONPATIBLERESET              412802
+DATA%                       : CONPATIBLESET                412803
+DATA%                       : FTP.OPEN2%                   412806
+ICOL%                       : SIBUTTON.DRAW                41280C
+ICOL%                       : SITEXTBOX.DRAW               412808
+ICOL%                       : SIWINDOW.DRAW                412808
+WDAY%                       : DATEADD$                     412806
+IPOS%                       : SIMULTCODESPLIT%             412803
+G&                          : SILICENSE.GET&               42280B
+SOCK.COM3%                  : FYVHT001-                    310011
+PMSGBOX.BTN1.TEXT$                                         3600DE
+PMSGBOX.BTN2.TEXT$                                         3600DF
+LC.COL.MOMO                                                330038
+G.FTP.HANDLE%                                              310012
+G.SYJISK.10$                                               3600E0
+G.SYJISK.20$                                               3600E1
+G.SYJISK.30$                                               3600E2
+G.SYJISK.40$                                               3600E3
+F.SYJISK.11$                : FYVHT001-                    3600E4
+F.SYJISK.21$                : FYVHT001-                    3600E5
+F.SYJISK.31$                : FYVHT001-                    3600E6
+F.SYJISK.41$                : FYVHT001-                    3600E7
+WMONTH%                     : DATEADD$                     412807
+LC.COL.THINBLUE                                            330039
+INTDATA%                    : SISYSIGET%                   412802
+INTDATA%                    : TCPIP.SYSGET.NUM%            412803
+INTDATA%                    : TCPIP.SYSSET.NUM             410802
+IMAXREC%                    : SILOG.WRITE&                 412805
+INTPARA%                    : SISYSIGET%                   410801
+INTPARA%                    : SISYSSGET$                   410801
+YM.OPTION%                  : CMDREPFILE.RECV%             41280B
+YM.OPTION%                  : YMODEMFILE.RECV%             41280F
+VAL.STR$                    : SIFORMAT$                    462805
+ISPC%                       : SPACEUME$                    412804
+LNGTIME1&                   : TIMEDEFF&                    422804
+LNGTIME2&                   : TIMEDEFF&                    422805
+G.SYJISK.11$                                               3600E8
+G.SYJISK.21$                                               3600E9
+G.SYJISK.31$                                               3600EA
+G.SYJISK.41$                                               3600EB
+F.SYJISK.12$                : FYVHT001-                    3600EC
+F.SYJISK.22$                : FYVHT001-                    3600ED
+F.SYJISK.32$                : FYVHT001-                    3600EE
+F.SYJISK.42$                : FYVHT001-                    3600EF
+INTKETAINT%                 : FUNNUMTEXTBOX$               410803
+LC.COL.PEERBLUE                                            33003A
+INFALSE$                    : IIF$                         460803
+INFALSE&                    : IIF&                         420803
+LC.COL.LIGHTBLUE                                           33003B
+INTNEWFLG%                  : SIDIQR.TWG.DECODE$           412806
+INTNEWFLG%                  : SIDIQR.TWG.DN.DECODE$        412806
+PMSGBOX.BTN.FORECOLOR&                                     320008
+YEAR%                       : STD.DAYS&                    412802
+YEAR%                       : DATECONV$                    412802
+I%                          : SPACE$                       412802
+I%                          : STRING$                      412803
+I%                          : SPLIT%                       412807
+I%                          : SIFORMAT$                    412803
+I%                          : SITEXTFORMAT$                412803
+I%                          : REPLACE$                     412804
+I%                          : UCASE$                       412802
+I%                          : LCASE$                       412802
+I%                          : SISTRINGCHK%                 412803
+I%                          : SISETINI%                    412806
+I%                          : SIGETINI$                    412805
+I%                          : SIGETMSG$                    412802
+I%                          : STD.DAYS&                    412806
+I%                          : DATECONV$                    412806
+I%                          : SIDIQR.DECODE$               412805
+SRCTOYOTADI$                : SITOYOTADIQR.DECODE$         460803
+I%                          : SITOYOTADIQR.DECODE$         412805
+I%                          : SUBBEEPMUSIC                 412807
+I%                          : SUBBEEPMUSIC2                412807
+I%                          : FUNTEXTBOX$                  412810
+I%                          : FUNTEXTBOXR$                 412812
+I%                          : FUNNUMTEXTBOX$               41280D
+I%                          : SILIST$                      412808
+I%                          : SILISTQR$                    41280A
+I%                          : SISELECTLIST2%               412807
+I%                          : SUBSETNBS.STARTLISTPOS       412804
+I%                          : SUBSETNBS.LISTPOS            412805
+I%                          : SILISTNSB$                   412808
+I%                          : SIMULTCODESPLIT%             412805
+ICRLF.MODE%                 : FTP.GET%                     410805
+ICRLF.MODE%                 : YMODEMFILE.RECV%             410804
+ICRLF.MODE%                 : YTP.GET%                     410805
+G.SYJISK.12$                                               3600F0
+G.SYJISK.22$                                               3600F1
+G.SYJISK.32$                                               3600F2
+G.SYJISK.42$                                               3600F3
+F.SYJISK.13$                : FYVHT001-                    3600F4
+F.SYJISK.23$                : FYVHT001-                    3600F5
+F.SYJISK.33$                : FYVHT001-                    3600F6
+MM$                         : DATEADD$                     462804
+IFTP.USER$                  : FTP.OPEN2%                   460803
+LEND&                       : SILOG.SRCH&                  420805
+LEND&                       : SYJISK.SRCH&                 420805
+LEND&                       : SYJSKWK.SRCH&                420805
+LEND&                       : KEJISK.SRCH&                 420805
+LEND&                       : SIJISK.SRCH&                 420805
+LEND&                       : YTPCMD.SRCH&                 420805
+LEND&                       : YTPREP.SRCH&                 420805
+IMSG$                       : SILOG.WRITE&                 460803
+INTEXIT$                    : FUNTEXTBOX$                  460806
+INTEXIT$                    : FUNTEXTBOXR$                 460806
+INTEXIT$                    : FUNNUMTEXTBOX$               460806
+J%                          : SIDIQR.DECODE$               412806
+J%                          : SITOYOTADIQR.DECODE$         412806
+J%                          : FUNTEXTBOXR$                 412813
+STRSMALLZ$                  : UCASE$                       462806
+STRSMALLZ$                  : LCASE$                       462806
+STRFRQMST$                  : SUBBEEPMUSIC2                46280E
+STRINPSTR$                  : FUNNUMTEXTBOX$               462811
+G.SYJISK.13$                                               3600F7
+G.SYJISK.23$                                               3600F8
+G.SYJISK.33$                                               3600F9
+F.SYJISK.14$                : FYVHT001-                    3600FA
+F.SYJISK.24$                : FYVHT001-                    3600FB
+F.SYJISK.34$                : FYVHT001-                    3600FC
+EXT$                        : NUMBERNAME$                  460803
+IRETSECOND&                 : TIMEDEFF&                    422803
+ILOOP%                      : SIDENSOQR.DECODE$            41280E
+G.INTFAIL%                                                 310013
+ITOYOTADI$                  : SIDIQR.TWG.DN.DECODE$        460803
+INTCURX%                    : FUNTEXTBOX$                  41280F
+INTCURX%                    : FUNTEXTBOXR$                 412810
+INTCURX%                    : FUNNUMTEXTBOX$               41280C
+STROUTP$                    : FUNTEXTBOX$                  46280D
+STROUTP$                    : FUNTEXTBOXR$                 46280D
+STROUTP$                    : FUNNUMTEXTBOX$               46280A
+DISPBOLD%                   : SISETBOLD%                   410801
+INTRETCD%                   : FTP.GET%                     412807
+INTRETCD%                   : FTP.PUT%                     412806
+INTRETCD%                   : FTP.DEL%                     412802
+LEN%                        : SIFIXEDLENQR.DECODE$         412805
+LEN%                        : SIFIXEDLENQR.CHECK%          412804
+FIT%                        : PICTUREBOX                   410806
+QRREADMODE$                                                3600FD
+G.SYJISK.14$                                               3600FE
+G.SYJISK.24$                                               3600FF
+G.SYJISK.34$                                               360100
+F.SYJISK.15$                : FYVHT001-                    360101
+F.SYJISK.25$                : FYVHT001-                    360102
+F.SYJISK.35$                : FYVHT001-                    360103
+INTCNGSETTING%              : FTP.OPEN2%                   41280A
+STRPARAMNM$                 : SISETINI%                    462808
+LC.COL.DORAEMON                                            33003C
+STRPARAMNM$                 : SIGETINI$                    462808
+STRPARAMNM$                 : SIGETMSG$                    462805
+BGCOLOR&                    : SIFONT.SET                   420803
+IMSG.FORECOLOR&             : SIMSGBOX.SETCOLOR            420803
+BKCOLOR&                    : SIFONT.COLOR                 420802
+LC.COL.OLIVE                                               33003D
+STRID$                      : SIDENSOQR.DECODE$            462806
+STRID$                      : SIFIXEDLENQR.DECODE$         462807
+STRID$                      : SIFIXEDLENQR.CHECK%          462806
+STRDATAWK$                  : SIDENSOQR.DECODE$            462808
+INTX%                       : SIFONT.GETSIZE               412803
+INTY%                       : SIFONT.GETSIZE               412804
+INTX%                       : SITEXT.PRINT                 410801
+INTY%                       : SITEXT.PRINT                 410802
+INTX%                       : SITEXT.CPRINT                410801
+INTY%                       : SITEXT.CPRINT                410802
+INTX%                       : FUNTEXTBOX$                  410801
+INTY%                       : FUNTEXTBOX$                  410802
+INTX%                       : FUNTEXTBOXR$                 410801
+INTY%                       : FUNTEXTBOXR$                 410802
+INTX%                       : FUNNUMTEXTBOX$               410801
+INTY%                       : FUNNUMTEXTBOX$               410802
+FTP.COMM%                   : FYVHT001-                    310014
+IMOJILEN%                   : MOJICOUNT%                   412802
+STRPARAM$                   : SISETINI%                    46280A
+STRPARAM$                   : SIGETINI$                    46280A
+STRPARAM$                   : SIGETMSG$                    462807
+STROTOMST$                  : SUBBEEPMUSIC2                46280D
+G.SYJISK.15$                                               360104
+G.SYJISK.25$                                               360105
+G.SYJISK.35$                                               360106
+F.SYJISK.16$                : FYVHT001-                    360107
+F.SYJISK.26$                : FYVHT001-                    360108
+F.SYJISK.36$                : FYVHT001-                    360109
+NUM%                        : SPACE$                       410801
+NUM%                        : STRING$                      410801
+NUM%                        : SIFORMAT$                    412808
+SRCFILE$                    : FILE.COPY                    460801
+IBTN.FORECOLOR&             : SIMSGBOX.SETCOLOR            420805
+LRECORD&                    : SILOG.SRCH&                  422807
+LRECORD&                    : SYJISK.SRCH&                 422807
+LRECORD&                    : SYJSKWK.SRCH&                422807
+LRECORD&                    : KEJISK.SRCH&                 422807
+LRECORD&                    : SIJISK.SRCH&                 422807
+INPBACKCOLOR&               : SIBUTTON.DRAW                420807
+INPBACKCOLOR&               : SISYSTEMSTATUS.DISP          420802
+LRECORD&                    : YTPCMD.SRCH&                 422807
+LRECORD&                    : YTPREP.SRCH&                 422807
+DUMMY$                                                     36010A
+DUMMY%                                                     310015
+INPREVATT%                  : SIBUTTON.DRAW                410808
+PMSGBOX.MSG.FORECOLOR&                                     320009
+STRAUTORUN$                 : SIAUTORUN                    462801
+DAYS&                       : STD.DAYS&                    422805
+DAYS&                       : DATECONV$                    420801
+DTIMEOUT%                   : FTP.OPEN%                    412802
+STFONT.XSIZE                                               33003E
+STFONT.YSIZE                                               33003F
+G.SYJISK.16$                                               36010B
+G.SYJISK.26$                                               36010C
+G.SYJISK.36$                                               36010D
+F.SYJISK.17$                : FYVHT001-                    36010E
+F.SYJISK.27$                : FYVHT001-                    36010F
+F.SYJISK.37$                : FYVHT001-                    360110
+SETPARAMNM$                 : SISETINI%                    460804
+SILOG.FILENM$                                              360111
+LC.COL.BUDOU                                               330040
+WDAYS$                      : DATECONV$                    46A80A
+INUM&                       : SISTR$                       420801
+INUM&                       : SEC2TIME$                    420801
+FTP.INIT%                   : FYVHT001-                    310016
+BDATA$                      : BHTMODEL$                    462801
+BDATA%                      : DISPMODE%                    412801
+BPARA%                      : BHTMODEL$                    412802
+BPARA%                      : DISPMODE%                    412802
+D1Y%                        : DTOD2%                       412803
+D2Y%                        : DTOD2%                       412806
+DAY%                        : STD.DAYS&                    412804
+DAY%                        : DATECONV$                    412804
+G.SYJISK.17$                                               360112
+G.SYJISK.27$                                               360113
+G.SYJISK.37$                                               360114
+F.SYJISK.18$                : FYVHT001-                    360115
+F.SYJISK.28$                : FYVHT001-                    360116
+F.SYJISK.38$                : FYVHT001-                    360117
+INPVISIBLE%                 : SISYSTEMSTATUS.DISP          410801
+G.FTP.STATUS%                                              310017
+DSTFILE$                    : FILE.COPY                    460802
+POSDI%                      : SITOYOTADIQR.DECODE$         41280E
+STRNG$                      : SYUKAWRITE                   460803
+FONTX%                      : SIFONT.SET                   412804
+FONTX%                      : SIFONT.SIZE                  410801
+FONTX%                      : SIFONT.GETSIZE               411801
+FONTX%                      : SITEXT.CPRINT                410806
+FONTX%                      : SIBOX.DRAW                   412807
+FONTX%                      : SIPROGRESSBAR                412809
+FONTX%                      : SIBUTTON.DRAW                41280A
+FTP.ETHER%                  : FYVHT001-                    310018
+FONTX%                      : SITEXTBOX.DRAW               412806
+FONTX%                      : SIWINDOW.DRAW                412806
+RC$                         : QR.OPN                       46A803
+FONTX%                      : SIMSGBOX.POPUP$              41280C
+NETDEVICE%                  : FTP.OPEN%                    412801
+STRCANCEL$                  : SUBBEEPMUSIC                 460803
+STRCANCEL$                  : SUBBEEPMUSIC2                460803
+FONTCOLOR&                  : SIFONT.SET                   420802

@@ -1,0 +1,1084 @@
+f' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+'    < 個別アプリケーション用ファイル >
+'    画面
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+
+'*******************************************************************************
+'	[共通]タイトル表示
+'	引数：
+'		strValue$		: 表示文字列
+'		ForeColor&		: 文字色
+'		BackColor&		: 背景色
+'		posX%			: X座標
+'		posY%			: Y座標
+'	戻り値：なし
+'*******************************************************************************
+ Sub SetTitle(strValue$, ForeColor&, BackColor&, posX%, posY%)
+
+	SIFont.Reset
+	SIFont.Set(Lc.WAT.NORMAL, ForeColor&, BackColor&)
+	SIText.Print( posX%, posY%, SpaceUme$(Lc.CENTER, strValue$, 20), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	SIFont.Reset
+
+ End Sub
+
+'*******************************************************************************
+'	[共通]タイトル表示
+'	引数：
+'		strValue$		: 表示文字列
+'		ForeColor&		: 文字色
+'		BackColor&		: 背景色
+'		posX%			: X座標
+'		posY%			: Y座標
+'	戻り値：なし
+'*******************************************************************************
+ Sub SetTitle2(strValue$, ForeColor&, BackColor&, posX%, posY%)
+
+	SIFont.Reset
+	SIFont.Set(Lc.WAT.HEIGHT, ForeColor&, BackColor&)
+	SIText.Print( posX%, posY%, SpaceUme$(Lc.CENTER, strValue$, 20), Lc.RAT.NORMAL, Lc.BLD.BOLD)
+	SIFont.Reset
+
+ End Sub
+
+
+'*******************************************************************************
+'*******************************************************************************
+'	[0000]ﾒﾆｭｰ
+'	引数：なし
+'	戻り値：なし
+'*******************************************************************************
+ Sub Scrn.MainMenu
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	DIM strListData$(8)[25]
+	DIM intListCnt%
+
+
+
+	'ﾒﾆｭｰ項目を登録
+	strListData$(1) = "１:担当者入力       1"
+	IF g.strWorkUser$ = "" Then
+		strListData$(2) = "                    2"
+		strListData$(3) = "                    3"
+		strListData$(4) = "                    4"
+	Else
+		strListData$(2) = "２:集荷作業         2"
+		strListData$(3) = "３:指示集荷作業     3"
+		strListData$(4) = "４:欠品集荷作業     4"
+	END IF
+	strListData$(5) = "５:欠品削除         5"
+	strListData$(6) = "６:集荷実績送信     6"
+	strListData$(7) = "                    "
+	strListData$(8) = "９:終了             9"
+
+
+	'ﾒﾆｭｰ項目数
+	intListCnt% = 8
+
+	'キー登録
+	strDefInKey$ = "123459"
+
+	SIList.Cursor& = 1		'配列内のカーソルの行
+	SIList.TopPos& = 1		'スクリーンのTOP行
+
+	'担当者ｺｰﾄﾞ初期化
+	'g.strWorkUser$ = "1234567"
+
+	'エラーコード初期化
+	g.intFail% = 0
+
+	'画面処理
+	WHILE strSyoriHensu$ = "0000"
+		strInKey$ = strDefInKey$
+
+		Cls
+
+		'タイトル表示
+		CALL SetTitle(MainMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		'サブタイトル表示
+		SIText.Print(1,3, "ﾒﾆｭｰ                ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print(14, 3, g.strWorkUser$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'バージョン
+
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+
+		'ボタン表示
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "▲▼:スクロール      ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "M1:確定             ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIFont.Reset
+		'リスト表示 & 入力待ち
+		strInKey$ = strInKey$ + M1.KEY + ENT.KEY + SFF1.KEY + SFF2.KEY
+		W$ = SIList$( 1, 6, 8, 20, strListData$, intListCnt%, strInKey$)
+
+		'キー入力確認
+		IF W$ = M1.KEY OR W$ = ENT.KEY THEN
+			'選択されたリスト項目Noを取得
+			W$ = MID$(strListData$(SIList.Cursor&),21,1)
+		END IF
+		SELECT W$
+			CASE "1"  '担当者入力
+				'[1010]担当者QR
+				NextScreen.Set("1010")
+			CASE "2"  '集荷作業
+				'[2000]かんばん読取
+				NextScreen.Set("2000")
+
+			CASE "9"  '終了
+				'[9999]終了
+				NextScreen.Set("9999")
+
+		END SELECT
+	WEND
+
+ End Sub
+
+
+'*************************************************************************************************************************************************
+'	[1010]担当コード読取
+'	引数：なし
+'	戻り値：なし
+'*************************************************************************************************************************************************
+	Sub Scrn.InputWorkUser
+	DIM W$
+	DIM intPos%
+	DIM iRet%
+	DIM CODE$
+
+	WHILE strSyoriHensu$ = "1010"
+
+		Cls
+
+		'--固定部分
+		'タイトル表示
+		CALL SetTitle(Shokuban.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIText.Print( 1, 8, "  職番ＱＲを      ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 10, "  読取ってください    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1,15, "  職番:             ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "職番QRを読取        ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'ボタン表示
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "M1:確定      M2:ﾒﾆｭｰ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'バージョン
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+
+		SIFont.Reset
+
+		'---------------------------
+		'	入力待ち
+		'---------------------------
+		'入力待ち(M1 or M2 or QR)
+		W$ = FunTextBox$(9, 8, g.strWorkUser$, "CCCCCCC", 0, M1.KEY + M2.KEY, 1, 0, "Q:")
+
+		IF strQR$ <> "" THEN
+			'----- QR入力 -----
+			'担当者QRかチェック(桁数:28)
+			IF Len(strQR$) = 28 THEN
+				'----- 担当者QR -----
+				CODE$ = Mid$(strQR$,1,5)
+
+				IF CODE$ = "ID001" THEN
+					g.strWorkUser$ = Mid$(strQR$,6,7)
+					'メニュー
+					NextScreen.Set("0000")
+				ELSE
+					Call NG.Beep
+
+					'ポップアップ表示
+					SIFont.Set(Lc.WAT.NORMAL, Lc.COL.BLACK, Lc.COL.WHITE)
+					SIMsgBox.SetColor(Lc.COL.WHITE, Lc.Col.Red, Lc.COL.BLACK, Lc.Col.Pink, Lc.COL.BLACK, Lc.Col.20Gray)
+					iMsg.Text$(1) = "職番QR"
+					iMsg.Text$(2) = "ではありません"
+					IF SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY THEN	'QRエラー
+					END IF
+				END IF
+			ELSE
+				'----- 担当者QR以外 -----
+				Call NG.Beep
+
+				'ポップアップ表示
+				SIFont.Set(Lc.WAT.NORMAL, Lc.COL.BLACK, Lc.COL.WHITE)
+				SIMsgBox.SetColor(Lc.COL.WHITE, Lc.Col.Red, Lc.COL.BLACK, Lc.Col.Pink, Lc.COL.BLACK, Lc.Col.20Gray)
+				iMsg.Text$(1) = "職番QR"
+				iMsg.Text$(2) = "ではありません"
+				IF SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY THEN	'QRエラー
+				END IF
+
+			END IF
+
+		ELSE
+			'----- キー入力 -----
+			SELECT CASE W$
+				CASE M1.KEY
+					'----- 確定 -----
+					'入力チェック(桁数:7)
+					IF Len(strKEY$) = 7 THEN
+						'----- チェックOK -----
+						g.strWorkUser$ = strKEY$		'担当者No
+						'メニュー
+						NextScreen.Set("0000")
+					ELSE
+						'----- チェックNG -----
+						Call NG.Beep
+						'ポップアップ表示
+						SIFont.Set(Lc.WAT.NORMAL, Lc.COL.BLACK, Lc.COL.WHITE)
+						SIMsgBox.SetColor(Lc.COL.WHITE, Lc.Col.Red, Lc.COL.BLACK, Lc.Col.Pink, Lc.COL.BLACK, Lc.Col.20Gray)
+						iMsg.Text$(1) = "職番ｺｰﾄﾞを"
+						iMsg.Text$(2) = "7桁で"
+						iMsg.Text$(3) = "入力してください"
+						IF SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 3, Lc.MSG.OKONLY) = M1.KEY THEN
+						END IF
+					END IF
+				CASE M2.KEY
+					'[0000]メインメニュー
+					NextScreen.Set("0000")
+
+			END SELECT
+		END IF
+	WEND
+
+	End Sub
+
+
+
+
+'*************************************************************************************************************************************************
+'	[2000]かんばん読取指示書作成
+'	引数：なし
+'	戻り値：なし
+'*************************************************************************************************************************************************
+ Sub Scrn.CreateKanban
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	Private strWhere$(6)[50] 'ファイルサーチ条件集荷
+	Private strWhereSyuka$(6)[50] 'ファイルサーチ条件集荷
+	Private strWhereSiji$(6)[50] 'ファイルサーチ条件指示
+	Private strCheckNo$	'重複チェックNo
+	Private iSrchCnt&
+	Private iSrchCnt2&
+	Private iWhereCnt&	'ファイル検索数'
+	Private iWhereCnt2&	'ファイル検索数'
+	Private check%
+
+	WHILE strSyoriHensu$ = "2000"
+		Cls
+
+		'--固定部分
+		'タイトル表示
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "品番:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "包装:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "収容数:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "組付区:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "整理No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		If SIJISK.Cnt& > 0 Then
+			SIText.Print( 1, 15, "指示書:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+			SIText.Print( 8, 15, ZeroUme$(SIJISK.Cnt&,3) + "枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		ELSE
+			SIText.Print( 1, 15, "指示書:000枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		ENDIF
+
+		'画面表示
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "指示書作成          ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'ボタン表示
+		If SIJISK.Cnt& > 0 Then
+			SIFont.Button
+			SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+			SIText.Print( 1,22, "F1:次へ             ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+			SIText.Print( 1,24, "             M2:戻る", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		ELSE
+			SIFont.Button
+			SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+			SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+			SIText.Print( 1,24, "M1:ｽｷｯﾌﾟ     M2:戻る", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		ENDIF
+
+		'バージョン
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'入力制御
+		If SIJISK.Cnt& > 0 Then
+			strInKey$ = M2.KEY + F1.KEY
+		Else
+			strInKey$ = M1.KEY + M2.KEY
+		END IF
+
+		'入力待ち(M1 or M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+		If strQR$ <> "" Then
+			'集荷実績のレコード数チェック
+			If SYJISK.Cnt& < 10000 Then	'10000件
+				'かんばんかチェック
+				If  Len(strQR$) = 119 OR Len(strQR$) = 124 Then
+					'先頭4桁がJAMAか判定
+					If Mid$(strQR$,1,4) = "JAMA" Then
+
+						'eかんばんか社内かんばんか'
+						If  Len(strQR$) = 119 THEN
+							'eかんばん指示書分割'
+							SijiSplit(strQR$)
+
+							'重複条件(集荷実績)'
+							strWhereSyuka$(0) = .Equal+Chr$(5) + g.SIJISK.1$		'デンソー品番
+							strWhereSyuka$(1) = .Equal+Chr$(6) + g.SIJISK.2$		'包装
+							strWhereSyuka$(2) = .Equal+Chr$(8) + g.SIJISK.5$		'整理番号
+							strWhereSyuka$(3) = .Equal+Chr$(10) + g.SIJISK.6$		'納入日
+							strWhereSyuka$(4) = .Equal+Chr$(41) + "OK"					'照合結果
+							iWhereCnt& = 5
+							'重複条件(指示書実績)'
+							strWhereSiji$(0) = .Equal+Chr$(1) + g.SIJISK.1$		'デンソー品番
+							strWhereSiji$(1) = .Equal+Chr$(2) + g.SIJISK.2$		'包装
+							strWhereSiji$(2) = .Equal+Chr$(5) + g.SIJISK.5$		'整理番号
+							strWhereSiji$(3) = .Equal+Chr$(6) + g.SIJISK.6$		'納入日
+							iWhereCnt2& = 4
+						ELSE
+							'社内かんばん指示書分割'
+							SijiSplit(strQR$)
+
+							'重複条件(集荷実績)'
+							strWhereSyuka$(0) = .Equal+Chr$(13) + g.SIJISK.7$		'かんばん種類
+							strWhereSyuka$(1) = .Equal+Chr$(16) + g.SIJISK.1$		'ﾃﾞﾝｿｰ品番
+							strWhereSyuka$(2) = .Equal+Chr$(17) + g.SIJISK.2$		'包装
+							strWhereSyuka$(3) = .Equal+Chr$(19) + g.SIJISK.4$		'組付区
+							strWhereSyuka$(4) = .Equal+Chr$(21) + g.SIJISK.5$		'整理No
+							strWhereSyuka$(5) = .Equal+Chr$(41) + "OK"					'照合結果
+							iWhereCnt& = 6
+							'重複条件(指示書実績)'
+							strWhereSiji$(0) = .Equal+Chr$(7) + g.SIJISK.7$		'かんばん種類
+							strWhereSiji$(1) = .Equal+Chr$(1) + g.SIJISK.1$		'ﾃﾞﾝｿｰ品番
+							strWhereSiji$(2) = .Equal+Chr$(2) + g.SIJISK.2$		'包装
+							strWhereSiji$(3) = .Equal+Chr$(4) + g.SIJISK.4$		'組付区
+							strWhereSiji$(4) = .Equal+Chr$(5) + g.SIJISK.5$		'整理No
+							iWhereCnt2& = 5
+						endif
+
+						'ファイル検索
+						iSrchCnt& = SYJISK.Srch&(.fcAndSrch, strWhereSyuka$, iWhereCnt&, 1, 0)
+						iSrchCnt2& = SIJISK.Srch&(.fcAndSrch, strWhereSiji$, iWhereCnt2&, 1, 0)
+
+						If iSrchCnt& < 1 AND iSrchCnt2& < 1 Then
+							'指示書実績書き込み'
+							SIJISK.Put(0)
+							'---指示書作成完了----
+							NextScreen.Set("2001")
+						Else
+							'----重複の場合はエラー
+							Call NG.Beep
+							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+							iMsg.Text$(1) = "読取済みの"
+							iMsg.Text$(2) = "かんばんです"
+							If SIMsgBox.PopUp$(7, "重複読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+							Endif
+						END IF
+					ELSE
+						'----かんばんでない場合はエラー
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "かんばん"
+						iMsg.Text$(2) = "ではありません"
+						If SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+						Endif
+					END IF
+				ELSE
+					'----かんばんでない場合はエラー
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "かんばん"
+					iMsg.Text$(2) = "ではありません"
+					If Len(SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY)) = 10 Then
+					Endif
+				Endif
+			ELSE
+				'---集荷実績が1万件以上の場合はエラー
+				Call NG.Beep
+				SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+				iMsg.Text$(1) = "実績データ保持"
+				iMsg.Text$(2) = "最大件数到達。"
+				iMsg.Text$(3) = "実績データを"
+				iMsg.Text$(4) = "送信して下さい。"
+				If SIMsgBox.PopUp$(7, "最大件数超過", iMsg.Text$(), 4, Lc.MSG.OKONLY) = M1.KEY Then
+				Endif
+			END IF
+		ELSE
+			SELECT CASE W$
+				CASE M1.KEY
+					'---かんばん読取(指示書実績無し)----
+					NextScreen.Set("2010")
+				CASE M2.KEY	'戻る
+					'---メニュー画面をセット
+					NextScreen.Set("0000")
+				CASE F1.KEY
+					'---かんばん読取(指示書実績有り)----
+					NextScreen.Set("2015")
+			END SELECT
+		END IF
+
+	 WEND
+ End Sub
+
+
+'*************************************************************************************************************************************************
+'	[2001]指示書作成完了
+'	引数：なし
+'	戻り値：なし
+'*************************************************************************************************************************************************
+ Sub Scrn.CreateCompKanban
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	Private strWhereSyuka$(5)[50] 'ファイルサーチ条件集荷
+	Private strWhereSiji$(5)[50] 'ファイルサーチ条件指示
+	Private strCheckNo$	'重複チェックNo
+	Private iSrchCnt&
+	Private iSrchCnt2&
+	Private check%
+	Private iWhereCnt&	'ファイル検索数'
+	Private iWhereCnt2&	'ファイル検索数'
+
+	WHILE strSyoriHensu$ = "2001"
+		Cls
+
+		'--固定部分
+		'タイトル表示
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "品番:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "包装:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "収容数:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "組付区:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "整理No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIText.Print( 6, 5, g.SIJISK.1$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 6, 7, g.SIJISK.2$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 9, Trim$(g.SIJISK.3$), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 11, g.SIJISK.4$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 13, g.SIJISK.5$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIText.Print( 1, 15, "指示書:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 15, ZeroUme$(SIJISK.Cnt&,3) + "枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+
+		'画面表示
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "指示書作成完了!     ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'ボタン表示
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "M1:次へ      M2:戻る", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+
+		'バージョン
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'入力制御
+		strInKey$ = M1.KEY + M2.KEY
+
+
+		'入力待ち(M1 or M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+		If strQR$ <> "" Then
+			'かんばんかチェック
+			If  Len(strQR$) = 119 OR Len(strQR$) = 124 Then
+				'先頭4桁がJAMAか判定
+				If Mid$(strQR$,1,4) = "JAMA" Then
+
+					'eかんばんか社内かんばんか'
+					If  Len(strQR$) = 119 THEN
+						'eかんばん指示書分割'
+						SijiSplit(strQR$)
+
+						'重複条件(集荷実績)'
+						strWhereSyuka$(0) = .Equal+Chr$(5) + g.SIJISK.1$		'デンソー品番
+						strWhereSyuka$(1) = .Equal+Chr$(6) + g.SIJISK.2$		'包装
+						strWhereSyuka$(2) = .Equal+Chr$(8) + g.SIJISK.5$		'整理番号
+						strWhereSyuka$(3) = .Equal+Chr$(10) + g.SIJISK.6$		'納入日
+						strWhereSyuka$(4) = .Equal+Chr$(41) + "OK"					'照合結果
+						iWhereCnt& = 5
+						'重複条件(指示書実績)'
+						strWhereSiji$(0) = .Equal+Chr$(1) + g.SIJISK.1$		'デンソー品番
+						strWhereSiji$(1) = .Equal+Chr$(2) + g.SIJISK.2$		'包装
+						strWhereSiji$(2) = .Equal+Chr$(5) + g.SIJISK.5$		'整理番号
+						strWhereSiji$(3) = .Equal+Chr$(6) + g.SIJISK.6$		'納入日
+						iWhereCnt2& = 4
+					ELSE
+						'社内かんばん指示書分割'
+						SijiSplit(strQR$)
+
+						'重複条件(集荷実績)'
+						strWhereSyuka$(0) = .Equal+Chr$(13) + g.SIJISK.7$		'かんばん種類
+						strWhereSyuka$(1) = .Equal+Chr$(16) + g.SIJISK.1$		'ﾃﾞﾝｿｰ品番
+						strWhereSyuka$(2) = .Equal+Chr$(17) + g.SIJISK.2$		'包装
+						strWhereSyuka$(3) = .Equal+Chr$(19) + g.SIJISK.4$		'組付区
+						strWhereSyuka$(4) = .Equal+Chr$(21) + g.SIJISK.5$		'整理No
+						strWhereSyuka$(5) = .Equal+Chr$(41) + "OK"					'照合結果
+						iWhereCnt& = 6
+						'重複条件(指示書実績)'
+						strWhereSiji$(0) = .Equal+Chr$(7) + g.SIJISK.7$		'かんばん種類
+						strWhereSiji$(1) = .Equal+Chr$(1) + g.SIJISK.1$		'ﾃﾞﾝｿｰ品番
+						strWhereSiji$(2) = .Equal+Chr$(2) + g.SIJISK.2$		'包装
+						strWhereSiji$(3) = .Equal+Chr$(4) + g.SIJISK.4$		'組付区
+						strWhereSiji$(4) = .Equal+Chr$(5) + g.SIJISK.5$		'整理No
+						iWhereCnt2& = 5
+					endif
+
+					'ファイル検索
+					iSrchCnt& = SYJISK.Srch&(.fcAndSrch, strWhereSyuka$, iWhereCnt&, 1, 0)
+					iSrchCnt2& = SIJISK.Srch&(.fcAndSrch, strWhereSiji$, iWhereCnt2&, 1, 0)
+
+					If iSrchCnt& < 1 AND iSrchCnt2& < 1 Then
+						'指示書実績書き込み'
+						SIJISK.Put(0)
+						'---指示書作成完了----
+						NextScreen.Set("2001")
+					Else
+						'----重複の場合はエラー
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "読取済みの"
+						iMsg.Text$(2) = "かんばんです"
+						If SIMsgBox.PopUp$(7, "重複読取エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD) = M1.KEY Then
+						Endif
+					END IF
+				ELSE
+					'----かんばんでない場合はエラー
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "かんばん"
+					iMsg.Text$(2) = "ではありません"
+					If SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+					Endif
+				END IF
+			ELSE
+				'----かんばんでない場合はエラー
+				Call NG.Beep
+				SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+				iMsg.Text$(1) = "かんばん"
+				iMsg.Text$(2) = "ではありません"
+				If Len(SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY)) = 10 Then
+				Endif
+			Endif
+
+		ELSE
+			SELECT CASE W$
+				CASE M1.KEY
+					'---かんばん読取(指示書実績有り)----
+					NextScreen.Set("2015")
+				CASE M2.KEY	'戻る
+					'---メニュー画面をセット
+					NextScreen.Set("0000")
+			END SELECT
+		END IF
+
+	 WEND
+ End Sub
+'*************************************************************************************************************************************************
+'	[2010]かんばん読取(指示書実績無し)
+'	引数：なし
+'	戻り値：なし
+'*************************************************************************************************************************************************
+ Sub Scrn.ReadKanban
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	Private strHinbanCount$	'未送信件数
+	Private strWhere$(6)[50] 'ファイルサーチ条件
+	Private strCheckNo$	'重複チェックNo
+	Private iSrchCnt&
+	Private iWhereCnt&	'ファイル検索数'
+	Private iWhereCnt2&	'ファイル検索数'
+
+	WHILE strSyoriHensu$ = "2010"
+		Cls
+
+		'--固定部分
+		'タイトル表示
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "品番:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "包装:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "収容数:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "組付区:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "整理No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 15, "指示書:000枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+
+		'画面表示
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "かんばん読取         ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'ボタン表示
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "M1:欠品      M2:戻る", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'バージョン
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'入力制御
+		strInKey$ = M1.KEY + M2.KEY
+
+		'入力待ち(M1 or M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+			If strQR$ <> "" Then
+				'かんばんかチェック
+				If  Len(strQR$) = 119 OR Len(strQR$) = 124 Then
+					'先頭4桁がJAMAか判定
+					If Mid$(strQR$,1,4) = "JAMA" Then
+
+						'eかんばんか社内かんばんか'
+						If  Len(strQR$) = 119 THEN
+							'eかんばん集荷実績'
+							EkanbanSplit(strQR$)
+
+							'重複条件(集荷実績)'
+							strWhere$(0) = .Equal+Chr$(5) + g.SYJISK.5$		'デンソー品番
+							strWhere$(1) = .Equal+Chr$(6) + g.SYJISK.6$		'包装
+							strWhere$(2) = .Equal+Chr$(8) + g.SYJISK.8$		'整理番号
+							strWhere$(3) = .Equal+Chr$(10) + g.SYJISK.10$		'納入日
+							strWhere$(4) = .Equal+Chr$(41) + "OK"					'照合結果
+							iWhereCnt& = 5
+						ELSE
+							'社内かんばん集荷実績'
+							kanbanSplit(strQR$)
+							'重複条件(集荷実績)'
+							strWhere$(0) = .Equal+Chr$(13) + g.SYJISK.13$		'かんばん種類
+							strWhere$(1) = .Equal+Chr$(16) + g.SYJISK.16$		'ﾃﾞﾝｿｰ品番
+							strWhere$(2) = .Equal+Chr$(17) + g.SYJISK.17$		'包装
+							strWhere$(3) = .Equal+Chr$(19) + g.SYJISK.19$		'組付区
+							strWhere$(4) = .Equal+Chr$(21) + g.SYJISK.21$		'整理No
+							strWhere$(5) = .Equal+Chr$(41) + "OK"					'照合結果
+							iWhereCnt& = 6
+						endif
+
+						'集荷実績ファイル検索
+						iSrchCnt& = SYJISK.Srch&(.fcAndSrch, strWhere$, iWhereCnt&, 1, 0)
+
+						If iSrchCnt& < 1 Then
+
+							'---トレース読取----
+							NextScreen.Set("0000")
+						Else
+							'----重複の場合はエラー
+							Call NG.Beep
+							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+							iMsg.Text$(1) = "読取済みの"
+							iMsg.Text$(2) = "かんばんです"
+							If SIMsgBox.PopUp$(7, "重複読取エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD) = M1.KEY Then
+							Endif
+						END IF
+					ELSE
+						'----かんばんでない場合はエラー
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "かんばん"
+						iMsg.Text$(2) = "ではありません"
+						If SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+						Endif
+					END IF
+				ELSE
+					'----かんばんでない場合はエラー
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "かんばん"
+					iMsg.Text$(2) = "ではありません"
+					If Len(SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY)) = 10 Then
+					Endif
+				Endif
+
+			ELSE
+				SELECT CASE W$
+					CASE M1.KEY
+						'---欠品かんばん読取画面(指示書実績無し)----
+						NextScreen.Set("2030")
+					CASE M2.KEY	'戻る
+						'---かんばん指示書作成画面
+						NextScreen.Set("2000")
+				END SELECT
+			END IF
+
+	 WEND
+ End Sub
+
+'*************************************************************************************************************************************************
+'	[2015]かんばん読取(指示書実績有り)
+'	引数：なし
+'	戻り値：なし
+'*************************************************************************************************************************************************
+ Sub Scrn.ReadKanbanSIJI
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	DIM intRet%
+	DIM flgLoop%
+	DIM pPopRET$
+	Private strHinbanCount$	'未送信件数
+	Private strWhere$(5)[50] 'ファイルサーチ条件
+	Private strCheckNo$	'重複チェックNo
+	Private iSrchCnt&
+	Private strHouso$'包装'
+	Private strHinban$'品番'
+	Private strSuryo$'数量'
+
+	WHILE strSyoriHensu$ = "2015"
+		Cls
+
+		'--固定部分
+		'タイトル表示
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "品番:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "包装:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "収容数:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "組付区:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "整理No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 15, "指示書:000枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'指示書実績取得'
+		SIJISK.Get(0)
+		SIText.Print( 6, 5, g.SIJISK.1$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 6, 7, g.SIJISK.2$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 9, Trim$(g.SIJISK.3$), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 11, g.SIJISK.4$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 13, g.SIJISK.5$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIText.Print( 1, 15, "指示書:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 15, ZeroUme$(SIJISK.Cnt&,3) + "枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'画面表示
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "かんばん読取         ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'ボタン表示
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "M1:欠品      M2:戻る", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'バージョン
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'入力制御
+		strInKey$ = M1.KEY + M2.KEY
+
+		'入力待ち(M1 or M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+			If strQR$ <> "" Then
+				'かんばんかチェック
+				If  Len(strQR$) = 119 OR Len(strQR$) = 124 Then
+					'先頭4桁がJAMAか判定
+					If Mid$(strQR$,1,4) = "JAMA" Then
+
+						'eかんばんか社内かんばんか'
+						If  Len(strQR$) = 119 THEN
+							'eかんばん集荷実績'
+							EkanbanSplit(strQR$)
+							strHinban$ = g.SYJISK.5$
+							strHouso$ = g.SYJISK.6$
+							strSuryo$ = g.SYJISK.7$
+						ELSE
+							'社内かんばん集荷実績'
+							kanbanSplit(strQR$)
+							strHinban$ = g.SYJISK.16$
+							strHouso$ = g.SYJISK.17$
+							strSuryo$ = g.SYJISK.18$
+						endif
+						'フラグセット'
+						flgLoop% = Lc.True
+						'品番チェック'
+						If strHinban$ = g.SIJISK.1$ Then
+							'包装チェック'
+							If strHouso$ = g.SIJISK.2$ Then
+								'数量チェック'
+								If strSuryo$ = Trim$(g.SIJISK.3$) Then
+									'---トレースカード読取画面----
+									NextScreen.Set("2020")
+								Else
+									Call NG.Beep
+									SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+									iMsg.Text$(1) = "正：" + g.SIJISK.2$
+									iMsg.Text$(2) = "誤：" + strHouso$
+									WHILE flgLoop% = Lc.True
+										intRet% = Lc.True
+										pPopRET$ = SIMsgBox.PopUp$(7, "数量エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+										IF LEN(strQR$) = 10 THEN
+											flgLoop% = Lc.False
+										END IF
+									WEND
+								ENDIF
+							Else
+								Call NG.Beep
+								SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+								iMsg.Text$(1) = "正：" + g.SIJISK.2$
+								iMsg.Text$(2) = "誤：" + strHouso$
+								WHILE flgLoop% = Lc.True
+									intRet% = Lc.True
+									pPopRET$ = SIMsgBox.PopUp$(7, "包装エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+									IF LEN(strQR$) = 10 THEN
+										flgLoop% = Lc.False
+									END IF
+								WEND
+							ENDIF
+						Else
+							'品番エラー
+							Call NG.Beep
+							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+							iMsg.Text$(1) = "正：" + g.SIJISK.1$
+							iMsg.Text$(2) = "誤：" + strHinban$
+							WHILE flgLoop% = Lc.True
+								intRet% = Lc.True
+								pPopRET$ = SIMsgBox.PopUp$(7, "品番エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+								IF LEN(strQR$) = 10 THEN
+									flgLoop% = Lc.False
+								END IF
+							WEND
+						END IF
+
+					ELSE
+						'----かんばんでない場合はエラー
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "かんばん"
+						iMsg.Text$(2) = "ではありません"
+						If SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+						Endif
+					END IF
+				ELSE
+					'----かんばんでない場合はエラー
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "かんばん"
+					iMsg.Text$(2) = "ではありません"
+					If SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+					Endif
+				Endif
+
+			ELSE
+				SELECT CASE W$
+					CASE M1.KEY
+						'---欠品かんばん読取画面(指示書実績有り)----
+						NextScreen.Set("2035")
+					CASE M2.KEY	'戻る
+						'---かんばん指示書作成画面
+						NextScreen.Set("2000")
+				END SELECT
+			END IF
+
+	 WEND
+ End Sub
+
+'*************************************************************************************************************************************************
+'	[2020]トレース読取
+'	引数：なし
+'	戻り値：なし
+'*************************************************************************************************************************************************
+ Sub Scrn.ReadTraceCard
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	DIM intRet%
+	DIM flgLoop%
+	DIM pPopRET$
+
+	Private strWhere$(6)[50] 'ファイルサーチ条件
+	Private strCheckNo$	'重複チェックNo
+	Private iSrchCnt&
+	Private strHouso$'包装'
+	Private strHinban$'品番'
+	Private strSuryo$'数量'
+	Private strKanbanSyurui$'かんばん種類'
+	Private strRoke$'製品ロケーション'
+	Private strTraceID$'トレースID'
+	Private strHakkouTime$'発行年月日時'
+
+	WHILE strSyoriHensu$ = "2020"
+		Cls
+
+		'--固定部分
+		'タイトル表示
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "品番:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "包装:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "収容数:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "組付区:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "整理No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 15, "指示書:000枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'指示書実績取得'
+		SIJISK.Get(0)
+		SIText.Print( 6, 5, g.SIJISK.1$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 6, 7, g.SIJISK.2$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 9, Trim$(g.SIJISK.3$), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 11, g.SIJISK.4$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 13, g.SIJISK.5$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIText.Print( 1, 15, "指示書:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 15, ZeroUme$(SIJISK.Cnt&,3) + "枚", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'画面表示
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "トレースカード読取  ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'ボタン表示
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "             M2:戻る", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'バージョン
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'入力制御
+		strInKey$ = M2.KEY
+
+		'入力待ち(M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+		If strQR$ <> "" Then
+		strKanbanSyurui$ = SIDensoQR.Decode$(strQR$,"100",2,1)
+		strRoke$ = SIDensoQR.Decode$(strQR$,"151",5,1)
+		strTraceID$ = SIDensoQR.Decode$(strQR$,"543",8,1)
+		strHakkouTime$ = SIDensoQR.Decode$(strQR$,"561",14,1)
+
+			'トレースカードがチェック
+			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND strRoke$ <> "" AND strTraceID$ <> "" AND strHakkouTime$ <> "" Then
+				'トレースカード取得'
+				TraceCardSplit(strQR$)
+				'重複条件(集荷実績)'
+				strWhere$(0) = .Equal+Chr$(24) + g.SYJISK.24$		'デンソー品番
+				strWhere$(1) = .Equal+Chr$(25) + g.SYJISK.25$		'包装区分
+				strWhere$(2) = .Equal+Chr$(30) + g.SYJISK.30$		'整理No
+				strWhere$(3) = .Equal+Chr$(31) + g.SYJISK.31$		'トレースID
+				strWhere$(4) = .Equal+Chr$(32) + g.SYJISK.32$		'発行年月日
+				strWhere$(5) = .Equal+Chr$(41) + "OK"		'照合結果
+				'集荷実績ファイル検索
+				iSrchCnt& = SYJISK.Srch&(.fcAndSrch, strWhere$, 6, 1, 0)
+				'重複チェック
+				If iSrchCnt& < 1 Then
+				'トレース情報取得'
+				TraceCardSplit(strQR$)
+				strHinban$ = g.SYJISK.24$
+				strHouso$ = g.SYJISK.25$
+				strSuryo$ = g.SYJISK.26$
+
+				'フラグセット'
+					flgLoop% = Lc.True
+					'品番チェック'
+					If strHinban$ = g.SIJISK.1$ Then
+						'包装チェック'
+						If strHouso$ = g.SIJISK.2$ Then
+							'数量チェック'
+							If Trim$(strSuryo$) = Trim$(g.SIJISK.3$) Then
+								'集荷実績OK書き込み'
+								SyukaWrite("0","OK","")
+								'---集荷完了画面
+								NextScreen.Set("2050")
+							Else
+								'集荷実績NG書き込み'
+								SyukaWrite("0","NG","2")
+								Call NG.Beep
+								SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+								iMsg.Text$(1) = "正：" + g.SIJISK.2$
+								iMsg.Text$(2) = "誤：" + strHouso$
+								WHILE flgLoop% = Lc.True
+									intRet% = Lc.True
+									pPopRET$ = SIMsgBox.PopUp$(7, "数量エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+									IF LEN(strQR$) = 10 THEN
+										flgLoop% = Lc.False
+									END IF
+								WEND
+							ENDIF
+						Else
+							'集荷実績NG書き込み'
+							SyukaWrite("0","NG","1")
+							Call NG.Beep
+							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+							iMsg.Text$(1) = "正：" + g.SIJISK.2$
+							iMsg.Text$(2) = "誤：" + strHouso$
+							WHILE flgLoop% = Lc.True
+								intRet% = Lc.True
+								pPopRET$ = SIMsgBox.PopUp$(7, "包装エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+								IF LEN(strQR$) = 10 THEN
+									flgLoop% = Lc.False
+								END IF
+							WEND
+						ENDIF
+					Else
+						'集荷実績NG書き込み'
+						SyukaWrite("0","NG","0")
+						'品番エラー
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "正：" + g.SIJISK.1$
+						iMsg.Text$(2) = "誤：" + strHinban$
+						WHILE flgLoop% = Lc.True
+							intRet% = Lc.True
+							pPopRET$ = SIMsgBox.PopUp$(7, "品番エラー", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+							IF LEN(strQR$) = 10 THEN
+								flgLoop% = Lc.False
+							END IF
+						WEND
+					END IF
+
+				ELSE
+					'----トレースカードでない場合はエラー
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "読取済みの"
+					iMsg.Text$(2) = "ﾄﾚｰｽｶｰﾄﾞです"
+					If SIMsgBox.PopUp$(7, "重複読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+					Endif
+				END IF
+			ELSE
+				'----トレースカードでない場合はエラー
+				Call NG.Beep
+				SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+				iMsg.Text$(1) = "トレースカード"
+				iMsg.Text$(2) = "ではありません"
+				If SIMsgBox.PopUp$(7, "読取エラー", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+				Endif
+			Endif
+
+		ELSE
+			SELECT CASE W$
+				CASE M2.KEY	'戻る
+					'---かんばん指示書作成画面
+					NextScreen.Set("2000")
+			END SELECT
+		END IF
+
+	 WEND
+ End Sub

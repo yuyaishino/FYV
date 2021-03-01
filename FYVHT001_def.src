@@ -1,0 +1,63 @@
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+'    < 個別アプリケーション用ファイル >
+'    グローバル定数・変数定義
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+
+'=======================================================
+'	グローバル定数
+'=======================================================
+	const MainMenu.NAME$   =    "製品集荷照合システム"
+	const Shokuban.NAME$   =    "    製品集荷照合    "
+	const SyukaMenu.NAME$   =    "    集荷作業    "
+	const NyukoMenu.NAME$   = "    入庫作業    "
+	const YuhaisoMenu.NAME$  = "    輸配送仕分け    "
+	const ZissekiSend.NAME$  = "販社商材倉庫システム"
+
+
+
+'=======================================================
+'	画面色の設定
+'=======================================================
+
+	' タイトル (文字：白、背景：青)//変更2018/08/21
+	const Hanyou.ForeColor  = Lc.COL.WHITE
+	const Hanyou.BackColor  = Lc.Col.Blue
+
+	' ボタン (文字：黒、背景：ベージュ)//
+	const HanyouB.ForeColor  = Lc.COL.BLACK
+	const HanyouB.BackColor  = Lc.Col.Beige
+
+	' タイトル (文字：黒、背景：白)
+	const Small.ForeColor  = Lc.COL.BLACK
+	const Small.BackColor  = Lc.Col.WHITE
+
+'=======================================================
+'	グローバル変数
+'=======================================================
+  '職番QR
+  Public g.strWorkUser$
+
+	'品番'
+	Public g.strSiziHinban$
+
+	'包装'
+	Public g.strSiziHouso$
+
+	'収容数'
+	Public g.strSiziSyuyo$
+
+	'組付区'
+	Public g.strSiziKumitsukeku$
+
+	'整理No'
+	Public g.strSiziSeiriNo$
+
+
+	'ポップアップテキスト
+	Public iMsg.Text$(9)
+
+	'指示書ファイル照合
+	Public g.intRecSIJI&
+
+	'エラーコード
+	Public g.intFail%

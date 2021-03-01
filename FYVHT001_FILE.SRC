@@ -1,0 +1,1461 @@
+'********************************************************************************
+'
+'    [部品集荷システム]
+'
+'    ファイル名 : FYVHT001_FILE.src
+'
+'    機能       : デンソーエスアイ・ファイルライブラリ
+'
+'    変更履歴   :
+'
+'    Version  Date      Time      Comments
+'    -------  --------  --------  ---------------------------------------------
+'    1.00.00  10/08/23  09:00:00  新規作成
+'
+'--------------------------------------------------------------------------------
+' Copyright (C) 2008 DENSO SI INCORPORATED All right reserved.
+'********************************************************************************
+
+'********************************************************************************
+'       ファイル用  変数宣言
+'********************************************************************************
+
+	'集荷実績
+	Const	SYJISK.FNo = 1
+	Public SYJISK.FileNm$	: SYJISK.FileNm$ = "FYVSYJIS.DAT"
+	Public SYJISK.Field$[100]	: SYJISK.Field$ = "7,14,1,10,10,2,3,4,2,4,4,4,2,18,14,10,2,3,6,1,4,18,14,10,2,3,6,1,5,4,8,14,18,14,10,2,3,5,1,4,2,1"
+
+	Public  g.SYJISK.1$[7]		'作業者ID
+	Public  g.SYJISK.2$[14]		'照合日時
+	Public  g.SYJISK.3$[1]		'パターン
+	Public  g.SYJISK.4$[10]		'部品番号
+	Public  g.SYJISK.5$[10]		'デンソー品番
+	Public  g.SYJISK.6$[2]		'包装
+	Public  g.SYJISK.7$[3]		'数量
+	Public  g.SYJISK.8$[4]		'整理番号
+	Public  g.SYJISK.9$[2]		'受入
+	Public  g.SYJISK.10$[4]		'納入日
+	Public  g.SYJISK.11$[4]		'納入便
+	Public  g.SYJISK.12$[4]		'背番号
+	Public  g.SYJISK.13$[2]		'かんばん種類
+	Public  g.SYJISK.14$[18]		'得意先品番
+	Public  g.SYJISK.15$[14]		'得意先品番識別－１
+	Public  g.SYJISK.16$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJISK.17$[2]		'包装区分
+	Public  g.SYJISK.18$[3]		'収容数
+	Public  g.SYJISK.19$[6]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJISK.20$[1]		'実績計上区分
+	Public  g.SYJISK.21$[4]		'整理№
+	Public  g.SYJISK.22$[18]		'得意先品番
+	Public  g.SYJISK.23$[14]		'得意先品番識別－１
+	Public  g.SYJISK.24$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJISK.25$[2]		'包装区分
+	Public  g.SYJISK.26$[3]		'収容数
+	Public  g.SYJISK.27$[6]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJISK.28$[1]		'実績計上区分
+	Public  g.SYJISK.29$[5]		'製品ロケーション№
+	Public  g.SYJISK.30$[4]		'整理№
+	Public  g.SYJISK.31$[8]		'ﾄﾚｰｽID
+	Public  g.SYJISK.32$[14]		'発行年月日時
+	Public  g.SYJISK.33$[18]		'得意先品番
+	Public  g.SYJISK.34$[14]		'得意先品番識別－１
+	Public  g.SYJISK.35$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJISK.36$[2]		'包装区分
+	Public  g.SYJISK.37$[3]		'収容数
+	Public  g.SYJISK.38$[5]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJISK.39$[1]		'実績計上区分
+	Public  g.SYJISK.40$[4]		'整理№
+	Public  g.SYJISK.41$[2]		'照合結果
+	Public  g.SYJISK.42$[1]		'NG理由
+
+	Private f.SYJISK.1$[7]		'作業者ID
+	Private f.SYJISK.2$[14]		'照合日時
+	Private f.SYJISK.3$[1]		'パターン
+	Private f.SYJISK.4$[10]		'部品番号
+	Private f.SYJISK.5$[10]		'デンソー品番
+	Private f.SYJISK.6$[2]		'包装
+	Private f.SYJISK.7$[3]		'数量
+	Private f.SYJISK.8$[4]		'整理番号
+	Private f.SYJISK.9$[2]		'受入
+	Private f.SYJISK.10$[4]		'納入日
+	Private f.SYJISK.11$[4]		'納入便
+	Private f.SYJISK.12$[4]		'背番号
+	Private f.SYJISK.13$[2]		'かんばん種類
+	Private f.SYJISK.14$[18]		'得意先品番
+	Private f.SYJISK.15$[14]		'得意先品番識別－１
+	Private f.SYJISK.16$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJISK.17$[2]		'包装区分
+	Private f.SYJISK.18$[3]		'収容数
+	Private f.SYJISK.19$[6]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJISK.20$[1]		'実績計上区分
+	Private f.SYJISK.21$[4]		'整理№
+	Private f.SYJISK.22$[18]		'得意先品番
+	Private f.SYJISK.23$[14]		'得意先品番識別－１
+	Private f.SYJISK.24$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJISK.25$[2]		'包装区分
+	Private f.SYJISK.26$[3]		'収容数
+	Private f.SYJISK.27$[6]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJISK.28$[1]		'実績計上区分
+	Private f.SYJISK.29$[5]		'製品ロケーション№
+	Private f.SYJISK.30$[4]		'整理№
+	Private f.SYJISK.31$[8]		'ﾄﾚｰｽID
+	Private f.SYJISK.32$[14]		'発行年月日時
+	Private f.SYJISK.33$[18]		'得意先品番
+	Private f.SYJISK.34$[14]		'得意先品番識別－１
+	Private f.SYJISK.35$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJISK.36$[2]		'包装区分
+	Private f.SYJISK.37$[3]		'収容数
+	Private f.SYJISK.38$[5]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJISK.39$[1]		'実績計上区分
+	Private f.SYJISK.40$[4]		'整理№
+	Private f.SYJISK.41$[2]		'照合結果
+	Private f.SYJISK.42$[1]		'NG理由
+
+	'集荷実績WK
+	Const	SYJskWK.FNo = 2
+	Public SYJskWK.FileNm$	: SYJskWK.FileNm$ = "FYVSYJWK.DAT"
+	Public SYJskWK.Field$[100]	: SYJskWK.Field$ = "7,14,1,10,10,2,3,4,2,4,4,18,14,10,2,3,6,1,4,18,14,10,2,3,6,1,5,4,8,14,18,14,10,2,3,5,1,4,2,1"
+
+	Public  g.SYJskWK.1$[7]		'作業者ID
+	Public  g.SYJskWK.2$[14]		'照合日時
+	Public  g.SYJskWK.3$[1]		'パターン
+	Public  g.SYJskWK.4$[10]		'部品番号
+	Public  g.SYJskWK.5$[10]		'デンソー品番
+	Public  g.SYJskWK.6$[2]		'包装
+	Public  g.SYJskWK.7$[3]		'数量
+	Public  g.SYJskWK.8$[4]		'整理番号
+	Public  g.SYJskWK.9$[2]		'受入
+	Public  g.SYJskWK.10$[4]		'納入日
+	Public  g.SYJskWK.11$[4]		'納入便
+	Public  g.SYJskWK.12$[18]		'得意先品番
+	Public  g.SYJskWK.13$[14]		'得意先品番識別－１
+	Public  g.SYJskWK.14$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJskWK.15$[2]		'包装区分
+	Public  g.SYJskWK.16$[3]		'収容数
+	Public  g.SYJskWK.17$[6]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJskWK.18$[1]		'実績計上区分
+	Public  g.SYJskWK.19$[4]		'整理№
+	Public  g.SYJskWK.20$[18]		'得意先品番
+	Public  g.SYJskWK.21$[14]		'得意先品番識別－１
+	Public  g.SYJskWK.22$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJskWK.23$[2]		'包装区分
+	Public  g.SYJskWK.24$[3]		'収容数
+	Public  g.SYJskWK.25$[6]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJskWK.26$[1]		'実績計上区分
+	Public  g.SYJskWK.27$[5]		'製品ロケーション№
+	Public  g.SYJskWK.28$[4]		'整理№
+	Public  g.SYJskWK.29$[8]		'ﾄﾚｰｽID
+	Public  g.SYJskWK.30$[14]		'発行年月日時
+	Public  g.SYJskWK.31$[18]		'得意先品番
+	Public  g.SYJskWK.32$[14]		'得意先品番識別－１
+	Public  g.SYJskWK.33$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJskWK.34$[2]		'包装区分
+	Public  g.SYJskWK.35$[3]		'収容数
+	Public  g.SYJskWK.36$[5]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJskWK.37$[1]		'実績計上区分
+	Public  g.SYJskWK.38$[4]		'整理№
+	Public  g.SYJskWK.39$[2]		'照合結果
+	Public  g.SYJskWK.40$[1]		'NG理由
+
+	Private f.SYJskWK.1$[7]		'作業者ID
+	Private f.SYJskWK.2$[14]		'照合日時
+	Private f.SYJskWK.3$[1]		'パターン
+	Private f.SYJskWK.4$[10]		'部品番号
+	Private f.SYJskWK.5$[10]		'デンソー品番
+	Private f.SYJskWK.6$[2]		'包装
+	Private f.SYJskWK.7$[3]		'数量
+	Private f.SYJskWK.8$[4]		'整理番号
+	Private f.SYJskWK.9$[2]		'受入
+	Private f.SYJskWK.10$[4]		'納入日
+	Private f.SYJskWK.11$[4]		'納入便
+	Private f.SYJskWK.12$[18]		'得意先品番
+	Private f.SYJskWK.13$[14]		'得意先品番識別－１
+	Private f.SYJskWK.14$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJskWK.15$[2]		'包装区分
+	Private f.SYJskWK.16$[3]		'収容数
+	Private f.SYJskWK.17$[6]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJskWK.18$[1]		'実績計上区分
+	Private f.SYJskWK.19$[4]		'整理№
+	Private f.SYJskWK.20$[18]		'得意先品番
+	Private f.SYJskWK.21$[14]		'得意先品番識別－１
+	Private f.SYJskWK.22$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJskWK.23$[2]		'包装区分
+	Private f.SYJskWK.24$[3]		'収容数
+	Private f.SYJskWK.25$[6]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJskWK.26$[1]		'実績計上区分
+	Private f.SYJskWK.27$[5]		'製品ロケーション№
+	Private f.SYJskWK.28$[4]		'整理№
+	Private f.SYJskWK.29$[8]		'ﾄﾚｰｽID
+	Private f.SYJskWK.30$[14]		'発行年月日時
+	Private f.SYJskWK.31$[18]		'得意先品番
+	Private f.SYJskWK.32$[14]		'得意先品番識別－１
+	Private f.SYJskWK.33$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJskWK.34$[2]		'包装区分
+	Private f.SYJskWK.35$[3]		'収容数
+	Private f.SYJskWK.36$[5]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJskWK.37$[1]		'実績計上区分
+	Private f.SYJskWK.38$[4]		'整理№
+	Private f.SYJskWK.39$[2]		'照合結果
+	Private f.SYJskWK.40$[1]		'NG理由
+
+	'欠品集荷実績WK
+	Const	KEJISK.FNo = 3
+	Public KEJISK.FileNm$	: KEJISK.FileNm$ = "FYVKEJWK.DAT"
+	Public KEJISK.Field$[100]	: KEJISK.Field$ = "7,14,10,2,3,6,4"
+
+	Public  g.KEJISK.1$[7]		'作業者ID
+	Public  g.KEJISK.2$[14]		'照合日時
+	Public  g.KEJISK.3$[10]		'デンソー品番
+	Public  g.KEJISK.4$[2]		'包装
+	Public  g.KEJISK.5$[3]		'収容数
+	Public  g.KEJISK.6$[6]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.KEJISK.7$[4]		'整理№
+
+	Private f.KEJISK.1$[7]		'作業者ID
+	Private f.KEJISK.2$[14]		'照合日時
+	Private f.KEJISK.3$[10]		'デンソー品番
+	Private f.KEJISK.4$[2]		'包装
+	Private f.KEJISK.5$[3]		'収容数
+	Private f.KEJISK.6$[6]		'組付区(又は組付ﾗｲﾝ)
+	Private f.KEJISK.7$[4]		'整理№
+
+	'指示書実績WK
+	Const	SIJISK.FNo = 4
+	Public SIJISK.FileNm$	: SIJISK.FileNm$ = "FYVSIJWK.DAT"
+	Public SIJISK.Field$[100]	: SIJISK.Field$ = "10,2,3,6,4,8,2"
+
+	Public  g.SIJISK.1$[10]		'デンソー品番
+	Public  g.SIJISK.2$[2]		'包装
+	Public  g.SIJISK.3$[3]		'収容数
+	Public  g.SIJISK.4$[6]		'組付区
+	Public  g.SIJISK.5$[4]		'整理No
+	Public  g.SIJISK.6$[8]		'納入日
+	Public  g.SIJISK.7$[2]		'かんばん種類
+
+	Private f.SIJISK.1$[10]		'デンソー品番
+	Private f.SIJISK.2$[2]		'包装
+	Private f.SIJISK.3$[3]		'収容数
+	Private f.SIJISK.4$[6]		'組付区
+	Private f.SIJISK.5$[4]		'整理No
+	Private f.SIJISK.6$[8]		'納入日
+	Private f.SIJISK.7$[2]		'かんばん種類
+
+'********************************************************************************
+' 関数名   : fRecCount&
+' 処理内容 : 指定ファイル名のレコード数を返す
+' 引数     : FileName$    : ファイル名
+' 戻り値   : fRecCount& : レコード数 
+' 備考     : ファイルが存在しない場合は -1 を返します。
+'********************************************************************************
+	Function fRecCount&(FileName$)
+		Dim inf$[1000]
+		Dim Rec1%,Rec2%,Rec3%,Rec4%
+		Call "FILE.FN3" 11 FileName$,inf$
+
+		If Len(inf$) = 0 Then
+			fRecCount& = -1
+		Else
+			Rec1% = Asc(Mid$(inf$,21,1))	'レコード数の1バイト目獲得
+			Rec2% = Asc(Mid$(inf$,22,1))	'レコード数の2バイト目獲得
+			Rec3% = Asc(Mid$(inf$,23,1))	'レコード数の3バイト目獲得
+			Rec4% = Asc(Mid$(inf$,24,1))	'レコード数の4バイト目獲得
+			fRecCount& = (Rec4% * 256 * 256 * 256) + (Rec3% * 256 * 256) + (Rec2% * 256) + Rec1%
+		End If
+	End Function
+
+'********************************************************************************
+' 関数名   : SYJISK.Opn
+' 処理内容 : 集荷実績をオープンする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJISK.Opn
+		Open SYJISK.FileNm$ As SYJISK.FNo Record 10000
+		Field SYJISK.FNo, _
+			7 AS f.SYJISK.1$, _
+			14 AS f.SYJISK.2$, _
+			1 AS f.SYJISK.3$, _
+			10 AS f.SYJISK.4$, _
+			10 AS f.SYJISK.5$, _
+			2 AS f.SYJISK.6$, _
+			3 AS f.SYJISK.7$, _
+			4 AS f.SYJISK.8$, _
+			2 AS f.SYJISK.9$, _
+			4 AS f.SYJISK.10$, _
+			4 AS f.SYJISK.11$, _
+			4 AS f.SYJISK.12$, _
+			2 AS f.SYJISK.13$, _
+			18 AS f.SYJISK.14$, _
+			14 AS f.SYJISK.15$, _
+			10 AS f.SYJISK.16$, _
+			2 AS f.SYJISK.17$, _
+			3 AS f.SYJISK.18$, _
+			6 AS f.SYJISK.19$, _
+			1 AS f.SYJISK.20$, _
+			4 AS f.SYJISK.21$, _
+			18 AS f.SYJISK.22$, _
+			14 AS f.SYJISK.23$, _
+			10 AS f.SYJISK.24$, _
+			2 AS f.SYJISK.25$, _
+			3 AS f.SYJISK.26$, _
+			6 AS f.SYJISK.27$, _
+			1 AS f.SYJISK.28$, _
+			5 AS f.SYJISK.29$, _
+			4 AS f.SYJISK.30$, _
+			8 AS f.SYJISK.31$, _
+			14 AS f.SYJISK.32$, _
+			18 AS f.SYJISK.33$, _
+			14 AS f.SYJISK.34$, _
+			10 AS f.SYJISK.35$, _
+			2 AS f.SYJISK.36$, _
+			3 AS f.SYJISK.37$, _
+			5 AS f.SYJISK.38$, _
+			1 AS f.SYJISK.39$, _
+			4 AS f.SYJISK.40$, _
+			2 AS f.SYJISK.41$, _
+			1 AS f.SYJISK.42$
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJISK.Cls
+' 処理内容 : 集荷実績をクローズする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJISK.Cls
+		Close SYJISK.FNo
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJISK.Cnt
+' 処理内容 : 集荷実績のレコード数を求める
+' 引数     : なし
+' 戻り値   : 長整数
+'            -1    : ファイルなし
+'            0     : 0件
+'            以外  : レコード件数
+' 備考     :
+'********************************************************************************
+	Function SYJISK.Cnt&
+		SYJISK.Cnt& = fRecCount&( SYJISK.FileNm$ )
+	End Function
+
+'********************************************************************************
+' 関数名   : SYJISK.Get
+' 処理内容 : 集荷実績から指定レコード情報を取得する
+' 引数     : Rec& : 指定レコードの情報取得
+'                   0:最初のレコード
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJISK.Get(Rec&)
+
+		SYJISK.Opn
+
+		If Rec& <> 0 Then
+			Get SYJISK.FNo, Rec&
+			g.SYJISK.1$		= f.SYJISK.1$
+			g.SYJISK.2$		= f.SYJISK.2$
+			g.SYJISK.3$		= f.SYJISK.3$
+			g.SYJISK.4$		= f.SYJISK.4$
+			g.SYJISK.5$		= f.SYJISK.5$
+			g.SYJISK.6$		= f.SYJISK.6$
+			g.SYJISK.7$		= f.SYJISK.7$
+			g.SYJISK.8$		= f.SYJISK.8$
+			g.SYJISK.9$		= f.SYJISK.9$
+			g.SYJISK.10$		= f.SYJISK.10$
+			g.SYJISK.11$		= f.SYJISK.11$
+			g.SYJISK.12$		= f.SYJISK.12$
+			g.SYJISK.13$		= f.SYJISK.13$
+			g.SYJISK.14$		= f.SYJISK.14$
+			g.SYJISK.15$		= f.SYJISK.15$
+			g.SYJISK.16$		= f.SYJISK.16$
+			g.SYJISK.17$		= f.SYJISK.17$
+			g.SYJISK.18$		= f.SYJISK.18$
+			g.SYJISK.19$		= f.SYJISK.19$
+			g.SYJISK.20$		= f.SYJISK.20$
+			g.SYJISK.21$		= f.SYJISK.21$
+			g.SYJISK.22$		= f.SYJISK.22$
+			g.SYJISK.23$		= f.SYJISK.23$
+			g.SYJISK.24$		= f.SYJISK.24$
+			g.SYJISK.25$		= f.SYJISK.25$
+			g.SYJISK.26$		= f.SYJISK.26$
+			g.SYJISK.27$		= f.SYJISK.27$
+			g.SYJISK.28$		= f.SYJISK.28$
+			g.SYJISK.29$		= f.SYJISK.29$
+			g.SYJISK.30$		= f.SYJISK.30$
+			g.SYJISK.31$		= f.SYJISK.31$
+			g.SYJISK.32$		= f.SYJISK.32$
+			g.SYJISK.33$		= f.SYJISK.33$
+			g.SYJISK.34$		= f.SYJISK.34$
+			g.SYJISK.35$		= f.SYJISK.35$
+			g.SYJISK.36$		= f.SYJISK.36$
+			g.SYJISK.37$		= f.SYJISK.37$
+			g.SYJISK.38$		= f.SYJISK.38$
+			g.SYJISK.39$		= f.SYJISK.39$
+			g.SYJISK.40$		= f.SYJISK.40$
+			g.SYJISK.41$		= f.SYJISK.41$
+			g.SYJISK.42$		= f.SYJISK.42$
+		Else
+			Get SYJISK.FNo
+			g.SYJISK.1$		= f.SYJISK.1$
+			g.SYJISK.2$		= f.SYJISK.2$
+			g.SYJISK.3$		= f.SYJISK.3$
+			g.SYJISK.4$		= f.SYJISK.4$
+			g.SYJISK.5$		= f.SYJISK.5$
+			g.SYJISK.6$		= f.SYJISK.6$
+			g.SYJISK.7$		= f.SYJISK.7$
+			g.SYJISK.8$		= f.SYJISK.8$
+			g.SYJISK.9$		= f.SYJISK.9$
+			g.SYJISK.10$		= f.SYJISK.10$
+			g.SYJISK.11$		= f.SYJISK.11$
+			g.SYJISK.12$		= f.SYJISK.12$
+			g.SYJISK.13$		= f.SYJISK.13$
+			g.SYJISK.14$		= f.SYJISK.14$
+			g.SYJISK.15$		= f.SYJISK.15$
+			g.SYJISK.16$		= f.SYJISK.16$
+			g.SYJISK.17$		= f.SYJISK.17$
+			g.SYJISK.18$		= f.SYJISK.18$
+			g.SYJISK.19$		= f.SYJISK.19$
+			g.SYJISK.20$		= f.SYJISK.20$
+			g.SYJISK.21$		= f.SYJISK.21$
+			g.SYJISK.22$		= f.SYJISK.22$
+			g.SYJISK.23$		= f.SYJISK.23$
+			g.SYJISK.24$		= f.SYJISK.24$
+			g.SYJISK.25$		= f.SYJISK.25$
+			g.SYJISK.26$		= f.SYJISK.26$
+			g.SYJISK.27$		= f.SYJISK.27$
+			g.SYJISK.28$		= f.SYJISK.28$
+			g.SYJISK.29$		= f.SYJISK.29$
+			g.SYJISK.30$		= f.SYJISK.30$
+			g.SYJISK.31$		= f.SYJISK.31$
+			g.SYJISK.32$		= f.SYJISK.32$
+			g.SYJISK.33$		= f.SYJISK.33$
+			g.SYJISK.34$		= f.SYJISK.34$
+			g.SYJISK.35$		= f.SYJISK.35$
+			g.SYJISK.36$		= f.SYJISK.36$
+			g.SYJISK.37$		= f.SYJISK.37$
+			g.SYJISK.38$		= f.SYJISK.38$
+			g.SYJISK.39$		= f.SYJISK.39$
+			g.SYJISK.40$		= f.SYJISK.40$
+			g.SYJISK.41$		= f.SYJISK.41$
+			g.SYJISK.42$		= f.SYJISK.42$
+		End If
+
+		SYJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJISK.Put
+' 処理内容 : 集荷実績から指定レコードへ情報を書き込む
+' 引数     : Rec& : 指定レコード
+'               0            : ファイル末尾へ追加
+'               1-2147483647 : 指定レコードへ追加
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJISK.Put(Rec&)
+
+		SYJISK.Opn
+
+		If Rec& > 0 Then
+			If Rec& > 10000 Then
+				'NOOP
+			Else
+				f.SYJISK.1$		= g.SYJISK.1$
+				f.SYJISK.2$		= g.SYJISK.2$
+				f.SYJISK.3$		= g.SYJISK.3$
+				f.SYJISK.4$		= g.SYJISK.4$
+				f.SYJISK.5$		= g.SYJISK.5$
+				f.SYJISK.6$		= g.SYJISK.6$
+				f.SYJISK.7$		= g.SYJISK.7$
+				f.SYJISK.8$		= g.SYJISK.8$
+				f.SYJISK.9$		= g.SYJISK.9$
+				f.SYJISK.10$		= g.SYJISK.10$
+				f.SYJISK.11$		= g.SYJISK.11$
+				f.SYJISK.12$		= g.SYJISK.12$
+				f.SYJISK.13$		= g.SYJISK.13$
+				f.SYJISK.14$		= g.SYJISK.14$
+				f.SYJISK.15$		= g.SYJISK.15$
+				f.SYJISK.16$		= g.SYJISK.16$
+				f.SYJISK.17$		= g.SYJISK.17$
+				f.SYJISK.18$		= g.SYJISK.18$
+				f.SYJISK.19$		= g.SYJISK.19$
+				f.SYJISK.20$		= g.SYJISK.20$
+				f.SYJISK.21$		= g.SYJISK.21$
+				f.SYJISK.22$		= g.SYJISK.22$
+				f.SYJISK.23$		= g.SYJISK.23$
+				f.SYJISK.24$		= g.SYJISK.24$
+				f.SYJISK.25$		= g.SYJISK.25$
+				f.SYJISK.26$		= g.SYJISK.26$
+				f.SYJISK.27$		= g.SYJISK.27$
+				f.SYJISK.28$		= g.SYJISK.28$
+				f.SYJISK.29$		= g.SYJISK.29$
+				f.SYJISK.30$		= g.SYJISK.30$
+				f.SYJISK.31$		= g.SYJISK.31$
+				f.SYJISK.32$		= g.SYJISK.32$
+				f.SYJISK.33$		= g.SYJISK.33$
+				f.SYJISK.34$		= g.SYJISK.34$
+				f.SYJISK.35$		= g.SYJISK.35$
+				f.SYJISK.36$		= g.SYJISK.36$
+				f.SYJISK.37$		= g.SYJISK.37$
+				f.SYJISK.38$		= g.SYJISK.38$
+				f.SYJISK.39$		= g.SYJISK.39$
+				f.SYJISK.40$		= g.SYJISK.40$
+				f.SYJISK.41$		= g.SYJISK.41$
+				f.SYJISK.42$		= g.SYJISK.42$
+				Put SYJISK.FNo, Rec&
+			End If
+		Else
+			If Rec& = 0 Then
+				f.SYJISK.1$		= g.SYJISK.1$
+				f.SYJISK.2$		= g.SYJISK.2$
+				f.SYJISK.3$		= g.SYJISK.3$
+				f.SYJISK.4$		= g.SYJISK.4$
+				f.SYJISK.5$		= g.SYJISK.5$
+				f.SYJISK.6$		= g.SYJISK.6$
+				f.SYJISK.7$		= g.SYJISK.7$
+				f.SYJISK.8$		= g.SYJISK.8$
+				f.SYJISK.9$		= g.SYJISK.9$
+				f.SYJISK.10$		= g.SYJISK.10$
+				f.SYJISK.11$		= g.SYJISK.11$
+				f.SYJISK.12$		= g.SYJISK.12$
+				f.SYJISK.13$		= g.SYJISK.13$
+				f.SYJISK.14$		= g.SYJISK.14$
+				f.SYJISK.15$		= g.SYJISK.15$
+				f.SYJISK.16$		= g.SYJISK.16$
+				f.SYJISK.17$		= g.SYJISK.17$
+				f.SYJISK.18$		= g.SYJISK.18$
+				f.SYJISK.19$		= g.SYJISK.19$
+				f.SYJISK.20$		= g.SYJISK.20$
+				f.SYJISK.21$		= g.SYJISK.21$
+				f.SYJISK.22$		= g.SYJISK.22$
+				f.SYJISK.23$		= g.SYJISK.23$
+				f.SYJISK.24$		= g.SYJISK.24$
+				f.SYJISK.25$		= g.SYJISK.25$
+				f.SYJISK.26$		= g.SYJISK.26$
+				f.SYJISK.27$		= g.SYJISK.27$
+				f.SYJISK.28$		= g.SYJISK.28$
+				f.SYJISK.29$		= g.SYJISK.29$
+				f.SYJISK.30$		= g.SYJISK.30$
+				f.SYJISK.31$		= g.SYJISK.31$
+				f.SYJISK.32$		= g.SYJISK.32$
+				f.SYJISK.33$		= g.SYJISK.33$
+				f.SYJISK.34$		= g.SYJISK.34$
+				f.SYJISK.35$		= g.SYJISK.35$
+				f.SYJISK.36$		= g.SYJISK.36$
+				f.SYJISK.37$		= g.SYJISK.37$
+				f.SYJISK.38$		= g.SYJISK.38$
+				f.SYJISK.39$		= g.SYJISK.39$
+				f.SYJISK.40$		= g.SYJISK.40$
+				f.SYJISK.41$		= g.SYJISK.41$
+				f.SYJISK.42$		= g.SYJISK.42$
+				Put SYJISK.FNo
+			End If
+		End If
+
+		SYJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJISK.Del
+' 処理内容 : 集荷実績の指定レコードを削除する。
+' 引数     :  Rec& : 指定レコード
+'               0 : 最終レコードを削除
+'               1-2147483647 : 指定レコードを削除
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJISK.Del(Rec&)
+
+		Private FileNo%
+		FileNo% = SYJISK.FNo
+
+		If Rec& = 0 Then
+			Rec& = SYJISK.Cnt&
+		End If
+
+		SYJISK.Opn
+
+		CALL "FILE.FN3" .fcRcDelete FileNo%, Rec&
+
+		SYJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJISK.Kill
+' 処理内容 : 集荷実績を削除する
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJISK.Kill
+
+		If fRecCount&( SYJISK.FileNm$ ) <> -1 THEN
+			Kill SYJISK.FileNm$
+		End If
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJISK.Srch&
+' 処理内容 : 集荷実績を検索するし一致したレコードを返す
+' 引数     : iComb%      複数フィールドの「AND」「OR」条件 (.fcAndSrch「AND」/.fcOrSrch「OR」/.fcAndSrchN「AND」件数/.fcOrSrchN「OR」件数)
+'            strWhere$() 検索条件
+'            lWhereCnt&  検索条件数
+'            lStart&     検索する最初のレコード
+'            lEnd&       検索する最終レコード  (0ならファイルの終わりまで)
+' 戻り値   : SYJISK.Srch& 一致したレコードNo
+' 備考     : ファイルが無けれれば -1
+'********************************************************************************
+	Function SYJISK.Srch&(iComb%, BYREF strWhere$(), lWhereCnt%, lStart&, lEnd&)
+
+		Private lRecCnt&
+		Private lRecord&
+
+		Private FileNo%
+		FileNo% = SYJISK.FNo
+
+		lRecCnt& = SYJISK.Cnt&
+
+		If lRecCnt& = -1 Then
+			SYJISK.Srch& = -1
+			Exit Function
+		Else
+
+			If lEnd& > lRecCnt& OR lEnd& = 0 Then
+				lEnd& = lRecCnt&
+			End If
+
+			SYJISK.Opn
+
+			Call "SEARCH.FN3" iComb% FileNo%, lStart&, lEnd&, lRecord&, strWhere$(), lWhereCnt%
+
+			SYJISK.Cls
+
+		End If
+
+		SYJISK.Srch& = lRecord&
+
+	End Function
+
+'********************************************************************************
+' 関数名   : SYJskWK.Opn
+' 処理内容 : 集荷実績WKをオープンする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJskWK.Opn
+		Open SYJskWK.FileNm$ As SYJskWK.FNo Record 10000
+		Field SYJskWK.FNo, _
+			7 AS f.SYJskWK.1$, _
+			14 AS f.SYJskWK.2$, _
+			1 AS f.SYJskWK.3$, _
+			10 AS f.SYJskWK.4$, _
+			10 AS f.SYJskWK.5$, _
+			2 AS f.SYJskWK.6$, _
+			3 AS f.SYJskWK.7$, _
+			4 AS f.SYJskWK.8$, _
+			2 AS f.SYJskWK.9$, _
+			4 AS f.SYJskWK.10$, _
+			4 AS f.SYJskWK.11$, _
+			18 AS f.SYJskWK.12$, _
+			14 AS f.SYJskWK.13$, _
+			10 AS f.SYJskWK.14$, _
+			2 AS f.SYJskWK.15$, _
+			3 AS f.SYJskWK.16$, _
+			6 AS f.SYJskWK.17$, _
+			1 AS f.SYJskWK.18$, _
+			4 AS f.SYJskWK.19$, _
+			18 AS f.SYJskWK.20$, _
+			14 AS f.SYJskWK.21$, _
+			10 AS f.SYJskWK.22$, _
+			2 AS f.SYJskWK.23$, _
+			3 AS f.SYJskWK.24$, _
+			6 AS f.SYJskWK.25$, _
+			1 AS f.SYJskWK.26$, _
+			5 AS f.SYJskWK.27$, _
+			4 AS f.SYJskWK.28$, _
+			8 AS f.SYJskWK.29$, _
+			14 AS f.SYJskWK.30$, _
+			18 AS f.SYJskWK.31$, _
+			14 AS f.SYJskWK.32$, _
+			10 AS f.SYJskWK.33$, _
+			2 AS f.SYJskWK.34$, _
+			3 AS f.SYJskWK.35$, _
+			5 AS f.SYJskWK.36$, _
+			1 AS f.SYJskWK.37$, _
+			4 AS f.SYJskWK.38$, _
+			2 AS f.SYJskWK.39$, _
+			1 AS f.SYJskWK.40$
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJskWK.Cls
+' 処理内容 : 集荷実績WKをクローズする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJskWK.Cls
+		Close SYJskWK.FNo
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJskWK.Cnt
+' 処理内容 : 集荷実績WKのレコード数を求める
+' 引数     : なし
+' 戻り値   : 長整数
+'            -1    : ファイルなし
+'            0     : 0件
+'            以外  : レコード件数
+' 備考     :
+'********************************************************************************
+	Function SYJskWK.Cnt&
+		SYJskWK.Cnt& = fRecCount&( SYJskWK.FileNm$ )
+	End Function
+
+'********************************************************************************
+' 関数名   : SYJskWK.Get
+' 処理内容 : 集荷実績WKから指定レコード情報を取得する
+' 引数     : Rec& : 指定レコードの情報取得
+'                   0:最初のレコード
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJskWK.Get(Rec&)
+
+		SYJskWK.Opn
+
+		If Rec& <> 0 Then
+			Get SYJskWK.FNo, Rec&
+			g.SYJskWK.1$		= f.SYJskWK.1$
+			g.SYJskWK.2$		= f.SYJskWK.2$
+			g.SYJskWK.3$		= f.SYJskWK.3$
+			g.SYJskWK.4$		= f.SYJskWK.4$
+			g.SYJskWK.5$		= f.SYJskWK.5$
+			g.SYJskWK.6$		= f.SYJskWK.6$
+			g.SYJskWK.7$		= f.SYJskWK.7$
+			g.SYJskWK.8$		= f.SYJskWK.8$
+			g.SYJskWK.9$		= f.SYJskWK.9$
+			g.SYJskWK.10$		= f.SYJskWK.10$
+			g.SYJskWK.11$		= f.SYJskWK.11$
+			g.SYJskWK.12$		= f.SYJskWK.12$
+			g.SYJskWK.13$		= f.SYJskWK.13$
+			g.SYJskWK.14$		= f.SYJskWK.14$
+			g.SYJskWK.15$		= f.SYJskWK.15$
+			g.SYJskWK.16$		= f.SYJskWK.16$
+			g.SYJskWK.17$		= f.SYJskWK.17$
+			g.SYJskWK.18$		= f.SYJskWK.18$
+			g.SYJskWK.19$		= f.SYJskWK.19$
+			g.SYJskWK.20$		= f.SYJskWK.20$
+			g.SYJskWK.21$		= f.SYJskWK.21$
+			g.SYJskWK.22$		= f.SYJskWK.22$
+			g.SYJskWK.23$		= f.SYJskWK.23$
+			g.SYJskWK.24$		= f.SYJskWK.24$
+			g.SYJskWK.25$		= f.SYJskWK.25$
+			g.SYJskWK.26$		= f.SYJskWK.26$
+			g.SYJskWK.27$		= f.SYJskWK.27$
+			g.SYJskWK.28$		= f.SYJskWK.28$
+			g.SYJskWK.29$		= f.SYJskWK.29$
+			g.SYJskWK.30$		= f.SYJskWK.30$
+			g.SYJskWK.31$		= f.SYJskWK.31$
+			g.SYJskWK.32$		= f.SYJskWK.32$
+			g.SYJskWK.33$		= f.SYJskWK.33$
+			g.SYJskWK.34$		= f.SYJskWK.34$
+			g.SYJskWK.35$		= f.SYJskWK.35$
+			g.SYJskWK.36$		= f.SYJskWK.36$
+			g.SYJskWK.37$		= f.SYJskWK.37$
+			g.SYJskWK.38$		= f.SYJskWK.38$
+			g.SYJskWK.39$		= f.SYJskWK.39$
+			g.SYJskWK.40$		= f.SYJskWK.40$
+		Else
+			Get SYJskWK.FNo
+			g.SYJskWK.1$		= f.SYJskWK.1$
+			g.SYJskWK.2$		= f.SYJskWK.2$
+			g.SYJskWK.3$		= f.SYJskWK.3$
+			g.SYJskWK.4$		= f.SYJskWK.4$
+			g.SYJskWK.5$		= f.SYJskWK.5$
+			g.SYJskWK.6$		= f.SYJskWK.6$
+			g.SYJskWK.7$		= f.SYJskWK.7$
+			g.SYJskWK.8$		= f.SYJskWK.8$
+			g.SYJskWK.9$		= f.SYJskWK.9$
+			g.SYJskWK.10$		= f.SYJskWK.10$
+			g.SYJskWK.11$		= f.SYJskWK.11$
+			g.SYJskWK.12$		= f.SYJskWK.12$
+			g.SYJskWK.13$		= f.SYJskWK.13$
+			g.SYJskWK.14$		= f.SYJskWK.14$
+			g.SYJskWK.15$		= f.SYJskWK.15$
+			g.SYJskWK.16$		= f.SYJskWK.16$
+			g.SYJskWK.17$		= f.SYJskWK.17$
+			g.SYJskWK.18$		= f.SYJskWK.18$
+			g.SYJskWK.19$		= f.SYJskWK.19$
+			g.SYJskWK.20$		= f.SYJskWK.20$
+			g.SYJskWK.21$		= f.SYJskWK.21$
+			g.SYJskWK.22$		= f.SYJskWK.22$
+			g.SYJskWK.23$		= f.SYJskWK.23$
+			g.SYJskWK.24$		= f.SYJskWK.24$
+			g.SYJskWK.25$		= f.SYJskWK.25$
+			g.SYJskWK.26$		= f.SYJskWK.26$
+			g.SYJskWK.27$		= f.SYJskWK.27$
+			g.SYJskWK.28$		= f.SYJskWK.28$
+			g.SYJskWK.29$		= f.SYJskWK.29$
+			g.SYJskWK.30$		= f.SYJskWK.30$
+			g.SYJskWK.31$		= f.SYJskWK.31$
+			g.SYJskWK.32$		= f.SYJskWK.32$
+			g.SYJskWK.33$		= f.SYJskWK.33$
+			g.SYJskWK.34$		= f.SYJskWK.34$
+			g.SYJskWK.35$		= f.SYJskWK.35$
+			g.SYJskWK.36$		= f.SYJskWK.36$
+			g.SYJskWK.37$		= f.SYJskWK.37$
+			g.SYJskWK.38$		= f.SYJskWK.38$
+			g.SYJskWK.39$		= f.SYJskWK.39$
+			g.SYJskWK.40$		= f.SYJskWK.40$
+		End If
+
+		SYJskWK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJskWK.Put
+' 処理内容 : 集荷実績WKから指定レコードへ情報を書き込む
+' 引数     : Rec& : 指定レコード
+'               0            : ファイル末尾へ追加
+'               1-2147483647 : 指定レコードへ追加
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJskWK.Put(Rec&)
+
+		SYJskWK.Opn
+
+		If Rec& > 0 Then
+			If Rec& > 10000 Then
+				'NOOP
+			Else
+				f.SYJskWK.1$		= g.SYJskWK.1$
+				f.SYJskWK.2$		= g.SYJskWK.2$
+				f.SYJskWK.3$		= g.SYJskWK.3$
+				f.SYJskWK.4$		= g.SYJskWK.4$
+				f.SYJskWK.5$		= g.SYJskWK.5$
+				f.SYJskWK.6$		= g.SYJskWK.6$
+				f.SYJskWK.7$		= g.SYJskWK.7$
+				f.SYJskWK.8$		= g.SYJskWK.8$
+				f.SYJskWK.9$		= g.SYJskWK.9$
+				f.SYJskWK.10$		= g.SYJskWK.10$
+				f.SYJskWK.11$		= g.SYJskWK.11$
+				f.SYJskWK.12$		= g.SYJskWK.12$
+				f.SYJskWK.13$		= g.SYJskWK.13$
+				f.SYJskWK.14$		= g.SYJskWK.14$
+				f.SYJskWK.15$		= g.SYJskWK.15$
+				f.SYJskWK.16$		= g.SYJskWK.16$
+				f.SYJskWK.17$		= g.SYJskWK.17$
+				f.SYJskWK.18$		= g.SYJskWK.18$
+				f.SYJskWK.19$		= g.SYJskWK.19$
+				f.SYJskWK.20$		= g.SYJskWK.20$
+				f.SYJskWK.21$		= g.SYJskWK.21$
+				f.SYJskWK.22$		= g.SYJskWK.22$
+				f.SYJskWK.23$		= g.SYJskWK.23$
+				f.SYJskWK.24$		= g.SYJskWK.24$
+				f.SYJskWK.25$		= g.SYJskWK.25$
+				f.SYJskWK.26$		= g.SYJskWK.26$
+				f.SYJskWK.27$		= g.SYJskWK.27$
+				f.SYJskWK.28$		= g.SYJskWK.28$
+				f.SYJskWK.29$		= g.SYJskWK.29$
+				f.SYJskWK.30$		= g.SYJskWK.30$
+				f.SYJskWK.31$		= g.SYJskWK.31$
+				f.SYJskWK.32$		= g.SYJskWK.32$
+				f.SYJskWK.33$		= g.SYJskWK.33$
+				f.SYJskWK.34$		= g.SYJskWK.34$
+				f.SYJskWK.35$		= g.SYJskWK.35$
+				f.SYJskWK.36$		= g.SYJskWK.36$
+				f.SYJskWK.37$		= g.SYJskWK.37$
+				f.SYJskWK.38$		= g.SYJskWK.38$
+				f.SYJskWK.39$		= g.SYJskWK.39$
+				f.SYJskWK.40$		= g.SYJskWK.40$
+				Put SYJskWK.FNo, Rec&
+			End If
+		Else
+			If Rec& = 0 Then
+				f.SYJskWK.1$		= g.SYJskWK.1$
+				f.SYJskWK.2$		= g.SYJskWK.2$
+				f.SYJskWK.3$		= g.SYJskWK.3$
+				f.SYJskWK.4$		= g.SYJskWK.4$
+				f.SYJskWK.5$		= g.SYJskWK.5$
+				f.SYJskWK.6$		= g.SYJskWK.6$
+				f.SYJskWK.7$		= g.SYJskWK.7$
+				f.SYJskWK.8$		= g.SYJskWK.8$
+				f.SYJskWK.9$		= g.SYJskWK.9$
+				f.SYJskWK.10$		= g.SYJskWK.10$
+				f.SYJskWK.11$		= g.SYJskWK.11$
+				f.SYJskWK.12$		= g.SYJskWK.12$
+				f.SYJskWK.13$		= g.SYJskWK.13$
+				f.SYJskWK.14$		= g.SYJskWK.14$
+				f.SYJskWK.15$		= g.SYJskWK.15$
+				f.SYJskWK.16$		= g.SYJskWK.16$
+				f.SYJskWK.17$		= g.SYJskWK.17$
+				f.SYJskWK.18$		= g.SYJskWK.18$
+				f.SYJskWK.19$		= g.SYJskWK.19$
+				f.SYJskWK.20$		= g.SYJskWK.20$
+				f.SYJskWK.21$		= g.SYJskWK.21$
+				f.SYJskWK.22$		= g.SYJskWK.22$
+				f.SYJskWK.23$		= g.SYJskWK.23$
+				f.SYJskWK.24$		= g.SYJskWK.24$
+				f.SYJskWK.25$		= g.SYJskWK.25$
+				f.SYJskWK.26$		= g.SYJskWK.26$
+				f.SYJskWK.27$		= g.SYJskWK.27$
+				f.SYJskWK.28$		= g.SYJskWK.28$
+				f.SYJskWK.29$		= g.SYJskWK.29$
+				f.SYJskWK.30$		= g.SYJskWK.30$
+				f.SYJskWK.31$		= g.SYJskWK.31$
+				f.SYJskWK.32$		= g.SYJskWK.32$
+				f.SYJskWK.33$		= g.SYJskWK.33$
+				f.SYJskWK.34$		= g.SYJskWK.34$
+				f.SYJskWK.35$		= g.SYJskWK.35$
+				f.SYJskWK.36$		= g.SYJskWK.36$
+				f.SYJskWK.37$		= g.SYJskWK.37$
+				f.SYJskWK.38$		= g.SYJskWK.38$
+				f.SYJskWK.39$		= g.SYJskWK.39$
+				f.SYJskWK.40$		= g.SYJskWK.40$
+				Put SYJskWK.FNo
+			End If
+		End If
+
+		SYJskWK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJskWK.Del
+' 処理内容 : 集荷実績WKの指定レコードを削除する。
+' 引数     :  Rec& : 指定レコード
+'               0 : 最終レコードを削除
+'               1-2147483647 : 指定レコードを削除
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJskWK.Del(Rec&)
+
+		Private FileNo%
+		FileNo% = SYJskWK.FNo
+
+		If Rec& = 0 Then
+			Rec& = SYJskWK.Cnt&
+		End If
+
+		SYJskWK.Opn
+
+		CALL "FILE.FN3" .fcRcDelete FileNo%, Rec&
+
+		SYJskWK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJskWK.Kill
+' 処理内容 : 集荷実績WKを削除する
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SYJskWK.Kill
+
+		If fRecCount&( SYJskWK.FileNm$ ) <> -1 THEN
+			Kill SYJskWK.FileNm$
+		End If
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SYJskWK.Srch&
+' 処理内容 : 集荷実績WKを検索するし一致したレコードを返す
+' 引数     : iComb%      複数フィールドの「AND」「OR」条件 (.fcAndSrch「AND」/.fcOrSrch「OR」/.fcAndSrchN「AND」件数/.fcOrSrchN「OR」件数)
+'            strWhere$() 検索条件
+'            lWhereCnt&  検索条件数
+'            lStart&     検索する最初のレコード
+'            lEnd&       検索する最終レコード  (0ならファイルの終わりまで)
+' 戻り値   : SYJskWK.Srch& 一致したレコードNo
+' 備考     : ファイルが無けれれば -1
+'********************************************************************************
+	Function SYJskWK.Srch&(iComb%, BYREF strWhere$(), lWhereCnt%, lStart&, lEnd&)
+
+		Private lRecCnt&
+		Private lRecord&
+
+		Private FileNo%
+		FileNo% = SYJskWK.FNo
+
+		lRecCnt& = SYJskWK.Cnt&
+
+		If lRecCnt& = -1 Then
+			SYJskWK.Srch& = -1
+			Exit Function
+		Else
+
+			If lEnd& > lRecCnt& OR lEnd& = 0 Then
+				lEnd& = lRecCnt&
+			End If
+
+			SYJskWK.Opn
+
+			Call "SEARCH.FN3" iComb% FileNo%, lStart&, lEnd&, lRecord&, strWhere$(), lWhereCnt%
+
+			SYJskWK.Cls
+
+		End If
+
+		SYJskWK.Srch& = lRecord&
+
+	End Function
+
+'********************************************************************************
+' 関数名   : KEJISK.Opn
+' 処理内容 : 欠品集荷実績WKをオープンする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub KEJISK.Opn
+		Open KEJISK.FileNm$ As KEJISK.FNo Record 10000
+		Field KEJISK.FNo, _
+			7 AS f.KEJISK.1$, _
+			14 AS f.KEJISK.2$, _
+			10 AS f.KEJISK.3$, _
+			2 AS f.KEJISK.4$, _
+			3 AS f.KEJISK.5$, _
+			6 AS f.KEJISK.6$, _
+			4 AS f.KEJISK.7$
+	End Sub
+
+'********************************************************************************
+' 関数名   : KEJISK.Cls
+' 処理内容 : 欠品集荷実績WKをクローズする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub KEJISK.Cls
+		Close KEJISK.FNo
+	End Sub
+
+'********************************************************************************
+' 関数名   : KEJISK.Cnt
+' 処理内容 : 欠品集荷実績WKのレコード数を求める
+' 引数     : なし
+' 戻り値   : 長整数
+'            -1    : ファイルなし
+'            0     : 0件
+'            以外  : レコード件数
+' 備考     :
+'********************************************************************************
+	Function KEJISK.Cnt&
+		KEJISK.Cnt& = fRecCount&( KEJISK.FileNm$ )
+	End Function
+
+'********************************************************************************
+' 関数名   : KEJISK.Get
+' 処理内容 : 欠品集荷実績WKから指定レコード情報を取得する
+' 引数     : Rec& : 指定レコードの情報取得
+'                   0:最初のレコード
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub KEJISK.Get(Rec&)
+
+		KEJISK.Opn
+
+		If Rec& <> 0 Then
+			Get KEJISK.FNo, Rec&
+			g.KEJISK.1$		= f.KEJISK.1$
+			g.KEJISK.2$		= f.KEJISK.2$
+			g.KEJISK.3$		= f.KEJISK.3$
+			g.KEJISK.4$		= f.KEJISK.4$
+			g.KEJISK.5$		= f.KEJISK.5$
+			g.KEJISK.6$		= f.KEJISK.6$
+			g.KEJISK.7$		= f.KEJISK.7$
+		Else
+			Get KEJISK.FNo
+			g.KEJISK.1$		= f.KEJISK.1$
+			g.KEJISK.2$		= f.KEJISK.2$
+			g.KEJISK.3$		= f.KEJISK.3$
+			g.KEJISK.4$		= f.KEJISK.4$
+			g.KEJISK.5$		= f.KEJISK.5$
+			g.KEJISK.6$		= f.KEJISK.6$
+			g.KEJISK.7$		= f.KEJISK.7$
+		End If
+
+		KEJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : KEJISK.Put
+' 処理内容 : 欠品集荷実績WKから指定レコードへ情報を書き込む
+' 引数     : Rec& : 指定レコード
+'               0            : ファイル末尾へ追加
+'               1-2147483647 : 指定レコードへ追加
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub KEJISK.Put(Rec&)
+
+		KEJISK.Opn
+
+		If Rec& > 0 Then
+			If Rec& > 10000 Then
+				'NOOP
+			Else
+				f.KEJISK.1$		= g.KEJISK.1$
+				f.KEJISK.2$		= g.KEJISK.2$
+				f.KEJISK.3$		= g.KEJISK.3$
+				f.KEJISK.4$		= g.KEJISK.4$
+				f.KEJISK.5$		= g.KEJISK.5$
+				f.KEJISK.6$		= g.KEJISK.6$
+				f.KEJISK.7$		= g.KEJISK.7$
+				Put KEJISK.FNo, Rec&
+			End If
+		Else
+			If Rec& = 0 Then
+				f.KEJISK.1$		= g.KEJISK.1$
+				f.KEJISK.2$		= g.KEJISK.2$
+				f.KEJISK.3$		= g.KEJISK.3$
+				f.KEJISK.4$		= g.KEJISK.4$
+				f.KEJISK.5$		= g.KEJISK.5$
+				f.KEJISK.6$		= g.KEJISK.6$
+				f.KEJISK.7$		= g.KEJISK.7$
+				Put KEJISK.FNo
+			End If
+		End If
+
+		KEJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : KEJISK.Del
+' 処理内容 : 欠品集荷実績WKの指定レコードを削除する。
+' 引数     :  Rec& : 指定レコード
+'               0 : 最終レコードを削除
+'               1-2147483647 : 指定レコードを削除
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub KEJISK.Del(Rec&)
+
+		Private FileNo%
+		FileNo% = KEJISK.FNo
+
+		If Rec& = 0 Then
+			Rec& = KEJISK.Cnt&
+		End If
+
+		KEJISK.Opn
+
+		CALL "FILE.FN3" .fcRcDelete FileNo%, Rec&
+
+		KEJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : KEJISK.Kill
+' 処理内容 : 欠品集荷実績WKを削除する
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub KEJISK.Kill
+
+		If fRecCount&( KEJISK.FileNm$ ) <> -1 THEN
+			Kill KEJISK.FileNm$
+		End If
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : KEJISK.Srch&
+' 処理内容 : 欠品集荷実績WKを検索するし一致したレコードを返す
+' 引数     : iComb%      複数フィールドの「AND」「OR」条件 (.fcAndSrch「AND」/.fcOrSrch「OR」/.fcAndSrchN「AND」件数/.fcOrSrchN「OR」件数)
+'            strWhere$() 検索条件
+'            lWhereCnt&  検索条件数
+'            lStart&     検索する最初のレコード
+'            lEnd&       検索する最終レコード  (0ならファイルの終わりまで)
+' 戻り値   : KEJISK.Srch& 一致したレコードNo
+' 備考     : ファイルが無けれれば -1
+'********************************************************************************
+	Function KEJISK.Srch&(iComb%, BYREF strWhere$(), lWhereCnt%, lStart&, lEnd&)
+
+		Private lRecCnt&
+		Private lRecord&
+
+		Private FileNo%
+		FileNo% = KEJISK.FNo
+
+		lRecCnt& = KEJISK.Cnt&
+
+		If lRecCnt& = -1 Then
+			KEJISK.Srch& = -1
+			Exit Function
+		Else
+
+			If lEnd& > lRecCnt& OR lEnd& = 0 Then
+				lEnd& = lRecCnt&
+			End If
+
+			KEJISK.Opn
+
+			Call "SEARCH.FN3" iComb% FileNo%, lStart&, lEnd&, lRecord&, strWhere$(), lWhereCnt%
+
+			KEJISK.Cls
+
+		End If
+
+		KEJISK.Srch& = lRecord&
+
+	End Function
+
+'********************************************************************************
+' 関数名   : SIJISK.Opn
+' 処理内容 : 指示書実績WKをオープンする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SIJISK.Opn
+		Open SIJISK.FileNm$ As SIJISK.FNo Record 10000
+		Field SIJISK.FNo, _
+			10 AS f.SIJISK.1$, _
+			2 AS f.SIJISK.2$, _
+			3 AS f.SIJISK.3$, _
+			6 AS f.SIJISK.4$, _
+			4 AS f.SIJISK.5$, _
+			8 AS f.SIJISK.6$, _
+			2 AS f.SIJISK.7$
+	End Sub
+
+'********************************************************************************
+' 関数名   : SIJISK.Cls
+' 処理内容 : 指示書実績WKをクローズする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SIJISK.Cls
+		Close SIJISK.FNo
+	End Sub
+
+'********************************************************************************
+' 関数名   : SIJISK.Cnt
+' 処理内容 : 指示書実績WKのレコード数を求める
+' 引数     : なし
+' 戻り値   : 長整数
+'            -1    : ファイルなし
+'            0     : 0件
+'            以外  : レコード件数
+' 備考     :
+'********************************************************************************
+	Function SIJISK.Cnt&
+		SIJISK.Cnt& = fRecCount&( SIJISK.FileNm$ )
+	End Function
+
+'********************************************************************************
+' 関数名   : SIJISK.Get
+' 処理内容 : 指示書実績WKから指定レコード情報を取得する
+' 引数     : Rec& : 指定レコードの情報取得
+'                   0:最初のレコード
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SIJISK.Get(Rec&)
+
+		SIJISK.Opn
+
+		If Rec& <> 0 Then
+			Get SIJISK.FNo, Rec&
+			g.SIJISK.1$		= f.SIJISK.1$
+			g.SIJISK.2$		= f.SIJISK.2$
+			g.SIJISK.3$		= f.SIJISK.3$
+			g.SIJISK.4$		= f.SIJISK.4$
+			g.SIJISK.5$		= f.SIJISK.5$
+			g.SIJISK.6$		= f.SIJISK.6$
+			g.SIJISK.7$		= f.SIJISK.7$
+		Else
+			Get SIJISK.FNo
+			g.SIJISK.1$		= f.SIJISK.1$
+			g.SIJISK.2$		= f.SIJISK.2$
+			g.SIJISK.3$		= f.SIJISK.3$
+			g.SIJISK.4$		= f.SIJISK.4$
+			g.SIJISK.5$		= f.SIJISK.5$
+			g.SIJISK.6$		= f.SIJISK.6$
+			g.SIJISK.7$		= f.SIJISK.7$
+		End If
+
+		SIJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SIJISK.Put
+' 処理内容 : 指示書実績WKから指定レコードへ情報を書き込む
+' 引数     : Rec& : 指定レコード
+'               0            : ファイル末尾へ追加
+'               1-2147483647 : 指定レコードへ追加
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SIJISK.Put(Rec&)
+
+		SIJISK.Opn
+
+		If Rec& > 0 Then
+			If Rec& > 10000 Then
+				'NOOP
+			Else
+				f.SIJISK.1$		= g.SIJISK.1$
+				f.SIJISK.2$		= g.SIJISK.2$
+				f.SIJISK.3$		= g.SIJISK.3$
+				f.SIJISK.4$		= g.SIJISK.4$
+				f.SIJISK.5$		= g.SIJISK.5$
+				f.SIJISK.6$		= g.SIJISK.6$
+				f.SIJISK.7$		= g.SIJISK.7$
+				Put SIJISK.FNo, Rec&
+			End If
+		Else
+			If Rec& = 0 Then
+				f.SIJISK.1$		= g.SIJISK.1$
+				f.SIJISK.2$		= g.SIJISK.2$
+				f.SIJISK.3$		= g.SIJISK.3$
+				f.SIJISK.4$		= g.SIJISK.4$
+				f.SIJISK.5$		= g.SIJISK.5$
+				f.SIJISK.6$		= g.SIJISK.6$
+				f.SIJISK.7$		= g.SIJISK.7$
+				Put SIJISK.FNo
+			End If
+		End If
+
+		SIJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SIJISK.Del
+' 処理内容 : 指示書実績WKの指定レコードを削除する。
+' 引数     :  Rec& : 指定レコード
+'               0 : 最終レコードを削除
+'               1-2147483647 : 指定レコードを削除
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SIJISK.Del(Rec&)
+
+		Private FileNo%
+		FileNo% = SIJISK.FNo
+
+		If Rec& = 0 Then
+			Rec& = SIJISK.Cnt&
+		End If
+
+		SIJISK.Opn
+
+		CALL "FILE.FN3" .fcRcDelete FileNo%, Rec&
+
+		SIJISK.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SIJISK.Kill
+' 処理内容 : 指示書実績WKを削除する
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SIJISK.Kill
+
+		If fRecCount&( SIJISK.FileNm$ ) <> -1 THEN
+			Kill SIJISK.FileNm$
+		End If
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SIJISK.Srch&
+' 処理内容 : 指示書実績WKを検索するし一致したレコードを返す
+' 引数     : iComb%      複数フィールドの「AND」「OR」条件 (.fcAndSrch「AND」/.fcOrSrch「OR」/.fcAndSrchN「AND」件数/.fcOrSrchN「OR」件数)
+'            strWhere$() 検索条件
+'            lWhereCnt&  検索条件数
+'            lStart&     検索する最初のレコード
+'            lEnd&       検索する最終レコード  (0ならファイルの終わりまで)
+' 戻り値   : SIJISK.Srch& 一致したレコードNo
+' 備考     : ファイルが無けれれば -1
+'********************************************************************************
+	Function SIJISK.Srch&(iComb%, BYREF strWhere$(), lWhereCnt%, lStart&, lEnd&)
+
+		Private lRecCnt&
+		Private lRecord&
+
+		Private FileNo%
+		FileNo% = SIJISK.FNo
+
+		lRecCnt& = SIJISK.Cnt&
+
+		If lRecCnt& = -1 Then
+			SIJISK.Srch& = -1
+			Exit Function
+		Else
+
+			If lEnd& > lRecCnt& OR lEnd& = 0 Then
+				lEnd& = lRecCnt&
+			End If
+
+			SIJISK.Opn
+
+			Call "SEARCH.FN3" iComb% FileNo%, lStart&, lEnd&, lRecord&, strWhere$(), lWhereCnt%
+
+			SIJISK.Cls
+
+		End If
+
+		SIJISK.Srch& = lRecord&
+
+	End Function
+
+'********************************************************************************
+' 関数名   : AllFile.Kill
+' 処理内容 : 全ファイルを削除する
+' 引数     : iIniKill% (Lc.True(-1):削除する, Lc.False(0):削除しない）
+'            拡張子".INI"のファイルを削除するかどうかのフラグ
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub AllFile.Kill(iIniKill%)
+
+		If iIniKill% = 0 AND RIGHT$(SYJISK.FileNm$, 4) = ".INI" Then
+		Else
+			SYJISK.Kill
+		End If
+
+		If iIniKill% = 0 AND RIGHT$(SYJskWK.FileNm$, 4) = ".INI" Then
+		Else
+			SYJskWK.Kill
+		End If
+
+		If iIniKill% = 0 AND RIGHT$(KEJISK.FileNm$, 4) = ".INI" Then
+		Else
+			KEJISK.Kill
+		End If
+
+		If iIniKill% = 0 AND RIGHT$(SIJISK.FileNm$, 4) = ".INI" Then
+		Else
+			SIJISK.Kill
+		End If
+
+	End Sub
+

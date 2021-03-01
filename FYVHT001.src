@@ -1,0 +1,231 @@
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+' ◇                                                                                                      ◇
+' ◇ 各個別アプリケーションの処理を記載するファイル （画面単位の関数を記載）                              ◇
+' ◇                                                                                                      ◇
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+'********************************************************************************
+'
+'	対応言語：BHT-Basic4.0
+'	対応機種：BHT1300
+'
+'	機能      ：SI　BHT設定
+'	ファイル名：SISET.src
+'
+'	作成者：MCS
+'	作成日：2021.02.08
+'
+'	Version  Date        Comments
+'	-------  ----------  ------------------------------------
+'	1.00.00  2010.4.22   新規作成
+'
+'--------------------------------------------------------------------------------
+' Copyright (C) 2010 DENSO SI INCORPORATED All right reserved.
+'********************************************************************************
+
+'==================================================================================================
+'	インクルードファイル 基本　定数　定義
+'==================================================================================================
+DEFINE	'定数定義
+
+'定数定義ファイルインクルード
+'$include:'..\Library\BHTDEF117.inc'
+'$include:'..\Library\SILib_107.dim'
+'$include:'..\Library\SILib_Color_100.dim'
+
+'ﾊﾞｰｼﾞｮﾝ情報				※PG修正の際は、ここの定数を変えること※
+	const strVERSION		= " 1.00"
+
+'標準フォント指定
+'	const StFont.XSize		= 24
+'	const StFont.YSize		= 24
+	public StFont.XSize		: StFont.XSize = 24
+	public StFont.YSize		: StFont.YSize = 24
+	const StFont.Wide		= Lc.SCR.NORMAL		'Lc.SCR.NORMAL / Lc.SCR.WIDE
+	const StFont.ForeColor	= Lc.COL.BLACK
+	const StFont.BackColor	= Lc.COL.WHITE
+
+	'標準ボタンフォント指定
+'	const BtFont.XSize		= 24
+'	const BtFont.YSize		= 24
+	public BtFont.XSize		: BtFont.XSize = 24
+	public BtFont.YSize		: BtFont.YSize = 24
+	const BtFont.Wide		= Lc.SCR.NORMAL		'Lc.SCR.NORMAL / Lc.SCR.WIDE
+	const BtFont.ForeColor	= Lc.COL.White
+	const BtFont.BackColor	= Lc.Col.Black
+
+	'リジューム時間[s]
+	'const Resume.time = 600	'--Cng 2014/09/11
+	Public Resume.time
+	Resume.time = 600
+
+	'QRの読み取りモード指定
+	'	M : モメンタリスイッチモード
+	'	F : オートオフモード
+	'	A : オルタネートスイッチモード
+	'	C : 連続読み取りモード
+	Public QRReadMode$		: QRReadMode$ = "F"
+
+'関数定義ファイルインクルード
+'$include:'..\Library\SILib_121.src'
+'$include:'..\Library\SILib_LOG_101.src'
+'$include:'..\Library\SILib_Ftp_206.SRC'
+'$include:'..\Library\SILib_QR_205.SRC'
+'$include:'..\Library\SILib_Sound_101.src'
+
+'$include:'FYVHT001_FILE.src'
+'$include:'FYVHT001_Def.src'
+'$include:'FYVHT001_Func1.src'
+'$include:'..\Library\SILib_UI_113.src'
+'$include:'..\Library\SILib_Graph_108.src'
+'$include:'..\Library\SILib_Version_301.src'
+'$include:'..\Library\SILib_YTP_200.SRC'
+
+'$include:'FYVHT001_Dsp.src'
+
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+' ◇                                                                                                      ◇
+' ◇ コンパイラーのオプションで「宣言されていない変数をエラーにする」をチェックしてコンパイルして下さい。 ◇
+' ◇                                                                                                      ◇
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+
+
+'==================================================================================================
+'	定数　定義
+'==================================================================================================
+
+'==================================================================================================
+'	変数　定義
+'==================================================================================================
+	Public	g.intQRPos%				'取得済のQRの確認位置
+	Public	g.intQRPrvPos%			'一つ前に取得済のQRの確認位置
+
+	Public	g.strSetName$[100]		'設定名を格納
+	Public	g.strChainAP$[14]		'設定後の起動アプリ
+
+	Public	g.strSet.Function$[14]	'設定用拡張関数名
+	Public	g.strSet.Kata$[3]		'設定値の型
+	Public	g.strSet.FunNum$[10]	'設定用機能番号(WEPの場合はキー番号)
+	Public	g.strSet.SetNum$[10]	'設定用設定番号(WEPの場合はキーサイズ)
+	Public	g.strSet.Value$[100]	'設定値
+
+
+'--------------------------------------------------------------------------------
+'****************************************************************************************
+'	メイン処理
+'****************************************************************************************
+ Sub subMain
+
+	'処理変数
+	strSyoriHensu$ = "0000"
+
+	WHILE strSyoriHensu$ <> "9999"		'作業終了
+
+		Check.Beep
+
+		SELECT strSyoriHensu$
+
+		CASE "0000"				'[0000]メインメニュー
+			Scrn.MainMenu
+
+		'担当コード読取
+		CASE "1010"
+			Scrn.InputWorkUser
+
+		'かんばん読取指示書作成
+		CASE "2000"
+			Scrn.CreateKanban
+
+		'指示書作成完了
+		CASE "2001"
+			Scrn.CreateCompKanban
+
+		'かんばん読取指示書作成無し
+		CASE "2010"
+			Scrn.ReadKanban
+
+		'かんばん読取指示書作成有り
+		CASE "2015"
+			Scrn.ReadKanbanSIJI
+
+		'トレース読取
+		CASE "2020"
+			Scrn.ReadTraceCard
+
+		END SELECT
+
+	WEND
+
+ END Sub
+
+'--------------------------------------------------------------------------------------------------
+'>********************************************************************************
+'	初期処理
+'********************************************************************************
+INIT	'初期化処理
+
+'	エラー割り込みを有効にする
+	ON ERROR GOTO ERRSUB
+	CLOSE		 	'全ファイルクローズ
+
+	'POWER Resume.time	 	'オートパワーオフ
+	CALL SIPOWER(Resume.time)
+
+	'キーNoの初期化
+	Call InitKeyNo
+
+	'バージョン情報をセット
+	Call SIVerCtl.AppVersion.Set
+
+	'ライセンス確認
+	Call SILicense.Screen
+
+Main	'メイン処理
+	Call subMain
+
+	'Defragの実行
+	Dummy% = SIDefrag%(Lc.GRP.AGRAPH)
+
+	Call SubBEPMOVE
+
+	'SIメニューがあればメニューへ遷移。
+	If file.Exist%("SIMENU.PD4") = Lc.True Then
+	    CHAIN "SIMENU.PD4"
+	end if
+
+	END
+'--------------------------------------------------------------------------------------------------
+'>********************************************************************************
+'	システムエラー ＳＵＢ
+'********************************************************************************
+ERRSUB	'システムエラー
+	BEEP 3,3,3
+
+'						"12345678901234567890"
+	SIFont.Reset
+	SIText.Print( 1, 1, "SYSTEM ERROR!!      " ,0,0)
+	SIText.Print( 1, 3, "ERR=" + HEX$(ERR) + "  ",0,0)
+	SIText.Print( 1, 5, "ERL=" + HEX$(ERL) + "  ",0,0)
+	SIText.Print( 1, 7, GetErrMsg$(ERR)    + "  ",0,0)
+
+	SIWaitKey(ENT.KEY)
+
+	RESUME NEXT
+'--------------------------------------------------------------------------------------------------
+
+	'**************************************************
+	'* DBG                                            *
+	'  下記の2行により画面左上に文字列表示し、処理停止する。
+	'  ENTにて次ステップへ進む
+	'    DBGLIST$="message"
+	'    GOSUB DBG
+	'**************************************************
+DBG		'デバッグ
+	SIFont.Reset
+	SIText.Print( 1, 1, "                    ",0,0)
+	SIText.Print( 1, 1, DBGLIST$,0,0)
+
+	SIWaitKey(ENT.KEY)
+
+	RETURN
+
+'--------------------------------------------------------------------------------------------------

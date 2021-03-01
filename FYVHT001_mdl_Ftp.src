@@ -1,0 +1,826 @@
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+'    各個別アプリケーションで使用する関数を記載するファイル
+'       関数群の後方に必要な関数を記載
+' ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+
+lblFtp.ErrDsp	'---(FTP)エラー画面
+'>********************************************************************************
+'   (FTP)エラーメッセージ取得
+'   引数：  strString$  全文字列
+'           (BYREF)strMsg$()  メッセージ配列
+'           intAryCnt.St%     メッセージ配列の開始添え字
+'           intAryCnt.Max%    メッセージ配列の最大添え字
+'   戻り値：メッセージ配列の格納数
+'********************************************************************************
+ Function FunSet.FtpMsgAry%(strString$, BYREF strMsg$(), intAryCnt.St%, intAryCnt.Max%)
+	DIM strBuff$, strWORK$[255]
+	DIM intAryCnt%, intLp%
+
+	'初期化
+	FOR intLp% = intAryCnt.St% TO intAryCnt.Max%
+		strMsg$(intLp%) = ""
+	NEXT
+
+	strWORK$ = strString$
+	strBuff$ = ""
+	intAryCnt% = intAryCnt.St% - 1
+
+	WHILE strWORK$ <> ""
+		intAryCnt% = intAryCnt% + 1
+
+		IF strWORK$ <> "" THEN
+			strBuff$ = SIMgCut$(strWORK$, 20)
+			strMsg$(intAryCnt%) = strBuff$
+
+			IF LEN(strWORK$) > LEN(strBuff$) THEN
+				strWORK$ = MID$(strWORK$, LEN(Rtrim$(strBuff$))+1)
+			ELSE
+				strWORK$ = ""
+			END IF
+		END IF
+
+		'最大添え字を超えたら終り
+		IF intAryCnt% >= intAryCnt.Max% THEN
+			strWORK$ = ""
+		END IF
+	WEND
+
+	FunSet.FtpMsgAry% = intAryCnt%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)エラーメッセージ画面
+'   引数：  iShoriMode$  処理モード(1:要求ファイル送信  2:指示ファイル受信  3:引取照合実績送信)
+'           strSYORI.ID$  処理ID
+'           (BYREF)strMsg$()  メッセージ配列
+'           intAryCnt%        メッセージ配列の最大添え字
+'           OtoNgflg%         応答NGフラグ
+'   戻り値：ｷｰｺｰﾄﾞ
+'********************************************************************************
+ Function FunDsp.FtpErr$(iShoriMode$, BYREF strMsg$(), intAryCnt%, OtoNgflg%)
+	DIM intY%, intLp%
+	DIM strBuff$
+	DIM strMode$
+	DIM strInKey$[10]
+    DIM W$,STRRET$
+	DIM strSumMsg$[1000]
+	DIm lpflg%
+	DIM intX%
+
+	lpflg% = Lc.True
+
+	DIM pstrMsg$(20)[20], intMsgAryCnt%
+
+	'表示域だけｸﾘｱします。
+	SIText.Print( 1,9, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	SIText.Print( 1,11, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	SIText.Print( 1,13, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	SIText.Print( 1,15, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	SIText.Print( 1,17, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+	CALL SetTitle(pcSyoriID.Menu$,"")	'タイトル表示
+	SIFont.Reset
+	SIFont.Color(Lc.Col.White, Lc.Col.Red)
+	SIText.Print( 1,9, SpaceUme$(Lc.LEFT, "[通信エラー]", 20), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	intY% = 9
+	FOR intLp% = 1 TO intAryCnt%
+		intY% = intY% + 2
+		SIFont.Color(Lc.Col.White, Lc.Col.Red)
+		SIText.Print( 1, intY%, SpaceUme$(Lc.LEFT, strMsg$(intLp%), 20), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	NEXT
+	SIFont.Reset
+	
+	'ボタン表示
+	SELECT iShoriMode$
+	CASE "1"  : strBuff$ = "受信"
+	CASE "2"  : strBuff$ = "受信"
+	CASE "3"  : strBuff$ = "送信"
+	CASE "4"  : strBuff$ = "送信"
+	END SELECT
+	
+	SIFont.Reset
+	'ボタン表示
+	SISystemStatus.Disp(1, BtFont.BackColor, "Ver."+strVERSION, Lc.Col.Blue, BtFont.BackColor)		 
+	SIFont.Button
+	SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	
+	'応答結果NGの時だけ再送信は無くします･･･｡
+	IF iShoriMode$ = "4" AND OtoNgflg% = 1 THEN
+		SIText.Print( 1,24, "            M2:ｷｬﾝｾﾙ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		strInKey$ = M2.KEY
+	ELSE
+		SIText.Print( 1,24, "M1:再"+strBuff$+"   M2:ｷｬﾝｾﾙ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		strInKey$ = M1.KEY + M2.KEY
+	ENDIF
+	SIFont.Reset
+
+	CALL subBEEP("NG")
+
+	W$ = FunInpGet$(strInKey$, 0, "")
+
+	FunDsp.FtpErr$ = W$
+
+ End Function
+
+lblFTPCommand		'---(FTP)コマンド
+'>********************************************************************************
+'   (FTP)カレントディレクトリ取得
+'   引数：  (BYREF)CURDIR$()  カレントディレクトリ
+'   戻り値：メッセージ配列の格納数
+'********************************************************************************
+ Function FTP.CurDir$(BYREF CURDIR$)
+	Private REPLY%
+	DIM MSG$[255]
+
+	ON ERROR GOTO FTP.CurDir.ERR
+	g.TRNERR% = 0
+	REPLY% = 0
+
+	CALL "FTP.FN3" 4 g.FTP.HANDLE%, CURDIR$, REPLY%
+
+	'戻り値生成
+	IF g.TRNERR% <> 0 THEN 
+		If REPLY% <> 0 Then
+			MSG$ = MSG$ + MID$(STR$(REPLY%),2) + ":" + GetFTPErrMsg$(REPLY%)
+		End If
+		FTP.CurDir$ = HEX$(g.TRNERR%) + ":" + MSG$
+	Else
+		FTP.CurDir$ = ""
+	End If
+
+
+FTP.CurDir.ERR
+	g.TRNERR% = ERR
+	RESUME NEXT
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)ｵｰﾌﾟﾝ
+'   引数：  intFtp.Mode%  通信モード(1:無線 2:CU(FTP))
+'           strSYORI.ID$  処理ID
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFTP.Opn%(intFtp.Mode%, BYREF strMsg$(), BYREF intMsgAryCnt%)
+	DIM intRet%
+	Private PARA%, DATA%
+	DIM intErrNo%, strErrMsg$[255]
+	Private NetDevice%
+	DIM intCngSetting%
+
+	intRet% = Lc.True
+	intCngSetting% = Lc.False
+
+	'BHTに設定されている通信デバイスを取得
+	PARA% = .soDvGet
+	CALL "SOCKET.FN3" .fcTSysGet PARA%, NetDevice%
+
+	'---現在の設定と指定通信デバイスが違う場合は、設定値を変更
+	SELECT intFtp.Mode%
+	CASE 1		'1:無線
+		IF NetDevice% <> .soDvCOM3 THEN
+			intCngSetting% = Lc.True
+			'通信デバイスをCOM3(無線)に設定
+			PARA% = .soDvGet
+			DATA% = .soDvCOM3
+			CALL "SOCKET.FN3" .fcTSysSet PARA%, DATA%
+		END IF
+
+	CASE 2		'2:CU(FTP)
+		IF NetDevice% <> .soDvCOM1 THEN
+			intCngSetting% = Lc.True
+			'通信デバイスをCOM1(Ir)に設定
+			PARA% = .soDvGet
+			DATA% = .soDvCOM1
+			CALL "SOCKET.FN3" .fcTSysSet PARA%, DATA%
+		END IF
+
+	END SELECT
+
+	intErrNo% = ftp.Open%
+	IF intErrNo% <> 0 THEN
+		intRet% = Lc.False
+		strMsg$(1) = "サーバーと"
+		strMsg$(2) = "通信ができません。"
+		strErrMsg$ = "("+SIStr$(intErrNo%)+")"+GetFTPErrMsg$(intErrNo%)
+		intMsgAryCnt% = FunSet.FtpMsgAry%("("+strErrMsg$+")", strMsg$, 3, 5)
+	END IF
+
+	'設定を元に戻す
+	IF intCngSetting% = Lc.True THEN
+		'通信デバイスをCOM3(無線)に戻す
+		PARA% = .soDvGet
+		DATA% = NetDevice%
+		CALL "SOCKET.FN3" .fcTSysSet PARA%, DATA%
+	END IF
+
+
+	FunFTP.Opn% = intRet%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)ｸﾛｰｽﾞ
+'   引数：  
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFTP.Close%
+
+	FunFTP.Close% = ftp.Close%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)チェンジディレクトリ
+'   引数：  intSRMode%  送受信モード(1:送信  2:受信)
+'           strSYORI.ID$  処理ID
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFTP.CD%(strFtp.Path$, BYREF strMsg$(), BYREF intMsgAryCnt%)
+	DIM intRet%
+	DIM intErrNo%, strErrMsg$[255]
+
+	intRet% = Lc.True
+
+	IF strFtp.Path$ <> "" THEN		'ブランクなら処理しない
+
+		intErrNo% = ftp.CD%(strFtp.Path$)
+		IF intErrNo% <> 0 THEN
+			intRet% = Lc.False
+			strMsg$(1) = "サーバーと"
+			strMsg$(2) = "通信ができません。"
+			strErrMsg$ = "("+SIStr$(intErrNo%)+")"+GetFTPErrMsg$(intErrNo%)
+			intMsgAryCnt% = FunSet.FtpMsgAry%("("+strErrMsg$+")", strMsg$, 3, 5)
+		END IF
+
+	END IF
+
+	FunFTP.CD% = intRet%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)送信
+'   引数：  strFtp.FNAMEBHT$  BHTのファイル名
+'           strFtp.FNAMESV$   サーバー上のファイル名
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFTP.Put%(strFtp.FNAMEBHT$, strFtp.FNAMESV$, BYREF strMsg$(), BYREF intMsgAryCnt%)
+	DIM intRet%
+	DIM intErrNo%, strErrMsg$[300]
+
+	intRet% = Lc.True
+	LOCATE 7, 15	'進捗表示の為
+
+	'送信(上書き)
+	intErrNo% = FTP.Put%(strFtp.FNAMEBHT$, _
+						strFtp.FNAMESV$, _
+						.ftCRLF, _
+						.ftUpSTOR, _
+						.ftDisp)
+
+	IF intErrNo% <> 0 THEN
+		intRet% = Lc.False
+		strMsg$(1) = "サーバーと"
+		strMsg$(2) = "通信ができません。"
+		strErrMsg$ = "("+SIStr$(intErrNo%)+")"+GetFTPErrMsg$(intErrNo%)
+		intMsgAryCnt% = FunSet.FtpMsgAry%("("+strErrMsg$+")", strMsg$, 3, 5)
+	END IF
+
+	FunFTP.Put% = intRet%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)受信
+'   引数：  strFtp.FNAMEBHT$  BHTのファイル名
+'           strFtp.FNAMESV$   サーバー上のファイル名
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFTP.Get%(strFtp.FNAMEBHT$, strFtp.FNAMESV$, strFtp.Field$, BYREF strMsg$(), BYREF intMsgAryCnt%)
+	DIM intRet%
+	DIM intErrNo%, strErrMsg$[255]
+
+	DIM flgReTry%, flgLoop2%
+	DIM intFtp.Reply%
+	DIM flgLoop%
+
+	intRet% = Lc.True
+	flgLoop% = Lc.True
+
+	TIMEA = VAL(pFTPTimeOUT$) * 10
+	LOCATE 7, 15	'進捗表示の為
+
+	WHILE flgLoop% = Lc.True
+		flgReTry% = Lc.False
+
+'	5.iCRLF.MODE% : レコード中の改行コードおよびフィールド末尾のスペースの扱いデータファイル以外は無視されます。
+'		.ftRcdSepa(0)	レコード中の改行コードをデータと見なさない。(レコード区切りとして扱う)フィールド末尾のスペースを削除する。
+'		.ftRcdData(1)	レコード中の改行コードをデータと見なす。フィールド末尾のスペースを削除する。
+'		.ftLspDel(10)	レコード中の改行コードをデータと見なさない。(レコード区切りとして扱う)フィールド末尾のスペースをデータと見なす。
+'		.ftLspData(11)	レコード中の改行コードをデータと見なす。フィールド末尾のスペースをデータと見なす。
+
+'		intErrNo% = FTP.Get%(strFtp.FNAMEBHT$, _
+'							strFtp.FNAMESV$, _
+'							strFtp.Field$, _
+'							.ftCRLF, _
+'							.ftLspDel, _
+'							.ftDisp)
+		intErrNo% = FTP.Get%(strFtp.FNAMEBHT$, _
+							strFtp.FNAMESV$, _
+							strFtp.Field$, _
+							.ftCRLF, _
+							.ftRcdData, _
+							.ftDisp)
+
+		'---受信OK
+		IF intErrNo% = 0 THEN
+			flgLoop% = Lc.False	'Exit While2
+
+		'---受信エラー
+		ELSE
+
+			IF intErrNo% >= 550 AND intErrNo% <= 553 THEN
+				flgReTry% = Lc.True		'ﾘﾄﾗｲ ﾌﾗｸﾞ
+			ELSE
+				intRet% = Lc.False
+				strErrMsg$ = GetFTPErrMsg$(intErrNo%)
+				intMsgAryCnt% = FunSet.FtpMsgAry%(strErrMsg$, strMsg$, 1, 5)
+				flgLoop% = Lc.False	'Exit While2
+			END IF
+		END IF
+
+		IF flgReTry% = Lc.True THEN		'ﾘﾄﾗｲ ﾌﾗｸﾞ
+			IF TIMEA > 0 THEN
+				Sleep(10)	'1s
+			ELSE
+				intRet% = Lc.False
+
+				strMsg$(1) = "受信対象のファイルが"
+				strMsg$(2) = "ありません。"
+				IF intErrNo% <> 0  THEN
+					strErrMsg$ = "("+SIStr$(intErrNo%)+")"+GetFTPErrMsg$(intErrNo%)
+					intMsgAryCnt% = FunSet.FtpMsgAry%("("+strErrMsg$+")", strMsg$, 3, 5)
+				ELSE
+					intMsgAryCnt% = 2
+				END IF
+
+				flgLoop% = Lc.False	'Exit While2
+			END IF
+		END IF
+	WEND
+
+	FunFTP.Get% = intRet%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)ReName
+'   引数：  
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFTP.Rename%(strFileName.Old$, strFileName.New$, BYREF strMsg$(), BYREF intMsgAryCnt%)
+	DIM intRet%
+	DIM intErrNo%, strErrMsg$[255]
+
+	intRet% = Lc.True
+
+	intErrNo% = FTP.Rename%(strFileName.Old$, strFileName.New$)
+	IF intErrNo% <> 0 THEN
+		intRet% = Lc.False
+		strMsg$(1) = "サーバーと"
+		strMsg$(2) = "通信ができません。"
+		strErrMsg$ = "("+SIStr$(intErrNo%)+")"+GetFTPErrMsg$(intErrNo%)
+		intMsgAryCnt% = FunSet.FtpMsgAry%("("+strErrMsg$+")", strMsg$, 3, 5)
+	END IF
+
+	FunFTP.Rename% = intRet%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)サーバー上のファイルを削除
+'   引数：  
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFTP.Del%(strFileNameSV$, BYREF strMsg$(), BYREF intMsgAryCnt%)
+	DIM intRet%
+	DIM intErrNo%, strErrMsg$[255]
+
+	intRet% = Lc.True
+
+	intErrNo% = FTP.Del%(strFileNameSV$)
+	IF intErrNo% <> 0 THEN
+		intRet% = Lc.False
+		strMsg$(1) = "サーバーと"
+		strMsg$(2) = "通信ができません。"
+		strErrMsg$ = "("+SIStr$(intErrNo%)+")"+GetFTPErrMsg$(intErrNo%)
+		intMsgAryCnt% = FunSet.FtpMsgAry%("("+strErrMsg$+")", strMsg$, 3, 5)
+	END IF
+
+	FunFTP.Del% = intRet%
+
+ End Function
+
+lblFtp.Tushin	'---(FTP)通信処理
+'>********************************************************************************
+'   (FTP)FTPディレクトリ取得
+'   引数：  iShoriMode$  処理モード(1:マスタ受信  2:実績送信  3:マスタ更新情報送信)
+'   戻り値：ｷｰｺｰﾄﾞ
+'********************************************************************************
+ Function FunGet.FtpPath$(iShoriMode$)[200]
+	DIM strPath$[200]
+
+	strPath$ = ""
+
+	'エラーメッセージが返ってくるようならディレクトリを変えない
+	IF FTP.CurDir$(strPath$) <> "" THEN
+		strPath$ = ""
+	ENDIF
+
+	'個別でのロジックも残しておきます。
+	'SELECT iShoriMode$
+	'CASE "1"		'1:マスタ受信
+	'	strPath$ = pFTP.MSTDIR$
+	'
+	'CASE "2"		'2:実績送信
+	'	strPath$ = pFTP.JSKDIR$
+	'
+	'END SELECT
+
+	FunGet.FtpPath$ = strPath$
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)FTP送受信ファイル名取得
+'   引数：  iShoriMode$  処理モード(1:マスタ受信  2:実績送信 )
+'			strFNAMEBHT$ : BHT上のファイル名
+'			strFNAMESV$  : FTPサーバ上のファイル名
+'			strField$    : ファイルのフィールド
+'   戻り値：ファイル数
+'********************************************************************************
+ Function FunGet.FtpFileName%(iShoriMode$, BYREF strFNAMEBHT$(), BYREF strFNAMESV$(), BYREF strField$())
+	DIM intFileCnt%
+	DIM strKaku$
+	DIM strWORK$[200]
+	DIM strFName$[200]
+
+	DIM strSysDate$
+	DIM strJskYMD$[8]
+
+	pRenameFile$ = "" 
+
+	intFileCnt% = 0
+
+	'---送信時のファイル名
+	SELECT iShoriMode$
+	CASE "1"		'1:指示要求ファイル送信
+		intFileCnt% = 1
+
+		'BHT上のﾌｧｲﾙ名
+		strFNAMEBHT$(1) = SZYKDATA.FileNm$
+		strField$(1)    = SZYKDATA.Field$
+
+		'サーバー上のﾌｧｲﾙ名 (BHT受信ファイル名+"_"+(発行端末ID)+(拡張子))
+		strWORK$ = LEFT$(strFNAMEBHT$(1), LEN(strFNAMEBHT$(1)) - 4)
+		strKaku$ = ".TMP"
+		pRenameFile2$ = strWORK$ + "_" + pPRINT$ + "_" + pBHTPrdctNo$ + RIGHT$(strFNAMEBHT$(1), 4)
+		strFNAMESV$(1)  = strWORK$ + "_" + pPRINT$ + "_" + pBHTPrdctNo$ + strKaku$
+
+	CASE "2"		'2:部品引取指示ファイル受信
+		'BHT上のﾌｧｲﾙ名
+		strFNAMEBHT$(1) = HTSZDATA.FileNm$
+		strField$(1)    = HTSZDATA.Field$
+
+		intFileCnt% = 1
+
+		'サーバー上のﾌｧｲﾙ名 (BHT受信ファイル名+"_"+(BHT機番)+(拡張子))
+		strWORK$ = LEFT$(strFNAMEBHT$(1), LEN(strFNAMEBHT$(1)) - 4)
+		strKaku$ = RIGHT$(strFNAMEBHT$(1), 4)
+		strFNAMESV$(1)  = strWORK$ + "_" + pBHTPrdctNo$ + strKaku$
+
+	CASE "3"		'3:部品引取実績ファイル送信
+		intFileCnt% = 1
+
+		'BHT上のﾌｧｲﾙ名
+		strFNAMEBHT$(1) = HTJKDATA.FileNm$
+		strField$(1)    = HTJKDATA.Field$
+
+		'サーバー上のﾌｧｲﾙ名 (BHT送信ファイル名+"_"+(BHT機番)+(拡張子))
+		strWORK$ = LEFT$(strFNAMEBHT$(1), LEN(strFNAMEBHT$(1)) - 4)
+		strKaku$ = ".TMP"
+		pRenameFile$ = strWORK$ + "_" + pBHTPrdctNo$ + RIGHT$(strFNAMEBHT$(1), 4)
+		strFNAMESV$(1)  = strWORK$ + "_" + pBHTPrdctNo$ + strKaku$
+
+	CASE "4"		'4:部品引取応答ファイル
+		intFileCnt% = 1
+
+		'BHT上のﾌｧｲﾙ名
+		strFNAMEBHT$(1) = JKOTODATA.FileNm$
+		strField$(1)    = JKOTODATA.Field$
+
+		'サーバー上のﾌｧｲﾙ名 (BHT受信ファイル名+"_"+(BHT機番)+(拡張子))
+		strWORK$ = LEFT$(strFNAMEBHT$(1), LEN(strFNAMEBHT$(1)) - 4)
+		strKaku$ = RIGHT$(strFNAMEBHT$(1), 4)
+		strFNAMESV$(1)  = strWORK$ + "_" + pBHTPrdctNo$ + strKaku$
+
+
+	CASE ELSE
+		intFileCnt% = 0
+
+	END SELECT
+
+
+	FunGet.FtpFileName% = intFileCnt%
+
+ End Function
+
+'>********************************************************************************
+'   (FTP)現在作業の表示
+'   引数：  strDsp$    処理内容
+'*********************************************************************************
+ Sub SubFTP.CurSyoriDsp(strDsp$)
+
+	SIFont.Reset
+	SIFont.Color(Lc.Col.40Gray, StFont.BackColor)
+	SIText.Print( 1,20, SpaceUme$(Lc.Right, strDsp$, 20), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+	SIFont.Reset
+	LOCATE 7, 11	'進捗表示の為
+
+ End Sub
+
+'>********************************************************************************
+'   (FTP)ファイル受信
+'   引数：  iShoriMode$  処理モード(1:マスタ受信  2:実績送信)
+'   戻り値：Lc.True / Lc.False
+'********************************************************************************
+ Function FunFtp.SendRecv%(iShoriMode$,Byref Siflg$)
+	DIM intRet%, flgLoop%, intLp%
+	DIM strRet$[255], W$, strTitle$
+	DIM strMsg$(9)[20], intMsgAryCnt%, strMsgRet$
+	DIM strFtp.Path$[200]
+	DIM strFtp.FNAMEBHT$(5)[100], strFtp.FNAMESV$(5)[100], strFtp.Field$(5)[100]
+	DIM intFtp.FCnt%
+	DIM strWORK$[100], strSendFile$[100]
+	DIM flgFtp.Opn%, intSVTIME.Recv%
+	DIM strSVTIME.FNameSV$[100]
+	DIM iDummy%, iBuff%
+	DIM strSubTitle$
+	DIM strSRStr$
+	DIM intFtp.Mode%
+	DIM strBuff$,strErrMsg$[100],intOtoNgflg%,strDelFile$
+
+	intFtp.Mode% = 2	'送信方法  (1:無線 2:CU(FTP))
+
+	flgLoop% = Lc.True
+	flgFtp.Opn% = Lc.False		'Ftpｵｰﾌﾟﾝ ﾌﾗｸﾞ
+
+	WHILE flgLoop% = Lc.True
+		'-----------------------------------
+		'	変数クリア・設定
+		'-----------------------------------
+		intRet% = Lc.True
+		intSVTIME.Recv% = Lc.False
+		strRet$ = ""
+		intOtoNgflg% = 0
+		FOR intLp% = 1 TO 9
+			strMsg$(intLp%) = ""
+		NEXT
+
+		SELECT iShoriMode$
+		CASE "1" : strSRStr$ = "送信"
+		CASE "2" : strSRStr$ = "受信"
+		CASE "3" : strSRStr$ = "送信"
+		CASE "4" : strSRStr$ = "受信"
+		END SELECT
+
+		'-----------------------------------
+		'	画面表示
+		'-----------------------------------
+	    Cls
+        'タイトル表示
+        CALL SetTitle(pcSyoriID.Menu$,"")	
+		'サブタイトル表示
+        CALL SetSubTitle(pcSyoriID.SIZI$,"")	
+
+		SIFont.Reset
+		IF iShoriMode$ = "1" OR iShoriMode$ = "2" THEN
+								'01234567890123456789
+			SIText.Print( 1, 6, "部品引取指示情報受信", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	        SIText.Print(7,11, "受信中･･･", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		ELSE
+								'01234567890123456789
+			SIText.Print( 1, 6, "  部品引取実績送信  ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+	        SIText.Print(7,11, "送信中･･･", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		ENDIF
+
+		SIFont.Reset
+        'ボタン表示
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver."+strVERSION, Lc.Col.Blue, BtFont.BackColor)		 		 
+        SIFont.Button
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+        SIText.Print( 1,24, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIFont.Reset
+
+        'SIText.Print(15,13, "バイト", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'LOCATE 20, 25	'進捗表示の為
+
+		'----------------------------------------
+		'	■FTPｵｰﾌﾟﾝ
+		'----------------------------------------
+		IF intRet% = Lc.True THEN
+			CALL SubFTP.CurSyoriDsp("FTP.ｵｰﾌﾟﾝ")
+			intRet% = FunFTP.Opn%(intFtp.Mode%, strMsg$, intMsgAryCnt%)		'1:無線 2:光
+			IF intRet% = Lc.True THEN
+				flgFtp.Opn% = Lc.True		'Ftpｵｰﾌﾟﾝ ﾌﾗｸﾞ
+			END IF
+		END IF
+
+		'----------------------------------------
+		'	前処理
+		'----------------------------------------
+		'■FTPチェンジディレクトリ
+		IF intRet% = Lc.True THEN
+
+			CALL SubFTP.CurSyoriDsp("FTP.ChangeDir")
+			iDummy% = ftp.CDSys%
+			IF iDummy% <> 0 THEN
+				intRet% = Lc.False
+			END IF
+		END IF
+
+		'----------------------------------------
+		'	通信処理
+		'----------------------------------------
+		'■FTPファイル送受信
+		IF intRet% = Lc.True THEN
+
+			'残留ファイルを消す
+			IF iShoriMode$ = "1" OR iShoriMode$ = "3" THEN
+				IF iShoriMode$ = "1" THEN
+					strDelFile$ = "2"
+				ELSE
+					strDelFile$ = "4"
+				ENDIF
+				'---ファイル名を取得
+				intFtp.FCnt% = FunGet.FtpFileName%(strDelFile$, _
+													strFtp.FNAMEBHT$, _
+													strFtp.FNAMESV$, _
+													strFtp.Field$)
+		
+				iDummy% = FunFTP.Del%(strFtp.FNAMESV$(1),strMsg$,intMsgAryCnt%)
+			ENDIF
+
+
+			'---ファイル名を取得(ここは実際の送受信ファイル名セット)
+			intFtp.FCnt% = FunGet.FtpFileName%(iShoriMode$, _
+												strFtp.FNAMEBHT$, _
+												strFtp.FNAMESV$, _
+												strFtp.Field$)
+			'---通信実行
+			FOR intLp% = 1 TO intFtp.FCnt%
+
+				'>>>送信
+				IF strSRStr$ = "送信" THEN
+
+					'●送信
+					CALL SubFTP.CurSyoriDsp("FTP.送信")
+
+					'FTP
+					intRet% = FunFTP.Put%(strFtp.FNAMEBHT$(intLp%), _
+											strFtp.FNAMESV$(intLp%), _
+											strMsg$, intMsgAryCnt%)
+				'>>>受信
+				ELSE
+
+					'●受信
+					CALL SubFTP.CurSyoriDsp("FTP.受信")
+					intRet% = FunFTP.Get%(strFtp.FNAMEBHT$(intLp%), _
+										  strFtp.FNAMESV$(intLp%), _
+										  strFtp.Field$(intLp%), _
+										  strMsg$, intMsgAryCnt%)
+
+				END IF
+
+				IF intRet% = Lc.False THEN
+					intLp% = intFtp.FCnt% + 1	'Exit For
+				END IF
+			NEXT
+		END IF
+
+		'応答ファイルは判定後消します。
+		IF intRet% = Lc.True THEN
+			IF iShoriMode$ = "2" OR iShoriMode$ = "4" THEN
+				iDummy% = FunFTP.Del%(strFtp.FNAMESV$(1),strMsg$,intMsgAryCnt%)
+			ENDIF
+
+			'実績送信で成功している場合､リネームを行う
+			IF iShoriMode$ = "3" THEN
+				intRet% = FunFTP.Rename%(strFtp.FNAMESV$(1), pRenameFile$, strMsg$, intMsgAryCnt%)
+			ENDIF
+			IF iShoriMode$ = "1" THEN
+				intRet% = FunFTP.Rename%(strFtp.FNAMESV$(1), pRenameFile2$, strMsg$, intMsgAryCnt%)
+			ENDIF
+
+		ENDIF
+
+		'■Ftpクローズ
+		'何が何でも閉じる
+		CALL SubFTP.CurSyoriDsp("FTP.ｸﾛｰｽﾞ")
+		iDummy% = FunFTP.Close%
+
+		CALL SubFTP.CurSyoriDsp("")		'作業表示を消す
+
+		IF intRet% = Lc.True THEN
+			'部品引取指示のステータスチェック
+			SELECT iShoriMode$
+			CASE "2"	'部品引取指示ファイル受信
+
+				IF HTSZDATA.Cnt& > 0 THEN
+					HTSZDATA.Get(0)
+
+					SELECT g.HTSZDATA.6$
+					CASE "0"	'OK
+						'OKであれば何もしない
+					CASE ELSE
+						intRet% = Lc.False
+
+						IF g.HTSZDATA.6$ = "1" THEN
+							strErrMsg$ = "ライン[" + pLINE$ + "]がライン原単位マスタに存在しません。"
+						ELSE
+							IF g.HTSZDATA.6$ = "2" THEN
+								strErrMsg$ = "集荷可能な生産指示情報が存在しません。"
+							ELSE
+								strErrMsg$ = "集荷中のデータがあります。データを確認して下さい。"
+							ENDIF
+						ENDIF
+					END SELECT 
+				ELSE
+					intRet% = Lc.False
+					strErrMsg$ = "データが異常です。サーバー処理を確認して下さい。"
+				ENDIF
+
+				'レコードなしorエラーステータスの場合
+				IF intRet% = Lc.False THEN
+					intMsgAryCnt% = FunSet.FtpMsgAry%(strErrMsg$, strMsg$, 1, 5)
+				ENDIF
+
+			CASE "4"	'部品引取応答ファイル受信
+
+				IF intRet% = Lc.True THEN
+					IF JKOTODATA.Cnt& > 0 THEN
+						JKOTODATA.Get(1)
+
+						'応答結果NGの場合はエラー表示
+						IF g.JKOTODATA.1$ <> "0" THEN
+							intRet% = Lc.False
+							strErrMsg$ = "データが異常です。サーバー処理を確認して下さい。"
+							intMsgAryCnt% = FunSet.FtpMsgAry%(strErrMsg$, strMsg$, 1, 5)
+							intOtoNgflg% = 1
+						ENDIF
+						'実績と応答を削除します
+						HTJKDATA.Kill
+						JKOTODATA.Kill
+					ENDIF
+				ENDIF
+
+			END SELECT
+		ENDIF
+
+		IF intRet% = Lc.True THEN
+			'---完了画面は無しで抜ける
+			flgLoop% = Lc.False		'Exit While
+			Siflg$ = "0"
+		ELSE
+			'---エラー時
+			strMsgRet$ = FunDsp.FtpErr$(iShoriMode$, strMsg$, intMsgAryCnt%,intOtoNgflg%)
+			SELECT strMsgRet$
+			CASE M1.KEY		'再送信
+				Siflg$ = "1"
+				intRet% = Lc.False
+				flgLoop% = Lc.False		'Exit While
+
+				'再度行うなら消込を行う
+				SELECT iShoriMode$
+				CASE "2"
+					HTSZDATA.KILL
+				CASE "4"
+					JKOTODATA.KILL
+				END SELECT
+
+			CASE M2.KEY		'キャンセル
+				Siflg$ = "0"
+				intRet% = Lc.False
+				flgLoop% = Lc.False		'Exit While
+			END SELECT
+
+		END IF
+	WEND
+
+	FunFtp.SendRecv% = intRet%
+
+ End Function
+

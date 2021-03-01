@@ -1,0 +1,658 @@
+          BHT-BASIC 4.0 Linker Version 1.03
+          Copyright (C) DENSO WAVE INCORPORATED 2004 all right reserved
+
+WORK SYMBOL
+    BTFONT.XSIZE                   <PUBLIC_>                      330001
+    BTFONT.YSIZE                   <PUBLIC_>                      330002
+    DBGLIST$                       <PUBLIC_>                      360008
+    DUMMY$                         <PUBLIC_>                      360098
+    DUMMY%                         <PUBLIC_>                      31000C
+    F.KEJISK.1$                    <FYVHT001->                    3600AD
+    F.KEJISK.2$                    <FYVHT001->                    3600AE
+    F.KEJISK.3$                    <FYVHT001->                    3600AF
+    F.KEJISK.4$                    <FYVHT001->                    3600B0
+    F.KEJISK.5$                    <FYVHT001->                    3600B1
+    F.KEJISK.6$                    <FYVHT001->                    3600B2
+    F.KEJISK.7$                    <FYVHT001->                    3600B3
+    F.SIJISK.1$                    <FYVHT001->                    3600DD
+    F.SIJISK.2$                    <FYVHT001->                    3600DE
+    F.SIJISK.3$                    <FYVHT001->                    3600DF
+    F.SIJISK.4$                    <FYVHT001->                    3600E0
+    F.SIJISK.5$                    <FYVHT001->                    3600E1
+    F.SIJISK.6$                    <FYVHT001->                    3600E2
+    F.SIJISK.7$                    <FYVHT001->                    3600E3
+    F.SILOG.1$                     <FYVHT001->                    3600CF
+    F.SILOG.10$                    <FYVHT001->                    3600BE
+    F.SILOG.11$                    <FYVHT001->                    3600BF
+    F.SILOG.12$                    <FYVHT001->                    3600C0
+    F.SILOG.13$                    <FYVHT001->                    3600C1
+    F.SILOG.2$                     <FYVHT001->                    3600D1
+    F.SILOG.3$                     <FYVHT001->                    3600D9
+    F.SILOG.4$                     <FYVHT001->                    3600DB
+    F.SILOG.5$                     <FYVHT001->                    3600ED
+    F.SILOG.6$                     <FYVHT001->                    3600EF
+    F.SILOG.7$                     <FYVHT001->                    3600F1
+    F.SILOG.8$                     <FYVHT001->                    3600F3
+    F.SILOG.9$                     <FYVHT001->                    3600F4
+    F.SYJISK.1$                    <FYVHT001->                    3600E4
+    F.SYJISK.10$                   <FYVHT001->                    3600FA
+    F.SYJISK.11$                   <FYVHT001->                    3600FE
+    F.SYJISK.12$                   <FYVHT001->                    360102
+    F.SYJISK.13$                   <FYVHT001->                    360106
+    F.SYJISK.14$                   <FYVHT001->                    360109
+    F.SYJISK.15$                   <FYVHT001->                    36010C
+    F.SYJISK.16$                   <FYVHT001->                    36010F
+    F.SYJISK.17$                   <FYVHT001->                    360112
+    F.SYJISK.18$                   <FYVHT001->                    360115
+    F.SYJISK.19$                   <FYVHT001->                    3600A0
+    F.SYJISK.2$                    <FYVHT001->                    3600E5
+    F.SYJISK.20$                   <FYVHT001->                    3600FB
+    F.SYJISK.21$                   <FYVHT001->                    3600FF
+    F.SYJISK.22$                   <FYVHT001->                    360103
+    F.SYJISK.23$                   <FYVHT001->                    360107
+    F.SYJISK.24$                   <FYVHT001->                    36010A
+    F.SYJISK.25$                   <FYVHT001->                    36010D
+    F.SYJISK.26$                   <FYVHT001->                    360110
+    F.SYJISK.27$                   <FYVHT001->                    360113
+    F.SYJISK.28$                   <FYVHT001->                    360116
+    F.SYJISK.29$                   <FYVHT001->                    3600A1
+    F.SYJISK.3$                    <FYVHT001->                    3600E6
+    F.SYJISK.30$                   <FYVHT001->                    3600FC
+    F.SYJISK.31$                   <FYVHT001->                    360100
+    F.SYJISK.32$                   <FYVHT001->                    360104
+    F.SYJISK.33$                   <FYVHT001->                    360108
+    F.SYJISK.34$                   <FYVHT001->                    36010B
+    F.SYJISK.35$                   <FYVHT001->                    36010E
+    F.SYJISK.36$                   <FYVHT001->                    360111
+    F.SYJISK.37$                   <FYVHT001->                    360114
+    F.SYJISK.38$                   <FYVHT001->                    360117
+    F.SYJISK.39$                   <FYVHT001->                    3600A2
+    F.SYJISK.4$                    <FYVHT001->                    3600E7
+    F.SYJISK.40$                   <FYVHT001->                    3600FD
+    F.SYJISK.41$                   <FYVHT001->                    360101
+    F.SYJISK.42$                   <FYVHT001->                    360105
+    F.SYJISK.5$                    <FYVHT001->                    3600E8
+    F.SYJISK.6$                    <FYVHT001->                    3600E9
+    F.SYJISK.7$                    <FYVHT001->                    3600EA
+    F.SYJISK.8$                    <FYVHT001->                    3600EB
+    F.SYJISK.9$                    <FYVHT001->                    3600EC
+    F.SYJSKWK.1$                   <FYVHT001->                    3600CD
+    F.SYJSKWK.10$                  <FYVHT001->                    3600A3
+    F.SYJSKWK.11$                  <FYVHT001->                    3600A4
+    F.SYJSKWK.12$                  <FYVHT001->                    3600A5
+    F.SYJSKWK.13$                  <FYVHT001->                    3600A6
+    F.SYJSKWK.14$                  <FYVHT001->                    3600A7
+    F.SYJSKWK.15$                  <FYVHT001->                    3600A8
+    F.SYJSKWK.16$                  <FYVHT001->                    3600A9
+    F.SYJSKWK.17$                  <FYVHT001->                    3600AA
+    F.SYJSKWK.18$                  <FYVHT001->                    3600AB
+    F.SYJSKWK.19$                  <FYVHT001->                    3600AC
+    F.SYJSKWK.2$                   <FYVHT001->                    3600CE
+    F.SYJSKWK.20$                  <FYVHT001->                    3600B4
+    F.SYJSKWK.21$                  <FYVHT001->                    3600B5
+    F.SYJSKWK.22$                  <FYVHT001->                    3600B6
+    F.SYJSKWK.23$                  <FYVHT001->                    3600B7
+    F.SYJSKWK.24$                  <FYVHT001->                    3600B8
+    F.SYJSKWK.25$                  <FYVHT001->                    3600B9
+    F.SYJSKWK.26$                  <FYVHT001->                    3600BA
+    F.SYJSKWK.27$                  <FYVHT001->                    3600BB
+    F.SYJSKWK.28$                  <FYVHT001->                    3600BC
+    F.SYJSKWK.29$                  <FYVHT001->                    3600BD
+    F.SYJSKWK.3$                   <FYVHT001->                    3600D0
+    F.SYJSKWK.30$                  <FYVHT001->                    3600C2
+    F.SYJSKWK.31$                  <FYVHT001->                    3600C3
+    F.SYJSKWK.32$                  <FYVHT001->                    3600C4
+    F.SYJSKWK.33$                  <FYVHT001->                    3600C5
+    F.SYJSKWK.34$                  <FYVHT001->                    3600C6
+    F.SYJSKWK.35$                  <FYVHT001->                    3600C7
+    F.SYJSKWK.36$                  <FYVHT001->                    3600C8
+    F.SYJSKWK.37$                  <FYVHT001->                    3600C9
+    F.SYJSKWK.38$                  <FYVHT001->                    3600CA
+    F.SYJSKWK.39$                  <FYVHT001->                    3600CB
+    F.SYJSKWK.4$                   <FYVHT001->                    3600D2
+    F.SYJSKWK.40$                  <FYVHT001->                    3600CC
+    F.SYJSKWK.5$                   <FYVHT001->                    3600DA
+    F.SYJSKWK.6$                   <FYVHT001->                    3600DC
+    F.SYJSKWK.7$                   <FYVHT001->                    3600EE
+    F.SYJSKWK.8$                   <FYVHT001->                    3600F0
+    F.SYJSKWK.9$                   <FYVHT001->                    3600F2
+    F.YTPCMD.1$                    <FYVHT001->                    3600F5
+    F.YTPCMD.2$                    <FYVHT001->                    3600F6
+    F.YTPCMD.3$                    <FYVHT001->                    3600F7
+    F.YTPCMD.4$                    <FYVHT001->                    3600F8
+    F.YTPCMD.5$                    <FYVHT001->                    3600F9
+    F.YTPREP.1$                    <FYVHT001->                    3600D3
+    F.YTPREP.2$                    <FYVHT001->                    3600D4
+    F.YTPREP.3$                    <FYVHT001->                    3600D5
+    F.YTPREP.4$                    <FYVHT001->                    3600D6
+    F.YTPREP.5$                    <FYVHT001->                    3600D7
+    F.YTPREP.6$                    <FYVHT001->                    3600D8
+    FTP.COMM%                      <FYVHT001->                    310016
+    FTP.ETHER%                     <FYVHT001->                    310018
+    FTP.INIT%                      <FYVHT001->                    310017
+    FTP.LOGIN%                     <FYVHT001->                    31000E
+    FTP.SYNC%                      <FYVHT001->                    310010
+    G.FTP.ERRMESSAGE$              <PUBLIC_>                      36000B
+    G.FTP.HANDLE%                  <PUBLIC_>                      31000A
+    G.FTP.MESSAGE$                 <PUBLIC_>                      36000F
+    G.FTP.REPLY%                   <PUBLIC_>                      310008
+    G.FTP.STATUS%                  <PUBLIC_>                      31000D
+    G.INTERFACE%                   <PUBLIC_>                      310009
+    G.INTFAIL%                     <PUBLIC_>                      31000B
+    G.INTQRPOS%                    <PUBLIC_>                      310006
+    G.INTQRPRVPOS%                 <PUBLIC_>                      310001
+    G.INTRECSIJI&                  <PUBLIC_>                      320000
+    G.KEJISK.1$                    <PUBLIC_>                      360020
+    G.KEJISK.2$                    <PUBLIC_>                      360021
+    G.KEJISK.3$                    <PUBLIC_>                      360022
+    G.KEJISK.4$                    <PUBLIC_>                      360023
+    G.KEJISK.5$                    <PUBLIC_>                      360024
+    G.KEJISK.6$                    <PUBLIC_>                      360025
+    G.KEJISK.7$                    <PUBLIC_>                      360026
+    G.SIJISK.1$                    <PUBLIC_>                      360059
+    G.SIJISK.2$                    <PUBLIC_>                      36005A
+    G.SIJISK.3$                    <PUBLIC_>                      36005B
+    G.SIJISK.4$                    <PUBLIC_>                      36005C
+    G.SIJISK.5$                    <PUBLIC_>                      36005D
+    G.SIJISK.6$                    <PUBLIC_>                      36005E
+    G.SIJISK.7$                    <PUBLIC_>                      36005F
+    G.SILOG.1$                     <PUBLIC_>                      360046
+    G.SILOG.10$                    <PUBLIC_>                      360032
+    G.SILOG.11$                    <PUBLIC_>                      360033
+    G.SILOG.12$                    <PUBLIC_>                      360034
+    G.SILOG.13$                    <PUBLIC_>                      360035
+    G.SILOG.2$                     <PUBLIC_>                      360048
+    G.SILOG.3$                     <PUBLIC_>                      360052
+    G.SILOG.4$                     <PUBLIC_>                      360056
+    G.SILOG.5$                     <PUBLIC_>                      360069
+    G.SILOG.6$                     <PUBLIC_>                      36006B
+    G.SILOG.7$                     <PUBLIC_>                      36006E
+    G.SILOG.8$                     <PUBLIC_>                      360070
+    G.SILOG.9$                     <PUBLIC_>                      360072
+    G.SOCK.STATUS%                 <PUBLIC_>                      310002
+    G.STRCHAINAP$                  <PUBLIC_>                      36007E
+    G.STRSET.FUNCTION$             <PUBLIC_>                      36007B
+    G.STRSET.FUNNUM$               <PUBLIC_>                      360009
+    G.STRSET.KATA$                 <PUBLIC_>                      36007D
+    G.STRSET.SETNUM$               <PUBLIC_>                      36007A
+    G.STRSET.VALUE$                <PUBLIC_>                      36007C
+    G.STRSETNAME$                  <PUBLIC_>                      36000E
+    G.STRSIZIHINBAN$               <PUBLIC_>                      360013
+    G.STRSIZIHOUSO$                <PUBLIC_>                      36007F
+    G.STRSIZIKUMITSUKEKU$          <PUBLIC_>                      36000D
+    G.STRSIZISEIRINO$              <PUBLIC_>                      360054
+    G.STRSIZISYUYO$                <PUBLIC_>                      360012
+    G.STRWORKUSER$                 <PUBLIC_>                      360010
+    G.SYJISK.1$                    <PUBLIC_>                      360060
+    G.SYJISK.10$                   <PUBLIC_>                      360082
+    G.SYJISK.11$                   <PUBLIC_>                      360086
+    G.SYJISK.12$                   <PUBLIC_>                      36008A
+    G.SYJISK.13$                   <PUBLIC_>                      36008E
+    G.SYJISK.14$                   <PUBLIC_>                      360092
+    G.SYJISK.15$                   <PUBLIC_>                      360095
+    G.SYJISK.16$                   <PUBLIC_>                      360099
+    G.SYJISK.17$                   <PUBLIC_>                      36009D
+    G.SYJISK.18$                   <PUBLIC_>                      360000
+    G.SYJISK.19$                   <PUBLIC_>                      360005
+    G.SYJISK.2$                    <PUBLIC_>                      360061
+    G.SYJISK.20$                   <PUBLIC_>                      360083
+    G.SYJISK.21$                   <PUBLIC_>                      360087
+    G.SYJISK.22$                   <PUBLIC_>                      36008B
+    G.SYJISK.23$                   <PUBLIC_>                      36008F
+    G.SYJISK.24$                   <PUBLIC_>                      360093
+    G.SYJISK.25$                   <PUBLIC_>                      360096
+    G.SYJISK.26$                   <PUBLIC_>                      36009A
+    G.SYJISK.27$                   <PUBLIC_>                      36009E
+    G.SYJISK.28$                   <PUBLIC_>                      360001
+    G.SYJISK.29$                   <PUBLIC_>                      360006
+    G.SYJISK.3$                    <PUBLIC_>                      360062
+    G.SYJISK.30$                   <PUBLIC_>                      360084
+    G.SYJISK.31$                   <PUBLIC_>                      360088
+    G.SYJISK.32$                   <PUBLIC_>                      36008C
+    G.SYJISK.33$                   <PUBLIC_>                      360090
+    G.SYJISK.34$                   <PUBLIC_>                      360094
+    G.SYJISK.35$                   <PUBLIC_>                      360097
+    G.SYJISK.36$                   <PUBLIC_>                      36009B
+    G.SYJISK.37$                   <PUBLIC_>                      36009F
+    G.SYJISK.38$                   <PUBLIC_>                      360002
+    G.SYJISK.39$                   <PUBLIC_>                      360007
+    G.SYJISK.4$                    <PUBLIC_>                      360063
+    G.SYJISK.40$                   <PUBLIC_>                      360085
+    G.SYJISK.41$                   <PUBLIC_>                      360089
+    G.SYJISK.42$                   <PUBLIC_>                      36008D
+    G.SYJISK.5$                    <PUBLIC_>                      360064
+    G.SYJISK.6$                    <PUBLIC_>                      360065
+    G.SYJISK.7$                    <PUBLIC_>                      360066
+    G.SYJISK.8$                    <PUBLIC_>                      360067
+    G.SYJISK.9$                    <PUBLIC_>                      360068
+    G.SYJSKWK.1$                   <PUBLIC_>                      360043
+    G.SYJSKWK.10$                  <PUBLIC_>                      360015
+    G.SYJSKWK.11$                  <PUBLIC_>                      360016
+    G.SYJSKWK.12$                  <PUBLIC_>                      360017
+    G.SYJSKWK.13$                  <PUBLIC_>                      360018
+    G.SYJSKWK.14$                  <PUBLIC_>                      360019
+    G.SYJSKWK.15$                  <PUBLIC_>                      36001A
+    G.SYJSKWK.16$                  <PUBLIC_>                      36001B
+    G.SYJSKWK.17$                  <PUBLIC_>                      36001C
+    G.SYJSKWK.18$                  <PUBLIC_>                      36001D
+    G.SYJSKWK.19$                  <PUBLIC_>                      36001E
+    G.SYJSKWK.2$                   <PUBLIC_>                      360045
+    G.SYJSKWK.20$                  <PUBLIC_>                      360028
+    G.SYJSKWK.21$                  <PUBLIC_>                      360029
+    G.SYJSKWK.22$                  <PUBLIC_>                      36002A
+    G.SYJSKWK.23$                  <PUBLIC_>                      36002B
+    G.SYJSKWK.24$                  <PUBLIC_>                      36002C
+    G.SYJSKWK.25$                  <PUBLIC_>                      36002D
+    G.SYJSKWK.26$                  <PUBLIC_>                      36002E
+    G.SYJSKWK.27$                  <PUBLIC_>                      36002F
+    G.SYJSKWK.28$                  <PUBLIC_>                      360030
+    G.SYJSKWK.29$                  <PUBLIC_>                      360031
+    G.SYJSKWK.3$                   <PUBLIC_>                      360047
+    G.SYJSKWK.30$                  <PUBLIC_>                      360036
+    G.SYJSKWK.31$                  <PUBLIC_>                      360037
+    G.SYJSKWK.32$                  <PUBLIC_>                      360038
+    G.SYJSKWK.33$                  <PUBLIC_>                      360039
+    G.SYJSKWK.34$                  <PUBLIC_>                      36003A
+    G.SYJSKWK.35$                  <PUBLIC_>                      36003B
+    G.SYJSKWK.36$                  <PUBLIC_>                      36003C
+    G.SYJSKWK.37$                  <PUBLIC_>                      36003D
+    G.SYJSKWK.38$                  <PUBLIC_>                      36003E
+    G.SYJSKWK.39$                  <PUBLIC_>                      36003F
+    G.SYJSKWK.4$                   <PUBLIC_>                      36004A
+    G.SYJSKWK.40$                  <PUBLIC_>                      360042
+    G.SYJSKWK.5$                   <PUBLIC_>                      360053
+    G.SYJSKWK.6$                   <PUBLIC_>                      360058
+    G.SYJSKWK.7$                   <PUBLIC_>                      36006A
+    G.SYJSKWK.8$                   <PUBLIC_>                      36006C
+    G.SYJSKWK.9$                   <PUBLIC_>                      36006F
+    G.TRNERR%                      <PUBLIC_>                      310007
+    G.YTP.MESSAGE$                 <PUBLIC_>                      360071
+    G.YTP.PROCESS$                 <PUBLIC_>                      360004
+    G.YTP.REPLYCD%                 <PUBLIC_>                      310003
+    G.YTP.TRNERR%                  <PUBLIC_>                      310005
+    G.YTPCMD.1$                    <PUBLIC_>                      360075
+    G.YTPCMD.2$                    <PUBLIC_>                      360076
+    G.YTPCMD.3$                    <PUBLIC_>                      360077
+    G.YTPCMD.4$                    <PUBLIC_>                      360078
+    G.YTPCMD.5$                    <PUBLIC_>                      360079
+    G.YTPREP.1$                    <PUBLIC_>                      36004C
+    G.YTPREP.2$                    <PUBLIC_>                      36004D
+    G.YTPREP.3$                    <PUBLIC_>                      36004E
+    G.YTPREP.4$                    <PUBLIC_>                      36004F
+    G.YTPREP.5$                    <PUBLIC_>                      360050
+    G.YTPREP.6$                    <PUBLIC_>                      360051
+    IMSG.TEXT$                     <PUBLIC_>                      368000
+    KEJISK.FIELD$                  <PUBLIC_>                      36001F
+    KEJISK.FILENM$                 <PUBLIC_>                      360011
+    LC.COL.20GRAY                  <GLOBAL_>                      330012
+    LC.COL.40GRAY                  <GLOBAL_>                      330013
+    LC.COL.50GRAY                  <GLOBAL_>                      330014
+    LC.COL.80GRAY                  <GLOBAL_>                      330015
+    LC.COL.AQUA                    <GLOBAL_>                      33001C
+    LC.COL.BEIGE                   <GLOBAL_>                      330016
+    LC.COL.BLACK                   <GLOBAL_>                      330018
+    LC.COL.BLUE                    <GLOBAL_>                      33001B
+    LC.COL.BLUEGRAY                <GLOBAL_>                      330011
+    LC.COL.BLUISHGREEN             <GLOBAL_>                      330039
+    LC.COL.BRIGHTGREEN             <GLOBAL_>                      33000B
+    LC.COL.BROWN                   <GLOBAL_>                      330007
+    LC.COL.BUDOU                   <GLOBAL_>                      330040
+    LC.COL.CARP                    <GLOBAL_>                      33001A
+    LC.COL.CHOCO                   <GLOBAL_>                      33000F
+    LC.COL.CYAN                    <GLOBAL_>                      330005
+    LC.COL.DARKBLUE                <GLOBAL_>                      330025
+    LC.COL.DARKBLUISHGREEN         <GLOBAL_>                      33000E
+    LC.COL.DARKGREEN               <GLOBAL_>                      330034
+    LC.COL.DARKRED                 <GLOBAL_>                      330008
+    LC.COL.DARKYELLOW              <GLOBAL_>                      330038
+    LC.COL.DORAEMON                <GLOBAL_>                      33003E
+    LC.COL.DRAGONS                 <GLOBAL_>                      330030
+    LC.COL.ELEPHANT                <GLOBAL_>                      330006
+    LC.COL.GIANTS                  <GLOBAL_>                      330035
+    LC.COL.GOLD                    <GLOBAL_>                      33001E
+    LC.COL.GREEN                   <GLOBAL_>                      33002B
+    LC.COL.INDIGO                  <GLOBAL_>                      33002A
+    LC.COL.JUSCO                   <GLOBAL_>                      33002F
+    LC.COL.KIKKORO                 <GLOBAL_>                      33002C
+    LC.COL.LAVENDER                <GLOBAL_>                      33001F
+    LC.COL.LEMON                   <GLOBAL_>                      330026
+    LC.COL.LIGHTBLUE               <GLOBAL_>                      33003D
+    LC.COL.LIGHTGREEN              <GLOBAL_>                      330020
+    LC.COL.LIGHTORANGE             <GLOBAL_>                      330019
+    LC.COL.LIGHTYELLOW             <GLOBAL_>                      33000C
+    LC.COL.LIME                    <GLOBAL_>                      330017
+    LC.COL.MAGENTA                 <GLOBAL_>                      330010
+    LC.COL.MIKAN                   <GLOBAL_>                      33000D
+    LC.COL.MOMO                    <GLOBAL_>                      33003A
+    LC.COL.MORIZO                  <GLOBAL_>                      33002E
+    LC.COL.OLIVE                   <GLOBAL_>                      33003F
+    LC.COL.ORANGE                  <GLOBAL_>                      330029
+    LC.COL.PEERBLUE                <GLOBAL_>                      33003C
+    LC.COL.PIKACHU                 <GLOBAL_>                      33000A
+    LC.COL.PINK                    <GLOBAL_>                      330022
+    LC.COL.PLUM                    <GLOBAL_>                      330031
+    LC.COL.RED                     <GLOBAL_>                      330023
+    LC.COL.ROSE                    <GLOBAL_>                      330024
+    LC.COL.SEAGREEN                <GLOBAL_>                      330028
+    LC.COL.SKYBLUE                 <GLOBAL_>                      330021
+    LC.COL.SWALLOWS                <GLOBAL_>                      330027
+    LC.COL.THINBLUE                <GLOBAL_>                      33003B
+    LC.COL.THINLIGHTBLUE           <GLOBAL_>                      33002D
+    LC.COL.TIGERS                  <GLOBAL_>                      33001D
+    LC.COL.UMI                     <GLOBAL_>                      330036
+    LC.COL.VIOLET                  <GLOBAL_>                      330033
+    LC.COL.WHITE                   <GLOBAL_>                      330037
+    LC.COL.YELLOW                  <GLOBAL_>                      330032
+    LC.COL.YUZU                    <GLOBAL_>                      330009
+    LNGLEN&                        <PUBLIC_>                      320003
+    PMSGBOX.BTN.BACKCOLOR&         <PUBLIC_>                      320002
+    PMSGBOX.BTN.FORECOLOR&         <PUBLIC_>                      320008
+    PMSGBOX.BTN1.TEXT$             <PUBLIC_>                      360080
+    PMSGBOX.BTN2.TEXT$             <PUBLIC_>                      360081
+    PMSGBOX.MSG.BACKCOLOR&         <PUBLIC_>                      320004
+    PMSGBOX.MSG.FORECOLOR&         <PUBLIC_>                      320009
+    PMSGBOX.TITLE.BACKCOLOR&       <PUBLIC_>                      320007
+    PMSGBOX.TITLE.FORECOLOR&       <PUBLIC_>                      320001
+    QRREADMODE$                    <PUBLIC_>                      360091
+    RESUME.TIME                    <PUBLIC_>                      330000
+    SCREEN.WIDE%                   <PUBLIC_>                      310004
+    SIJISK.FIELD$                  <PUBLIC_>                      360055
+    SIJISK.FILENM$                 <PUBLIC_>                      360040
+    SILIST.CURSOR&                 <PUBLIC_>                      320006
+    SILIST.TOPPOS&                 <PUBLIC_>                      320005
+    SILOG.FIELD$                   <PUBLIC_>                      360073
+    SILOG.FILENM$                  <PUBLIC_>                      36009C
+    SOCK.COM3%                     <FYVHT001->                    310015
+    SOCK.CONN%                     <FYVHT001->                    310012
+    SOCK.ETHER%                    <FYVHT001->                    31000F
+    SOCK.INIT%                     <FYVHT001->                    310014
+    SOCK.OPEN%                     <FYVHT001->                    310013
+    SOCK.SYNC%                     <FYVHT001->                    310011
+    STFONT.XSIZE                   <PUBLIC_>                      330003
+    STFONT.YSIZE                   <PUBLIC_>                      330004
+    STRKEY$                        <PUBLIC_>                      360044
+    STRPRVSYORIHENSU$              <PUBLIC_>                      36000A
+    STRQR$                         <PUBLIC_>                      360014
+    STRSYORIHENSU$                 <PUBLIC_>                      36006D
+    SYJISK.FIELD$                  <PUBLIC_>                      360057
+    SYJISK.FILENM$                 <PUBLIC_>                      360041
+    SYJSKWK.FIELD$                 <PUBLIC_>                      36000C
+    SYJSKWK.FILENM$                <PUBLIC_>                      36004B
+    YTPCMD.FIELD$                  <PUBLIC_>                      360074
+    YTPCMD.FILENM$                 <PUBLIC_>                      360003
+    YTPREP.FIELD$                  <PUBLIC_>                      360049
+    YTPREP.FILENM$                 <PUBLIC_>                      360027
+
+FUNCTION SYMBOL
+    ALLFILE.KILL                                                  512800AD
+    AOKBAR                                                        51280083
+    APP.EXENAME$                                                  56280008
+    BHTMODEL$                                                     56280001
+    BHTPHOTO                                                      512800D0
+    CHECK.BEEP                                                    51280074
+    CMDREPFILE.RECV%                                              512800F1
+    COMPLE.BEEP                                                   51280079
+    CONPATIBLERESET                                               51280048
+    CONPATIBLESET                                                 51280049
+    DATEADD$                                                      56280041
+    DATECONV$                                                     56280047
+    DATEDEFF&                                                     52280046
+    DISPMODE%                                                     512800D7
+    DTOD2%                                                        5128003F
+    EKANBANSPLIT                                                  512800AF
+    ERR.BEEP                                                      51280072
+    FILE.COPY                                                     51280032
+    FILE.COUNT&                                                   52280030
+    FILE.EXIST%                                                   5128002F
+    FILE.RENAME                                                   51280031
+    FRECCOUNT&                                                    5228008C
+    FREEMEMORY%                                                   51280005
+    FTP.CD%                                                       5128005F
+    FTP.CDSYS%                                                    51280060
+    FTP.CLOSE%                                                    5128005E
+    FTP.DEL%                                                      51280063
+    FTP.GET%                                                      51280061
+    FTP.OPEN%                                                     5128005C
+    FTP.OPEN2%                                                    5128005D
+    FTP.PUT%                                                      51280062
+    FTP.RENAME%                                                   51280064
+    FTP.SYSGET                                                    51280056
+    FTP.SYSSET                                                    51280057
+    FUNDATECHK%                                                   5128003D
+    FUNINPGET$                                                    562800BA
+    FUNINPGET.ONTIMER$                                            562800BB
+    FUNLOGOGET$                                                   562800C7
+    FUNLOGOSET$                                                   562800C6
+    FUNNUMTEXTBOX$                                                562800BE
+    FUNTEXTBOX$                                                   562800BC
+    FUNTEXTBOXR$                                                  562800BD
+    GETERRMSG$                                                    56280000
+    GETFTPERRMSG$                                                 56280054
+    GETRESUME%                                                    51280007
+    GETYTPERRMSG$                                                 562800EE
+    IIF$                                                          56280017
+    IIF&                                                          52280018
+    INITKEYNO                                                     51280002
+    INSTRCNT%                                                     5128002E
+    IP.GET$                                                       56280055
+    KANBANSPLIT                                                   512800B0
+    KEJISK.CLS                                                    5128009E
+    KEJISK.CNT&                                                   5228009F
+    KEJISK.DEL                                                    512800A2
+    KEJISK.GET                                                    512800A0
+    KEJISK.KILL                                                   512800A3
+    KEJISK.OPN                                                    5128009D
+    KEJISK.PUT                                                    512800A1
+    KEJISK.SRCH&                                                  522800A4
+    LCASE$                                                        5628001B
+    LTRIM$                                                        5628000C
+    MOD&                                                          5228002D
+    MOJICOUNT%                                                    5128000D
+    NEXTSCREEN.RESET                                              512800B5
+    NEXTSCREEN.SET                                                512800B4
+    NG.BEEP                                                       51280076
+    NG.SOUND                                                      51280082
+    NUMBERNAME$                                                   562800D3
+    OK.BEEP                                                       51280075
+    OK.SOUND                                                      51280080
+    OK2.SOUND                                                     51280081
+    OPERATION.BEEP                                                51280077
+    PICTUREBOX                                                    512800D1
+    QR.CLS                                                        512800B6
+    QR.OPN                                                        512800B7
+    QR.PEEK                                                       512800B8
+    RECTANGLE                                                     512800D2
+    REPLACE$                                                      56280019
+    RTRIM$                                                        5628000B
+    SCRN.CREATECOMPKANBAN                                         51280100
+    SCRN.CREATEKANBAN                                             512800FF
+    SCRN.INPUTWORKUSER                                            512800FE
+    SCRN.MAINMENU                                                 512800FD
+    SCRN.READKANBAN                                               51280101
+    SCRN.READKANBANSIJI                                           51280102
+    SCRN.READTRACECARD                                            51280103
+    SEC2TIME$                                                     56280043
+    SETRESUME                                                     51280006
+    SETTITLE                                                      512800FB
+    SETTITLE2                                                     512800FC
+    SIAUTORUN                                                     5128003E
+    SIBACKCOLOR.SET                                               512800CB
+    SIBOX.DRAW                                                    51280027
+    SIBUTTON.DRAW                                                 512800CC
+    SIDEFRAG%                                                     5128000F
+    SIDENSOQR.DECODE$                                             56280066
+    SIDIQR.CNT%                                                   51280068
+    SIDIQR.DECODE$                                                56280067
+    SIDIQR.TWG.DECODE$                                            5628006A
+    SIDIQR.TWG.DN.DECODE$                                         5628006B
+    SIDRAW.LINE                                                   512800C9
+    SIDRAW.PICTURE                                                512800C8
+    SIDRAW.RECT                                                   512800CA
+    SIFIXEDLENQR.CHECK%                                           5128006D
+    SIFIXEDLENQR.DECODE$                                          5628006C
+    SIFONT.BUTTON                                                 51280024
+    SIFONT.COLOR                                                  5128001F
+    SIFONT.GETCOLOR                                               51280020
+    SIFONT.GETSIZE                                                51280022
+    SIFONT.RESET                                                  51280023
+    SIFONT.SET                                                    5128001E
+    SIFONT.SIZE                                                   51280021
+    SIFORMAT$                                                     56280015
+    SIGETINI$                                                     56280034
+    SIGETMSG$                                                     56280037
+    SIGETSYSINI$                                                  56280036
+    SIJISK.CLS                                                    512800A6
+    SIJISK.CNT&                                                   522800A7
+    SIJISK.DEL                                                    512800AA
+    SIJISK.GET                                                    512800A8
+    SIJISK.KILL                                                   512800AB
+    SIJISK.OPN                                                    512800A5
+    SIJISK.PUT                                                    512800A9
+    SIJISK.SRCH&                                                  522800AC
+    SIJISPLIT                                                     512800B2
+    SILICENSE.CHECK%                                              512800DC
+    SILICENSE.GET&                                                522800DB
+    SILICENSE.SCREEN                                              512800DD
+    SILICENSE.SET                                                 512800DA
+    SILIST$                                                       562800BF
+    SILISTNSB$                                                    562800C4
+    SILISTQR$                                                     562800C0
+    SILISTSUB                                                     512800AE
+    SILOG.CLS                                                     5128004C
+    SILOG.CNT&                                                    5228004D
+    SILOG.DEL                                                     51280050
+    SILOG.GET                                                     5128004E
+    SILOG.KILL                                                    51280051
+    SILOG.OPN                                                     5128004B
+    SILOG.PUT                                                     5128004F
+    SILOG.SRCH&                                                   52280052
+    SILOG.WRITE&                                                  51280053
+    SIMGCUT$                                                      5628002B
+    SIMSGBOX.POPUP$                                               562800D6
+    SIMSGBOX.SETCOLOR                                             512800D4
+    SIMULTCODESPLIT%                                              512800C5
+    SIPOWER                                                       5128004A
+    SIPROGRESSBAR                                                 51280028
+    SIQR.CHECK%                                                   51280065
+    SIRECVFILE%                                                   5128003B
+    SIRSFILE%                                                     5128003A
+    SIRSFILEBT%                                                   51280039
+    SISELECTLIST2%                                                512800C1
+    SISENDFILE%                                                   5128003C
+    SISETBOLD%                                                    51280009
+    SISETINI%                                                     51280033
+    SISETLED%                                                     5128000E
+    SISETSYSINI%                                                  51280035
+    SISQRC.CHECK%                                                 5128006E
+    SISQRC.DNCARDCHECK%                                           5128006F
+    SISTR$                                                        5628002C
+    SISTRINGCHK%                                                  5128001C
+    SISYSIGET%                                                    51280029
+    SISYSSGET$                                                    5628002A
+    SISYSTEMSTATUS.DISP                                           512800CF
+    SITEXT.CPRINT                                                 51280026
+    SITEXT.PRINT                                                  51280025
+    SITEXTBOX.DRAW                                                512800CD
+    SITEXTFORMAT$                                                 56280016
+    SITOYOTADIQR.DECODE$                                          56280069
+    SIVERCTL.APPVERSION.SET                                       512800D8
+    SIVERCTL.FILEVERSION.SET                                      512800D9
+    SIWAITKEY                                                     512800B9
+    SIWINDOW.DRAW                                                 512800CE
+    SIXFILE&                                                      52280038
+    SLEEP                                                         5128001D
+    SOUND1                                                        51280084
+    SOUND2                                                        51280085
+    SOUND3                                                        51280086
+    SOUND4                                                        51280087
+    SOUND5                                                        51280088
+    SOUND7                                                        51280089
+    SPACE$                                                        56280010
+    SPACEUME$                                                     56280013
+    SPLIT%                                                        51280012
+    STD.DAYS&                                                     52280045
+    STRING$                                                       56280011
+    SUB01.SOUND                                                   5128007D
+    SUB02.SOUND                                                   5128007E
+    SUB03.SOUND                                                   5128007F
+    SUBBEEPMUSIC                                                  5128008A
+    SUBBEEPMUSIC2                                                 5128008B
+    SUBBEPERROR                                                   51280073
+    SUBBEPFUP                                                     51280078
+    SUBBEPKAIJO                                                   5128007C
+    SUBBEPMOVE                                                    51280070
+    SUBBEPMOVEL                                                   51280071
+    SUBBEPNONEND                                                  5128007A
+    SUBBEPOFF                                                     5128007B
+    SUBMAIN                                                       51280104
+    SUBSETCOLOR.SIMSGBOX                                          512800D5
+    SUBSETNBS.LISTPOS                                             512800C3
+    SUBSETNBS.STARTLISTPOS                                        512800C2
+    SUBYTP.CURSYORIDSP                                            512800EF
+    SYJISK.CLS                                                    5128008E
+    SYJISK.CNT&                                                   5228008F
+    SYJISK.DEL                                                    51280092
+    SYJISK.GET                                                    51280090
+    SYJISK.KILL                                                   51280093
+    SYJISK.OPN                                                    5128008D
+    SYJISK.PUT                                                    51280091
+    SYJISK.SRCH&                                                  52280094
+    SYJSKWK.CLS                                                   51280096
+    SYJSKWK.CNT&                                                  52280097
+    SYJSKWK.DEL                                                   5128009A
+    SYJSKWK.GET                                                   51280098
+    SYJSKWK.KILL                                                  5128009B
+    SYJSKWK.OPN                                                   51280095
+    SYJSKWK.PUT                                                   51280099
+    SYJSKWK.SRCH&                                                 5228009C
+    SYSDATE$                                                      56280044
+    SYUKAWRITE                                                    512800B3
+    TCPIP.SYSGET.NUM%                                             51280058
+    TCPIP.SYSGET.STR$                                             56280059
+    TCPIP.SYSSET.NUM                                              5128005A
+    TCPIP.SYSSET.STR                                              5128005B
+    TIMEDEFF&                                                     52280042
+    TRACECARDSPLIT                                                512800B1
+    TRIGGER.OFF                                                   51280004
+    TRIGGER.ON                                                    51280003
+    TRIM$                                                         5628000A
+    TTOT%                                                         51280040
+    UCASE$                                                        5628001A
+    YMODEMFILE.RECV%                                              512800F2
+    YTP.CD%                                                       512800F3
+    YTP.CDSYS%                                                    512800F4
+    YTP.DEL%                                                      512800F7
+    YTP.DIR%                                                      512800F9
+    YTP.EXECUTE%                                                  512800FA
+    YTP.GET%                                                      512800F5
+    YTP.PUT%                                                      512800F6
+    YTP.RENAME%                                                   512800F8
+    YTPCMD.CLS                                                    512800DF
+    YTPCMD.CNT&                                                   522800E0
+    YTPCMD.DEL                                                    512800E3
+    YTPCMD.GET                                                    512800E1
+    YTPCMD.KILL                                                   512800E4
+    YTPCMD.OPN                                                    512800DE
+    YTPCMD.PUT                                                    512800E2
+    YTPCMD.SRCH&                                                  522800E5
+    YTPCOM.OPN                                                    512800F0
+    YTPREP.CLS                                                    512800E7
+    YTPREP.CNT&                                                   522800E8
+    YTPREP.DEL                                                    512800EB
+    YTPREP.GET                                                    512800E9
+    YTPREP.KILL                                                   512800EC
+    YTPREP.OPN                                                    512800E6
+    YTPREP.PUT                                                    512800EA
+    YTPREP.SRCH&                                                  522800ED
+    ZEROUME$                                                      56280014
+
+OBJECT INFORMATION
+                                                  Offset     Size
+    PRC                                           00000000   00000100
+    REG                                           00000100   000049C4
+    PRD                                           00004AC4   000160E9
+
+PRD INFORMATION
+    [Filename]                                    Offset     Size
+    FYVHT001.ob4                                  00000000   000160E9
+    [Total]                                                  000160E9
