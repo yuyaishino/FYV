@@ -765,7 +765,13 @@ f' 
 		SIText.Print( 1, 13, "®—No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1, 15, "w¦‘:000–‡", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'w¦‘ÀÑæ“¾'
-		SIJISK.Get(0)
+		if g.intRecSIJI& > 1 Then
+			SIJISK.Get(g.intRecSIJI&)
+		ELSE
+			g.intRecSIJI& = 1
+			SIJISK.Get(g.intRecSIJI&)
+		endif
+
 		SIText.Print( 6, 5, g.SIJISK.1$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 6, 7, g.SIJISK.2$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 8, 9, Trim$(g.SIJISK.3$), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
@@ -827,7 +833,7 @@ f' 
 								Else
 									Call NG.Beep
 									SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
-									iMsg.Text$(1) = "³F" + g.SIJISK.2$
+									iMsg.Text$(1) = "³F" + g.SIJISK.3$
 									iMsg.Text$(2) = "ŒëF" + strHouso$
 									WHILE flgLoop% = Lc.True
 										intRet% = Lc.True
@@ -938,7 +944,12 @@ f' 
 		SIText.Print( 1, 13, "®—No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1, 15, "w¦‘:000–‡", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'w¦‘ÀÑæ“¾'
-		SIJISK.Get(0)
+		if g.intRecSIJI& > 1 Then
+			SIJISK.Get(g.intRecSIJI&)
+		ELSE
+			g.intRecSIJI& = 1
+			SIJISK.Get(g.intRecSIJI&)
+		endif
 		SIText.Print( 6, 5, g.SIJISK.1$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 6, 7, g.SIJISK.2$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 8, 9, Trim$(g.SIJISK.3$), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
@@ -1011,7 +1022,7 @@ f' 
 								SyukaWrite("0","NG","2")
 								Call NG.Beep
 								SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
-								iMsg.Text$(1) = "³F" + g.SIJISK.2$
+								iMsg.Text$(1) = "³F" + g.SIJISK.3$
 								iMsg.Text$(2) = "ŒëF" + strHouso$
 								WHILE flgLoop% = Lc.True
 									intRet% = Lc.True
@@ -1067,6 +1078,503 @@ f' 
 				Call NG.Beep
 				SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
 				iMsg.Text$(1) = "ƒgƒŒ[ƒXƒJ[ƒh"
+				iMsg.Text$(2) = "‚Å‚Í‚ ‚è‚Ü‚¹‚ñ"
+				If SIMsgBox.PopUp$(7, "“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+				Endif
+			Endif
+
+		ELSE
+			SELECT CASE W$
+				CASE M2.KEY	'–ß‚é
+					'---‚©‚ñ‚Î‚ñw¦‘ì¬‰æ–Ê
+					NextScreen.Set("2000")
+			END SELECT
+		END IF
+
+	 WEND
+ End Sub
+
+
+
+'*************************************************************************************************************************************************
+'	[2030]Œ‡•i‚©‚ñ‚Î‚ñ“Çæ(w¦‘ÀÑ–³‚µ)
+'	ˆø”F‚È‚µ
+'	–ß‚è’lF‚È‚µ
+'*************************************************************************************************************************************************
+ Sub Scrn.KeppinReadKanban
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	Private strHinbanCount$	'–¢‘—MŒ”
+	Private strWhere$(6)[50] 'ƒtƒ@ƒCƒ‹ƒT[ƒ`ğŒ
+	Private strCheckNo$	'd•¡ƒ`ƒFƒbƒNNo
+	Private iSrchCnt&
+	Private iWhereCnt&	'ƒtƒ@ƒCƒ‹ŒŸõ”'
+	Private iWhereCnt2&	'ƒtƒ@ƒCƒ‹ŒŸõ”'
+
+	WHILE strSyoriHensu$ = "2030"
+		Cls
+
+		'--ŒÅ’è•”•ª
+		'ƒ^ƒCƒgƒ‹•\¦
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "•i”Ô:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "•ï‘•:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "û—e”:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "‘g•t‹æ:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "®—No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 15, "w¦‘:000–‡", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+
+		'‰æ–Ê•\¦
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "Œ‡•i‚©‚ñ‚Î‚ñ“Çæ    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'ƒ{ƒ^ƒ“•\¦
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'ƒo[ƒWƒ‡ƒ“
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'“ü—Í§Œä
+		strInKey$ = M2.KEY
+
+		'“ü—Í‘Ò‚¿(M1 or M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+			If strQR$ <> "" Then
+				'‚©‚ñ‚Î‚ñ‚©ƒ`ƒFƒbƒN
+				If  Len(strQR$) = 119 OR Len(strQR$) = 124 Then
+					'æ“ª4Œ…‚ªJAMA‚©”»’è
+					If Mid$(strQR$,1,4) = "JAMA" Then
+
+						'e‚©‚ñ‚Î‚ñ‚©Ğ“à‚©‚ñ‚Î‚ñ‚©'
+						If  Len(strQR$) = 119 THEN
+							'e‚©‚ñ‚Î‚ñW‰×ÀÑ'
+							EkanbanSplit(strQR$)
+
+							'd•¡ğŒ(W‰×ÀÑ)'
+							strWhere$(0) = .Equal+Chr$(5) + g.SYJISK.5$		'ƒfƒ“ƒ\[•i”Ô
+							strWhere$(1) = .Equal+Chr$(6) + g.SYJISK.6$		'•ï‘•
+							strWhere$(2) = .Equal+Chr$(8) + g.SYJISK.8$		'®—”Ô†
+							strWhere$(3) = .Equal+Chr$(10) + g.SYJISK.10$		'”[“ü“ú
+							strWhere$(4) = .Equal+Chr$(41) + "OK"					'Æ‡Œ‹‰Ê
+							iWhereCnt& = 5
+						ELSE
+							'Ğ“à‚©‚ñ‚Î‚ñW‰×ÀÑ'
+							kanbanSplit(strQR$)
+							'd•¡ğŒ(W‰×ÀÑ)'
+							strWhere$(0) = .Equal+Chr$(13) + g.SYJISK.13$		'‚©‚ñ‚Î‚ñí—Ş
+							strWhere$(1) = .Equal+Chr$(16) + g.SYJISK.16$		'ÃŞİ¿°•i”Ô
+							strWhere$(2) = .Equal+Chr$(17) + g.SYJISK.17$		'•ï‘•
+							strWhere$(3) = .Equal+Chr$(19) + g.SYJISK.19$		'‘g•t‹æ
+							strWhere$(4) = .Equal+Chr$(21) + g.SYJISK.21$		'®—No
+							strWhere$(5) = .Equal+Chr$(41) + "OK"					'Æ‡Œ‹‰Ê
+							iWhereCnt& = 6
+						endif
+
+						'W‰×ÀÑƒtƒ@ƒCƒ‹ŒŸõ
+						iSrchCnt& = SYJISK.Srch&(.fcAndSrch, strWhere$, iWhereCnt&, 1, 0)
+
+						If iSrchCnt& < 1 Then
+							'-----‚¯‚ñ‚Â‚Î“Çæ----
+							NextScreen.Set("2040")
+						Else
+							'----d•¡‚Ìê‡‚ÍƒGƒ‰[
+							Call NG.Beep
+							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+							iMsg.Text$(1) = "“ÇæÏ‚İ‚Ì"
+							iMsg.Text$(2) = "‚©‚ñ‚Î‚ñ‚Å‚·"
+							If SIMsgBox.PopUp$(7, "d•¡“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD) = M1.KEY Then
+							Endif
+						END IF
+					ELSE
+						'----‚©‚ñ‚Î‚ñ‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "‚©‚ñ‚Î‚ñ"
+						iMsg.Text$(2) = "‚Å‚Í‚ ‚è‚Ü‚¹‚ñ"
+						If SIMsgBox.PopUp$(7, "“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+						Endif
+					END IF
+				ELSE
+					'----‚©‚ñ‚Î‚ñ‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "‚©‚ñ‚Î‚ñ"
+					iMsg.Text$(2) = "‚Å‚Í‚ ‚è‚Ü‚¹‚ñ"
+					If Len(SIMsgBox.PopUp$(7, "“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY)) = 10 Then
+					Endif
+				Endif
+
+			ELSE
+				SELECT CASE W$
+
+					CASE M2.KEY	'–ß‚é
+						'---‚©‚ñ‚Î‚ñw¦‘ì¬‰æ–Ê
+						NextScreen.Set("2000")
+				END SELECT
+			END IF
+
+	 WEND
+ End Sub
+
+'*************************************************************************************************************************************************
+'	[2035]Œ‡•i‚©‚ñ‚Î‚ñ“Çæ(w¦‘ÀÑ—L‚è)
+'	ˆø”F‚È‚µ
+'	–ß‚è’lF‚È‚µ
+'*************************************************************************************************************************************************
+ Sub Scrn.KeppinReadKanbanSIJI
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	DIM intRet%
+	DIM flgLoop%
+	DIM pPopRET$
+	Private strHinbanCount$	'–¢‘—MŒ”
+	Private strWhere$(5)[50] 'ƒtƒ@ƒCƒ‹ƒT[ƒ`ğŒ
+	Private strCheckNo$	'd•¡ƒ`ƒFƒbƒNNo
+	Private iSrchCnt&
+	Private strHouso$'•ï‘•'
+	Private strHinban$'•i”Ô'
+	Private strSuryo$'”—Ê'
+
+	WHILE strSyoriHensu$ = "2035"
+		Cls
+
+		'--ŒÅ’è•”•ª
+		'ƒ^ƒCƒgƒ‹•\¦
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "•i”Ô:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "•ï‘•:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "û—e”:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "‘g•t‹æ:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "®—No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 15, "w¦‘:000–‡", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'w¦‘ÀÑæ“¾'
+		if g.intRecSIJI& > 1 Then
+			SIJISK.Get(g.intRecSIJI&)
+		ELSE
+			g.intRecSIJI& = 1
+			SIJISK.Get(g.intRecSIJI&)
+		endif
+		SIText.Print( 6, 5, g.SIJISK.1$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 6, 7, g.SIJISK.2$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 9, Trim$(g.SIJISK.3$), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 11, g.SIJISK.4$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 13, g.SIJISK.5$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIText.Print( 1, 15, "w¦‘:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 15, ZeroUme$(SIJISK.Cnt&,3) + "–‡", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'‰æ–Ê•\¦
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "‚©‚ñ‚Î‚ñ“Çæ         ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'ƒ{ƒ^ƒ“•\¦
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "M1:Œ‡•i      M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'ƒo[ƒWƒ‡ƒ“
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'“ü—Í§Œä
+		strInKey$ = M2.KEY
+
+		'“ü—Í‘Ò‚¿(M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+			If strQR$ <> "" Then
+				'‚©‚ñ‚Î‚ñ‚©ƒ`ƒFƒbƒN
+				If  Len(strQR$) = 119 OR Len(strQR$) = 124 Then
+					'æ“ª4Œ…‚ªJAMA‚©”»’è
+					If Mid$(strQR$,1,4) = "JAMA" Then
+
+						'e‚©‚ñ‚Î‚ñ‚©Ğ“à‚©‚ñ‚Î‚ñ‚©'
+						If  Len(strQR$) = 119 THEN
+							'e‚©‚ñ‚Î‚ñW‰×ÀÑ'
+							EkanbanSplit(strQR$)
+							strHinban$ = g.SYJISK.5$
+							strHouso$ = g.SYJISK.6$
+							strSuryo$ = g.SYJISK.7$
+						ELSE
+							'Ğ“à‚©‚ñ‚Î‚ñW‰×ÀÑ'
+							kanbanSplit(strQR$)
+							strHinban$ = g.SYJISK.16$
+							strHouso$ = g.SYJISK.17$
+							strSuryo$ = g.SYJISK.18$
+						endif
+						'ƒtƒ‰ƒOƒZƒbƒg'
+						flgLoop% = Lc.True
+						'•i”Ôƒ`ƒFƒbƒN'
+						If strHinban$ = g.SIJISK.1$ Then
+							'•ï‘•ƒ`ƒFƒbƒN'
+							If strHouso$ = g.SIJISK.2$ Then
+								'”—Êƒ`ƒFƒbƒN'
+								If strSuryo$ = Trim$(g.SIJISK.3$) Then
+									'---‚¯‚ñ‚Â‚Î“Çæ‰æ–Ê----
+									NextScreen.Set("2040")
+								Else
+									Call NG.Beep
+									SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+									iMsg.Text$(1) = "³F" + g.SIJISK.3$
+									iMsg.Text$(2) = "ŒëF" + strHouso$
+									WHILE flgLoop% = Lc.True
+										intRet% = Lc.True
+										pPopRET$ = SIMsgBox.PopUp$(7, "”—ÊƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+										IF LEN(strQR$) = 10 THEN
+											flgLoop% = Lc.False
+										END IF
+									WEND
+								ENDIF
+							Else
+								Call NG.Beep
+								SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+								iMsg.Text$(1) = "³F" + g.SIJISK.2$
+								iMsg.Text$(2) = "ŒëF" + strHouso$
+								WHILE flgLoop% = Lc.True
+									intRet% = Lc.True
+									pPopRET$ = SIMsgBox.PopUp$(7, "•ï‘•ƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+									IF LEN(strQR$) = 10 THEN
+										flgLoop% = Lc.False
+									END IF
+								WEND
+							ENDIF
+						Else
+							'•i”ÔƒGƒ‰[
+							Call NG.Beep
+							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+							iMsg.Text$(1) = "³F" + g.SIJISK.1$
+							iMsg.Text$(2) = "ŒëF" + strHinban$
+							WHILE flgLoop% = Lc.True
+								intRet% = Lc.True
+								pPopRET$ = SIMsgBox.PopUp$(7, "•i”ÔƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+								IF LEN(strQR$) = 10 THEN
+									flgLoop% = Lc.False
+								END IF
+							WEND
+						END IF
+
+					ELSE
+						'----‚©‚ñ‚Î‚ñ‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "‚©‚ñ‚Î‚ñ"
+						iMsg.Text$(2) = "‚Å‚Í‚ ‚è‚Ü‚¹‚ñ"
+						If SIMsgBox.PopUp$(7, "“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+						Endif
+					END IF
+				ELSE
+					'----‚©‚ñ‚Î‚ñ‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "‚©‚ñ‚Î‚ñ"
+					iMsg.Text$(2) = "‚Å‚Í‚ ‚è‚Ü‚¹‚ñ"
+					If SIMsgBox.PopUp$(7, "“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+					Endif
+				Endif
+
+			ELSE
+				SELECT CASE W$
+
+					CASE M2.KEY	'–ß‚é
+						'---‚©‚ñ‚Î‚ñw¦‘ì¬‰æ–Ê
+						NextScreen.Set("2000")
+				END SELECT
+			END IF
+
+	 WEND
+ End Sub
+
+'*************************************************************************************************************************************************
+'	[2040]‚¯‚ñ‚Â‚Î“Çæ
+'	ˆø”F‚È‚µ
+'	–ß‚è’lF‚È‚µ
+'*************************************************************************************************************************************************
+ Sub Scrn.ReadKentsuba
+
+	DIM W$
+	DIM strDefInKey$[10], strInKey$[10]
+	DIM intRet%
+	DIM flgLoop%
+	DIM pPopRET$
+
+	Private strWhere$(6)[50] 'ƒtƒ@ƒCƒ‹ƒT[ƒ`ğŒ
+	Private strCheckNo$	'd•¡ƒ`ƒFƒbƒNNo
+	Private iSrchCnt&
+	Private strHouso$'•ï‘•'
+	Private strHinban$'•i”Ô'
+	Private strSuryo$'”—Ê'
+	Private strKanbanSyurui$'‚©‚ñ‚Î‚ñí—Ş'
+	Private strTHinban$'“¾ˆÓæ•i”Ô'
+	Private strTHinbanS$'“¾ˆÓæ•i”Ô¯•Ê'
+	Private strID151$	'ID151'
+	Private strID543$	'ID543'
+	Private strID561$	'ID561'
+
+	WHILE strSyoriHensu$ = "2040"
+		Cls
+
+		'--ŒÅ’è•”•ª
+		'ƒ^ƒCƒgƒ‹•\¦
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
+		SIText.Print( 1, 5, "•i”Ô:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 7, "•ï‘•:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 9, "û—e”:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 11, "‘g•t‹æ:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 13, "®—No:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1, 15, "w¦‘:000–‡", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'w¦‘ÀÑæ“¾'
+		if g.intRecSIJI& > 1 Then
+			SIJISK.Get(g.intRecSIJI&)
+		ELSE
+			g.intRecSIJI& = 1
+			SIJISK.Get(g.intRecSIJI&)
+		endif
+		SIText.Print( 6, 5, g.SIJISK.1$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 6, 7, g.SIJISK.2$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 9, Trim$(g.SIJISK.3$), Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 11, g.SIJISK.4$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 13, g.SIJISK.5$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		SIText.Print( 1, 15, "w¦‘:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 8, 15, ZeroUme$(SIJISK.Cnt&,3) + "–‡", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'‰æ–Ê•\¦
+		SIFont.Reset
+		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
+		SIText.Print( 1,20, "ƒgƒŒ[ƒXƒJ[ƒh“Çæ  ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		'ƒ{ƒ^ƒ“•\¦
+		SIFont.Button
+		SIFont.Set(Lc.WAT.NORMAL, HanyouB.ForeColor, HanyouB.BackColor)
+		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+
+		'ƒo[ƒWƒ‡ƒ“
+		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SIFont.Reset
+		'“ü—Í§Œä
+		strInKey$ = M2.KEY
+
+		'“ü—Í‘Ò‚¿(M2 or QR)
+		W$ = FunInpGet$(strInKey$, 1, "Q:")
+
+		If strQR$ <> "" Then
+		strKanbanSyurui$ = SIDensoQR.Decode$(strQR$,"100",2,1)'‚©‚ñ‚Î‚ñí—Ş'
+		strTHinban$ = SIDensoQR.Decode$(strQR$,"101",18,1)'“¾ˆÓæ•i”Ô'
+		strTHinbanS$ = SIDensoQR.Decode$(strQR$,"543",8,1)'“¾ˆÓæ•i”Ô¯•Ê'
+		strID151$ = SIDensoQR.Decode$(strQR$,"151",5,1)
+		strID543$ = SIDensoQR.Decode$(strQR$,"543",8,1)
+		strID561$ = SIDensoQR.Decode$(strQR$,"561",14,1)
+
+
+			'‚¯‚ñ‚Â‚Î‚©ƒ`ƒFƒbƒN
+			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND LEN(strTHinban$) <> 18 AND LEN(strTHinbanS$) <> 14 AND strID151$ = "" AND strID543$ = "" AND strID561$ = "" Then
+				'‚¯‚ñ‚Â‚Îæ“¾'
+				KentsubaSplit(strQR$)
+
+				'd•¡ğŒ(W‰×ÀÑ)'
+				strWhere$(0) = .Equal+Chr$(24) + g.SYJISK.35$		'ƒfƒ“ƒ\[•i”Ô
+				strWhere$(1) = .Equal+Chr$(25) + g.SYJISK.37$		'û—e”
+				strWhere$(2) = .Equal+Chr$(30) + g.SYJISK.30$		'®—No
+				strWhere$(3) = .Equal+Chr$(41) + "OK"		'Æ‡Œ‹‰Ê
+				'W‰×ÀÑƒtƒ@ƒCƒ‹ŒŸõ
+				iSrchCnt& = SYJISK.Srch&(.fcAndSrch, strWhere$, 4, 1, 0)
+				'd•¡ƒ`ƒFƒbƒN
+				If iSrchCnt& < 1 Then
+				strHinban$ = g.SYJISK.35$		'ƒfƒ“ƒ\[•i”Ô'
+				strHouso$ = g.SYJISK.36$		'•ï‘•'
+				strSuryo$ = g.SYJISK.37$		'û—e”'
+
+				'ƒtƒ‰ƒOƒZƒbƒg'
+					flgLoop% = Lc.True
+					'•i”Ôƒ`ƒFƒbƒN'
+					If strHinban$ = g.SIJISK.1$ Then
+						'•ï‘•ƒ`ƒFƒbƒN'
+						If strHouso$ = g.SIJISK.2$ Then
+							'”—Êƒ`ƒFƒbƒN'
+							If Trim$(strSuryo$) = Trim$(g.SIJISK.3$) Then
+								'W‰×ÀÑOK‘‚«‚İ'
+								SyukaWrite("0","OK","")
+								'Œ‡•iW‰×ÀÑ‘‚«‚İ'
+								KeppinWKWrite(g.SYJISK.35$,g.SYJISK.36$,g.SYJISK.37$,g.SYJISK.38$,g.SYJISK.40$)
+								'---W‰×Š®—¹‰æ–Ê
+								NextScreen.Set("2050")
+							Else
+								'W‰×ÀÑNG‘‚«‚İ'
+								SyukaWrite("0","NG","2")
+								Call NG.Beep
+								SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+								iMsg.Text$(1) = "³F" + g.SIJISK.3$
+								iMsg.Text$(2) = "ŒëF" + strHouso$
+								WHILE flgLoop% = Lc.True
+									intRet% = Lc.True
+									pPopRET$ = SIMsgBox.PopUp$(7, "”—ÊƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+									IF LEN(strQR$) = 10 THEN
+										flgLoop% = Lc.False
+									END IF
+								WEND
+							ENDIF
+						Else
+							'W‰×ÀÑNG‘‚«‚İ'
+							SyukaWrite("0","NG","1")
+							Call NG.Beep
+							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+							iMsg.Text$(1) = "³F" + g.SIJISK.2$
+							iMsg.Text$(2) = "ŒëF" + strHouso$
+							WHILE flgLoop% = Lc.True
+								intRet% = Lc.True
+								pPopRET$ = SIMsgBox.PopUp$(7, "•ï‘•ƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+								IF LEN(strQR$) = 10 THEN
+									flgLoop% = Lc.False
+								END IF
+							WEND
+						ENDIF
+					Else
+						'W‰×ÀÑNG‘‚«‚İ'
+						SyukaWrite("0","NG","0")
+						'•i”ÔƒGƒ‰[
+						Call NG.Beep
+						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+						iMsg.Text$(1) = "³F" + g.SIJISK.1$
+						iMsg.Text$(2) = "ŒëF" + strHinban$
+						WHILE flgLoop% = Lc.True
+							intRet% = Lc.True
+							pPopRET$ = SIMsgBox.PopUp$(7, "•i”ÔƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+							IF LEN(strQR$) = 10 THEN
+								flgLoop% = Lc.False
+							END IF
+						WEND
+					END IF
+
+				ELSE
+					'----ƒgƒŒ[ƒXƒJ[ƒh‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
+					Call NG.Beep
+					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+					iMsg.Text$(1) = "“ÇæÏ‚İ‚Ì"
+					iMsg.Text$(2) = "‚¯‚ñ‚Â‚Î‚Å‚·"
+					If SIMsgBox.PopUp$(7, "d•¡“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
+					Endif
+				END IF
+			ELSE
+				'----ƒgƒŒ[ƒXƒJ[ƒh‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
+				Call NG.Beep
+				SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
+				iMsg.Text$(1) = "Œ‡•i‚¯‚ñ‚Â‚Î"
 				iMsg.Text$(2) = "‚Å‚Í‚ ‚è‚Ü‚¹‚ñ"
 				If SIMsgBox.PopUp$(7, "“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
 				Endif

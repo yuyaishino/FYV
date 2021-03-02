@@ -151,6 +151,18 @@ DEFINE	'定数定義
 		CASE "2020"
 			Scrn.ReadTraceCard
 
+		'欠品かんばん読取(指示書実績無し)
+		CASE "2030"
+			Scrn.KeppinReadKanban
+
+		'欠品かんばん読取(指示書実績有り)
+		CASE "2035"
+			Scrn.KeppinReadKanbanSIJI
+
+		'けんつば読取
+		CASE "2040"
+			Scrn.ReadKentsuba
+
 		END SELECT
 
 	WEND
