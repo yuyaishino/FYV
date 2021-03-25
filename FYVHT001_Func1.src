@@ -82,15 +82,18 @@
 '********************************************************************************
 ' けんつば分割
 '	引数：QR情報
+'				得意先品番桁数
+'				得意先品番識別桁数
+'				収容数桁数
 '********************************************************************************
- Sub KentsubaSplit(strQR$)
+ Sub KentsubaSplit(strQR$,intThinban&,intThinbanS&,intSyuyo&)
 
-	g.SYJISK.33$ = SIDensoQR.Decode$(strQR$,"101",18,1)		'得意先品番
-	g.SYJISK.34$ = SIDensoQR.Decode$(strQR$,"102",14,1)		'得意先品番識別－１
+	g.SYJISK.33$ = SIDensoQR.Decode$(strQR$,"101",intThinban&,1)		'得意先品番
+	g.SYJISK.34$ = SIDensoQR.Decode$(strQR$,"102",intThinbanS&,1)		'得意先品番識別－１
 	g.SYJISK.35$ = SIDensoQR.Decode$(strQR$,"104",10,1)		'ﾃﾞﾝｿｰ品番
 	g.SYJISK.36$ = SIDensoQR.Decode$(strQR$,"111",2,1)		'包装区分
-	g.SYJISK.37$ = SIDensoQR.Decode$(strQR$,"112",3,1)		'収容数
-	g.SYJISK.38$ = SIDensoQR.Decode$(strQR$,"121",6,1)		'組付区(又は組付ﾗｲﾝ)
+	g.SYJISK.37$ = SIDensoQR.Decode$(strQR$,"112",intSyuyo&,1)		'収容数
+	g.SYJISK.38$ = SIDensoQR.Decode$(strQR$,"121",5,1)		'組付区(又は組付ﾗｲﾝ)
 	g.SYJISK.39$ = SIDensoQR.Decode$(strQR$,"132",1,1)		'実績計上区分
 	g.SYJISK.40$ = SIDensoQR.Decode$(strQR$,"152",4,1)		'整理No
 
@@ -165,5 +168,44 @@
 	g.KEJISK.6$ = strKumiku$		'組付区'
 	g.KEJISK.7$ = strSeiriNo$		'整理No'
 	KEJISK.Put(0)
+
+ End Sub
+
+
+'********************************************************************************
+' 欠品集荷社内かんばん分割
+'	引数：QR情報
+'********************************************************************************
+ Sub KeppinkanbanSplit(strQR$)
+
+	g.SYJISK.13$ = SIDensoQR.Decode$(strQR$,"100",2,1)	'かんばん種類
+	g.SYJISK.14$ = SIDensoQR.Decode$(strQR$,"101",18,1)	'得意先品番
+	g.SYJISK.15$ = SIDensoQR.Decode$(strQR$,"102",14,1)	'得意先品番識別－１
+	g.SYJISK.16$ = SIDensoQR.Decode$(strQR$,"104",10,1)	'ﾃﾞﾝｿｰ品番
+	g.SYJISK.17$ = SIDensoQR.Decode$(strQR$,"111",2,1)	'包装区分
+	g.SYJISK.18$ = SIDensoQR.Decode$(strQR$,"112",3,1)	'収容数
+	g.SYJISK.19$ = SIDensoQR.Decode$(strQR$,"121",6,1)	'組付区(又は組付ﾗｲﾝ)
+	g.SYJISK.20$ = SIDensoQR.Decode$(strQR$,"132",1,1)	'実績計上区分
+	g.SYJISK.21$ = SIDensoQR.Decode$(strQR$,"152",4,1)	'整理№
+
+ End Sub
+
+
+'********************************************************************************
+' 欠品集荷グローバル変数取得
+'	引数：品番
+'			包装'
+'			数量'
+'			組付区'
+'			整理No'
+'********************************************************************************
+ Sub KeppinGlobal(strHinban$,strHousou$,strSuryo$,strKumitsuke$,strkeppinSeir$)
+
+	g.strKeppinHinban$ = strHinban$
+	g.strKeppinHouso$ = strHousou$
+	g.strKeppinSyuyo$ = strSuryo$
+	g.strKeppinKumitsukeku$ = strKumitsuke$
+	g.strKeppinSeiriNo$ = strkeppinSeir$
+
 
  End Sub

@@ -9,9 +9,10 @@
 	const MainMenu.NAME$   =    "製品集荷照合システム"
 	const Shokuban.NAME$   =    "    製品集荷照合    "
 	const SyukaMenu.NAME$   =    "    集荷作業    "
-	const NyukoMenu.NAME$   = "    入庫作業    "
-	const YuhaisoMenu.NAME$  = "    輸配送仕分け    "
-	const ZissekiSend.NAME$  = "販社商材倉庫システム"
+	const ShiziSyuka.NAME$   =    "    指示集荷作業    "
+	const KeppinSyuka.NAME$   =    "    欠品集荷作業    "
+	const KeppinDelete.NAME$   =    "    欠品削除    "
+	const ZissekiSend.NAME$  = "    製品集荷照合    "
 
 
 
@@ -38,6 +39,21 @@
   Public g.strWorkUser$
 
 	'品番'
+	Public g.strHinban$
+
+	'包装'
+	Public g.strHouso$
+
+	'収容数'
+	Public g.strSyuyo$
+
+	'組付区'
+	Public g.strKumitsukeku$
+
+	'整理No'
+	Public g.strSeiriNo$
+
+	'品番'
 	Public g.strSiziHinban$
 
 	'包装'
@@ -52,6 +68,26 @@
 	'整理No'
 	Public g.strSiziSeiriNo$
 
+	'欠品品番'
+	Public g.strKeppinHinban$
+
+	'欠品包装'
+	Public g.strKeppinHouso$
+
+	'欠品収容数'
+	Public g.strKeppinSyuyo$
+
+	'欠品組付区'
+	Public g.strKeppinKumitsukeku$
+
+	'欠品整理No'
+	Public g.strKeppinSeiriNo$
+
+	'欠品No'
+	Public g.intKeppinNo&
+
+	'欠品削除ページNo'
+	Public g.intDeletePageNo&
 
 	'ポップアップテキスト
 	Public iMsg.Text$(9)
@@ -61,3 +97,21 @@
 
 	'エラーコード
 	Public g.intFail%
+
+	'ページフラグ
+	Public g.intFlg&
+
+	'ページ最大数
+	Public g.intMaxP&
+
+	'ページ番号
+	Public g.intPage&
+
+	'削除対象'
+	Public g.intDeleteNumber&
+
+	'設定'
+	Public g.strSetting$
+
+	'遷移画面番号'
+	Public g.strStageNo$

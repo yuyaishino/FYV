@@ -23,7 +23,7 @@
 	'集荷実績
 	Const	SYJISK.FNo = 1
 	Public SYJISK.FileNm$	: SYJISK.FileNm$ = "FYVSYJIS.DAT"
-	Public SYJISK.Field$[100]	: SYJISK.Field$ = "7,14,1,10,10,2,3,4,2,4,4,4,2,18,14,10,2,3,6,1,4,18,14,10,2,3,6,1,5,4,8,14,18,14,10,2,3,5,1,4,2,1"
+	Public SYJISK.Field$[100]	: SYJISK.Field$ = "7,14,1,10,10,2,3,4,2,8,4,4,2,18,14,10,2,3,6,1,4,18,14,10,2,3,6,1,5,4,8,14,18,14,10,2,4,5,1,4,2,1"
 
 	Public  g.SYJISK.1$[7]		'作業者ID
 	Public  g.SYJISK.2$[14]		'照合日時
@@ -34,7 +34,7 @@
 	Public  g.SYJISK.7$[3]		'数量
 	Public  g.SYJISK.8$[4]		'整理番号
 	Public  g.SYJISK.9$[2]		'受入
-	Public  g.SYJISK.10$[4]		'納入日
+	Public  g.SYJISK.10$[8]		'納入日
 	Public  g.SYJISK.11$[4]		'納入便
 	Public  g.SYJISK.12$[4]		'背番号
 	Public  g.SYJISK.13$[2]		'かんばん種類
@@ -61,7 +61,7 @@
 	Public  g.SYJISK.34$[14]		'得意先品番識別－１
 	Public  g.SYJISK.35$[10]		'ﾃﾞﾝｿｰ品番
 	Public  g.SYJISK.36$[2]		'包装区分
-	Public  g.SYJISK.37$[3]		'収容数
+	Public  g.SYJISK.37$[4]		'収容数
 	Public  g.SYJISK.38$[5]		'組付区(又は組付ﾗｲﾝ)
 	Public  g.SYJISK.39$[1]		'実績計上区分
 	Public  g.SYJISK.40$[4]		'整理№
@@ -77,7 +77,7 @@
 	Private f.SYJISK.7$[3]		'数量
 	Private f.SYJISK.8$[4]		'整理番号
 	Private f.SYJISK.9$[2]		'受入
-	Private f.SYJISK.10$[4]		'納入日
+	Private f.SYJISK.10$[8]		'納入日
 	Private f.SYJISK.11$[4]		'納入便
 	Private f.SYJISK.12$[4]		'背番号
 	Private f.SYJISK.13$[2]		'かんばん種類
@@ -104,7 +104,7 @@
 	Private f.SYJISK.34$[14]		'得意先品番識別－１
 	Private f.SYJISK.35$[10]		'ﾃﾞﾝｿｰ品番
 	Private f.SYJISK.36$[2]		'包装区分
-	Private f.SYJISK.37$[3]		'収容数
+	Private f.SYJISK.37$[4]		'収容数
 	Private f.SYJISK.38$[5]		'組付区(又は組付ﾗｲﾝ)
 	Private f.SYJISK.39$[1]		'実績計上区分
 	Private f.SYJISK.40$[4]		'整理№
@@ -114,7 +114,7 @@
 	'集荷実績WK
 	Const	SYJskWK.FNo = 2
 	Public SYJskWK.FileNm$	: SYJskWK.FileNm$ = "FYVSYJWK.DAT"
-	Public SYJskWK.Field$[100]	: SYJskWK.Field$ = "7,14,1,10,10,2,3,4,2,4,4,18,14,10,2,3,6,1,4,18,14,10,2,3,6,1,5,4,8,14,18,14,10,2,3,5,1,4,2,1"
+	Public SYJskWK.Field$[100]	: SYJskWK.Field$ = "7,14,1,10,10,2,3,4,2,8,4,4,2,18,14,10,2,3,6,1,4,18,14,10,2,3,6,1,5,4,8,14,18,14,10,2,4,5,1,4"
 
 	Public  g.SYJskWK.1$[7]		'作業者ID
 	Public  g.SYJskWK.2$[14]		'照合日時
@@ -125,37 +125,37 @@
 	Public  g.SYJskWK.7$[3]		'数量
 	Public  g.SYJskWK.8$[4]		'整理番号
 	Public  g.SYJskWK.9$[2]		'受入
-	Public  g.SYJskWK.10$[4]		'納入日
+	Public  g.SYJskWK.10$[8]		'納入日
 	Public  g.SYJskWK.11$[4]		'納入便
-	Public  g.SYJskWK.12$[18]		'得意先品番
-	Public  g.SYJskWK.13$[14]		'得意先品番識別－１
-	Public  g.SYJskWK.14$[10]		'ﾃﾞﾝｿｰ品番
-	Public  g.SYJskWK.15$[2]		'包装区分
-	Public  g.SYJskWK.16$[3]		'収容数
-	Public  g.SYJskWK.17$[6]		'組付区(又は組付ﾗｲﾝ)
-	Public  g.SYJskWK.18$[1]		'実績計上区分
-	Public  g.SYJskWK.19$[4]		'整理№
-	Public  g.SYJskWK.20$[18]		'得意先品番
-	Public  g.SYJskWK.21$[14]		'得意先品番識別－１
-	Public  g.SYJskWK.22$[10]		'ﾃﾞﾝｿｰ品番
-	Public  g.SYJskWK.23$[2]		'包装区分
-	Public  g.SYJskWK.24$[3]		'収容数
-	Public  g.SYJskWK.25$[6]		'組付区(又は組付ﾗｲﾝ)
-	Public  g.SYJskWK.26$[1]		'実績計上区分
-	Public  g.SYJskWK.27$[5]		'製品ロケーション№
-	Public  g.SYJskWK.28$[4]		'整理№
-	Public  g.SYJskWK.29$[8]		'ﾄﾚｰｽID
-	Public  g.SYJskWK.30$[14]		'発行年月日時
-	Public  g.SYJskWK.31$[18]		'得意先品番
-	Public  g.SYJskWK.32$[14]		'得意先品番識別－１
-	Public  g.SYJskWK.33$[10]		'ﾃﾞﾝｿｰ品番
-	Public  g.SYJskWK.34$[2]		'包装区分
-	Public  g.SYJskWK.35$[3]		'収容数
-	Public  g.SYJskWK.36$[5]		'組付区(又は組付ﾗｲﾝ)
-	Public  g.SYJskWK.37$[1]		'実績計上区分
-	Public  g.SYJskWK.38$[4]		'整理№
-	Public  g.SYJskWK.39$[2]		'照合結果
-	Public  g.SYJskWK.40$[1]		'NG理由
+	Public  g.SYJskWK.12$[4]		'背番号
+	Public  g.SYJskWK.13$[2]		'かんばん種類
+	Public  g.SYJskWK.14$[18]		'得意先品番
+	Public  g.SYJskWK.15$[14]		'得意先品番識別－１
+	Public  g.SYJskWK.16$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJskWK.17$[2]		'包装区分
+	Public  g.SYJskWK.18$[3]		'収容数
+	Public  g.SYJskWK.19$[6]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJskWK.20$[1]		'実績計上区分
+	Public  g.SYJskWK.21$[4]		'整理№
+	Public  g.SYJskWK.22$[18]		'得意先品番
+	Public  g.SYJskWK.23$[14]		'得意先品番識別－１
+	Public  g.SYJskWK.24$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJskWK.25$[2]		'包装区分
+	Public  g.SYJskWK.26$[3]		'収容数
+	Public  g.SYJskWK.27$[6]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJskWK.28$[1]		'実績計上区分
+	Public  g.SYJskWK.29$[5]		'製品ロケーション№
+	Public  g.SYJskWK.30$[4]		'整理№
+	Public  g.SYJskWK.31$[8]		'ﾄﾚｰｽID
+	Public  g.SYJskWK.32$[14]		'発行年月日時
+	Public  g.SYJskWK.33$[18]		'得意先品番
+	Public  g.SYJskWK.34$[14]		'得意先品番識別－１
+	Public  g.SYJskWK.35$[10]		'ﾃﾞﾝｿｰ品番
+	Public  g.SYJskWK.36$[2]		'包装区分
+	Public  g.SYJskWK.37$[4]		'収容数
+	Public  g.SYJskWK.38$[5]		'組付区(又は組付ﾗｲﾝ)
+	Public  g.SYJskWK.39$[1]		'実績計上区分
+	Public  g.SYJskWK.40$[4]		'整理№
 
 	Private f.SYJskWK.1$[7]		'作業者ID
 	Private f.SYJskWK.2$[14]		'照合日時
@@ -166,48 +166,48 @@
 	Private f.SYJskWK.7$[3]		'数量
 	Private f.SYJskWK.8$[4]		'整理番号
 	Private f.SYJskWK.9$[2]		'受入
-	Private f.SYJskWK.10$[4]		'納入日
+	Private f.SYJskWK.10$[8]		'納入日
 	Private f.SYJskWK.11$[4]		'納入便
-	Private f.SYJskWK.12$[18]		'得意先品番
-	Private f.SYJskWK.13$[14]		'得意先品番識別－１
-	Private f.SYJskWK.14$[10]		'ﾃﾞﾝｿｰ品番
-	Private f.SYJskWK.15$[2]		'包装区分
-	Private f.SYJskWK.16$[3]		'収容数
-	Private f.SYJskWK.17$[6]		'組付区(又は組付ﾗｲﾝ)
-	Private f.SYJskWK.18$[1]		'実績計上区分
-	Private f.SYJskWK.19$[4]		'整理№
-	Private f.SYJskWK.20$[18]		'得意先品番
-	Private f.SYJskWK.21$[14]		'得意先品番識別－１
-	Private f.SYJskWK.22$[10]		'ﾃﾞﾝｿｰ品番
-	Private f.SYJskWK.23$[2]		'包装区分
-	Private f.SYJskWK.24$[3]		'収容数
-	Private f.SYJskWK.25$[6]		'組付区(又は組付ﾗｲﾝ)
-	Private f.SYJskWK.26$[1]		'実績計上区分
-	Private f.SYJskWK.27$[5]		'製品ロケーション№
-	Private f.SYJskWK.28$[4]		'整理№
-	Private f.SYJskWK.29$[8]		'ﾄﾚｰｽID
-	Private f.SYJskWK.30$[14]		'発行年月日時
-	Private f.SYJskWK.31$[18]		'得意先品番
-	Private f.SYJskWK.32$[14]		'得意先品番識別－１
-	Private f.SYJskWK.33$[10]		'ﾃﾞﾝｿｰ品番
-	Private f.SYJskWK.34$[2]		'包装区分
-	Private f.SYJskWK.35$[3]		'収容数
-	Private f.SYJskWK.36$[5]		'組付区(又は組付ﾗｲﾝ)
-	Private f.SYJskWK.37$[1]		'実績計上区分
-	Private f.SYJskWK.38$[4]		'整理№
-	Private f.SYJskWK.39$[2]		'照合結果
-	Private f.SYJskWK.40$[1]		'NG理由
+	Private f.SYJskWK.12$[4]		'背番号
+	Private f.SYJskWK.13$[2]		'かんばん種類
+	Private f.SYJskWK.14$[18]		'得意先品番
+	Private f.SYJskWK.15$[14]		'得意先品番識別－１
+	Private f.SYJskWK.16$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJskWK.17$[2]		'包装区分
+	Private f.SYJskWK.18$[3]		'収容数
+	Private f.SYJskWK.19$[6]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJskWK.20$[1]		'実績計上区分
+	Private f.SYJskWK.21$[4]		'整理№
+	Private f.SYJskWK.22$[18]		'得意先品番
+	Private f.SYJskWK.23$[14]		'得意先品番識別－１
+	Private f.SYJskWK.24$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJskWK.25$[2]		'包装区分
+	Private f.SYJskWK.26$[3]		'収容数
+	Private f.SYJskWK.27$[6]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJskWK.28$[1]		'実績計上区分
+	Private f.SYJskWK.29$[5]		'製品ロケーション№
+	Private f.SYJskWK.30$[4]		'整理№
+	Private f.SYJskWK.31$[8]		'ﾄﾚｰｽID
+	Private f.SYJskWK.32$[14]		'発行年月日時
+	Private f.SYJskWK.33$[18]		'得意先品番
+	Private f.SYJskWK.34$[14]		'得意先品番識別－１
+	Private f.SYJskWK.35$[10]		'ﾃﾞﾝｿｰ品番
+	Private f.SYJskWK.36$[2]		'包装区分
+	Private f.SYJskWK.37$[4]		'収容数
+	Private f.SYJskWK.38$[5]		'組付区(又は組付ﾗｲﾝ)
+	Private f.SYJskWK.39$[1]		'実績計上区分
+	Private f.SYJskWK.40$[4]		'整理№
 
 	'欠品集荷実績WK
 	Const	KEJISK.FNo = 3
 	Public KEJISK.FileNm$	: KEJISK.FileNm$ = "FYVKEJWK.DAT"
-	Public KEJISK.Field$[100]	: KEJISK.Field$ = "7,14,10,2,3,6,4"
+	Public KEJISK.Field$[100]	: KEJISK.Field$ = "7,14,10,2,4,6,4"
 
 	Public  g.KEJISK.1$[7]		'作業者ID
 	Public  g.KEJISK.2$[14]		'照合日時
 	Public  g.KEJISK.3$[10]		'デンソー品番
 	Public  g.KEJISK.4$[2]		'包装
-	Public  g.KEJISK.5$[3]		'収容数
+	Public  g.KEJISK.5$[4]		'収容数
 	Public  g.KEJISK.6$[6]		'組付区(又は組付ﾗｲﾝ)
 	Public  g.KEJISK.7$[4]		'整理№
 
@@ -215,7 +215,7 @@
 	Private f.KEJISK.2$[14]		'照合日時
 	Private f.KEJISK.3$[10]		'デンソー品番
 	Private f.KEJISK.4$[2]		'包装
-	Private f.KEJISK.5$[3]		'収容数
+	Private f.KEJISK.5$[4]		'収容数
 	Private f.KEJISK.6$[6]		'組付区(又は組付ﾗｲﾝ)
 	Private f.KEJISK.7$[4]		'整理№
 
@@ -282,7 +282,7 @@
 			3 AS f.SYJISK.7$, _
 			4 AS f.SYJISK.8$, _
 			2 AS f.SYJISK.9$, _
-			4 AS f.SYJISK.10$, _
+			8 AS f.SYJISK.10$, _
 			4 AS f.SYJISK.11$, _
 			4 AS f.SYJISK.12$, _
 			2 AS f.SYJISK.13$, _
@@ -309,7 +309,7 @@
 			14 AS f.SYJISK.34$, _
 			10 AS f.SYJISK.35$, _
 			2 AS f.SYJISK.36$, _
-			3 AS f.SYJISK.37$, _
+			4 AS f.SYJISK.37$, _
 			5 AS f.SYJISK.38$, _
 			1 AS f.SYJISK.39$, _
 			4 AS f.SYJISK.40$, _
@@ -663,37 +663,37 @@
 			3 AS f.SYJskWK.7$, _
 			4 AS f.SYJskWK.8$, _
 			2 AS f.SYJskWK.9$, _
-			4 AS f.SYJskWK.10$, _
+			8 AS f.SYJskWK.10$, _
 			4 AS f.SYJskWK.11$, _
-			18 AS f.SYJskWK.12$, _
-			14 AS f.SYJskWK.13$, _
-			10 AS f.SYJskWK.14$, _
-			2 AS f.SYJskWK.15$, _
-			3 AS f.SYJskWK.16$, _
-			6 AS f.SYJskWK.17$, _
-			1 AS f.SYJskWK.18$, _
-			4 AS f.SYJskWK.19$, _
-			18 AS f.SYJskWK.20$, _
-			14 AS f.SYJskWK.21$, _
-			10 AS f.SYJskWK.22$, _
-			2 AS f.SYJskWK.23$, _
-			3 AS f.SYJskWK.24$, _
-			6 AS f.SYJskWK.25$, _
-			1 AS f.SYJskWK.26$, _
-			5 AS f.SYJskWK.27$, _
-			4 AS f.SYJskWK.28$, _
-			8 AS f.SYJskWK.29$, _
-			14 AS f.SYJskWK.30$, _
-			18 AS f.SYJskWK.31$, _
+			4 AS f.SYJskWK.12$, _
+			2 AS f.SYJskWK.13$, _
+			18 AS f.SYJskWK.14$, _
+			14 AS f.SYJskWK.15$, _
+			10 AS f.SYJskWK.16$, _
+			2 AS f.SYJskWK.17$, _
+			3 AS f.SYJskWK.18$, _
+			6 AS f.SYJskWK.19$, _
+			1 AS f.SYJskWK.20$, _
+			4 AS f.SYJskWK.21$, _
+			18 AS f.SYJskWK.22$, _
+			14 AS f.SYJskWK.23$, _
+			10 AS f.SYJskWK.24$, _
+			2 AS f.SYJskWK.25$, _
+			3 AS f.SYJskWK.26$, _
+			6 AS f.SYJskWK.27$, _
+			1 AS f.SYJskWK.28$, _
+			5 AS f.SYJskWK.29$, _
+			4 AS f.SYJskWK.30$, _
+			8 AS f.SYJskWK.31$, _
 			14 AS f.SYJskWK.32$, _
-			10 AS f.SYJskWK.33$, _
-			2 AS f.SYJskWK.34$, _
-			3 AS f.SYJskWK.35$, _
-			5 AS f.SYJskWK.36$, _
-			1 AS f.SYJskWK.37$, _
-			4 AS f.SYJskWK.38$, _
-			2 AS f.SYJskWK.39$, _
-			1 AS f.SYJskWK.40$
+			18 AS f.SYJskWK.33$, _
+			14 AS f.SYJskWK.34$, _
+			10 AS f.SYJskWK.35$, _
+			2 AS f.SYJskWK.36$, _
+			4 AS f.SYJskWK.37$, _
+			5 AS f.SYJskWK.38$, _
+			1 AS f.SYJskWK.39$, _
+			4 AS f.SYJskWK.40$
 	End Sub
 
 '********************************************************************************
@@ -1029,7 +1029,7 @@
 			14 AS f.KEJISK.2$, _
 			10 AS f.KEJISK.3$, _
 			2 AS f.KEJISK.4$, _
-			3 AS f.KEJISK.5$, _
+			4 AS f.KEJISK.5$, _
 			6 AS f.KEJISK.6$, _
 			4 AS f.KEJISK.7$
 	End Sub

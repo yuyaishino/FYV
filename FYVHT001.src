@@ -147,6 +147,10 @@ DEFINE	'定数定義
 		CASE "2015"
 			Scrn.ReadKanbanSIJI
 
+		'指示一覧
+		CASE "2016"
+			Scrn.SijiList
+
 		'トレース読取
 		CASE "2020"
 			Scrn.ReadTraceCard
@@ -163,6 +167,60 @@ DEFINE	'定数定義
 		CASE "2040"
 			Scrn.ReadKentsuba
 
+		'集荷完了
+		CASE "2050"
+			Scrn.SyukaComplete
+
+		'指示QR読取
+		CASE "3000"
+			Scrn.SijiSyuka
+
+		'指示集荷完了
+		CASE "3010"
+			Scrn.SyukaSijiComplete
+
+		'欠品集荷かんばん読取
+		CASE "4000"
+			Scrn.KeppinSyukaReadKanban
+
+		'欠品集荷トレースカード読取
+		CASE "4010"
+				Scrn.KeppinReadTraceCard
+
+		'欠品集荷読取完了
+		CASE "4020"
+				Scrn.KeppinSyukaComplete
+
+		'欠品詳細
+		CASE "5000"
+				Scrn.KeppinDelete
+
+		'欠品削除
+		CASE "5010"
+				Scrn.KeppinDeleteDetail
+
+		'欠品削除完了
+		CASE "5011"
+				Scrn.KeppinDeleteDetailComplete
+
+		'集荷実績送信確認
+		CASE "6000"
+				Scrn.SendSyuka
+ 		'送信中
+		CASE "6010"
+				Scrn.SendingSyuka
+
+		'送信完了
+		CASE "6011"
+				Scrn.SendSyukaComplete
+
+		'送信失敗
+		CASE "6012"
+				Scrn.SendSyukaFailed
+
+		'設定
+		CASE "7000"
+				Scrn.SettingMenu
 		END SELECT
 
 	WEND
