@@ -50,7 +50,7 @@ f' 
 '*******************************************************************************
  Sub Scrn.MainMenu
 	DIM W$
-	DIM strDefInKey$[10], strInKey$[10]
+	DIM strDefInKey$[10], strInKey$[15]
 	DIM strListData$(8)[25]
 	DIM intListCnt%
 
@@ -60,7 +60,20 @@ f' 
 		g.strSetting$ = "1"
 	endif
 
+	'’S“–Ò‚ª“ü‚Á‚Ä‚¢‚½‚ç'
+	if WUJskWk.Cnt& > 0 THEN
+		WUJskWk.Get(0)
+		g.strWorkUser$ = g.WUJskWk.1$
+	endif
+
+	'İ’è’l‚ª“ü‚Á‚Ä‚¢‚½‚ç'
+	if SEJskWk.Cnt& > 0 THEN
+		SEJskWk.Get(0)
+		g.strSetting$ = g.SEJskWk.1$
+	endif
+
 	'ÒÆ­°€–Ú‚ğ“o˜^
+	strDefInKey$ = "1"
 	strListData$(1) = "‚P:’S“–Ò“ü—Í       1"
 	IF g.strWorkUser$ = "" Then
 		strListData$(2) = "                     "
@@ -72,35 +85,43 @@ f' 
 		ELSE
 			strListData$(2) = "‚Q:W‰×ì‹Æ         2"
 		endif
-
 		strListData$(3) = "‚R:w¦W‰×ì‹Æ     3"
+		strDefInKey$ = strDefInKey$ + "23"
+
 		IF KEJISK.Cnt& > 0 Then
 			strListData$(4) = "‚S:Œ‡•iW‰×ì‹Æ     4"
+			strDefInKey$ = strDefInKey$ + "4"
 		ELSE
 			strListData$(4) = "                    "
 		endif
 	END IF
 	IF KEJISK.Cnt& > 0 Then
 		strListData$(5) = "‚T:Œ‡•iíœ         5"
+		strDefInKey$ = strDefInKey$ + "5"
 	ELSE
 		strListData$(5) = "                    "
 	endif
 
 	IF SYJISK.Cnt& > 0 Then
 		strListData$(6) = "‚U:W‰×ÀÑ‘—M     6"
+		strDefInKey$ = strDefInKey$ + "6"
 	Else
 		strListData$(6) = "                    "
 	Endif
 
-	strListData$(7) = "‚V:İ’è             7"
-	strListData$(8) = "‚X:I—¹             9"
+	if SIJISK.Cnt& > 0 THEN
+		strListData$(7) = "                    "
+	Else
+		strListData$(7) = "‚V:İ’è             7"
+		strDefInKey$ = strDefInKey$ + "7"
+	Endif
 
+	strListData$(8) = "‚X:I—¹             9"
+	strDefInKey$ = strDefInKey$ + "9"
 
 	'ÒÆ­°€–Ú”
-	intListCnt% = 9
+	intListCnt% = 8
 
-	'ƒL[“o˜^
-	strDefInKey$ = "12345679"
 
 	SIList.Cursor& = 1		'”z—ñ“à‚ÌƒJ[ƒ\ƒ‹‚Ìs
 	SIList.TopPos& = 1		'ƒXƒNƒŠ[ƒ“‚ÌTOPs
@@ -114,14 +135,15 @@ f' 
 
 		Cls
 
+
 		'ƒ^ƒCƒgƒ‹•\¦
 		CALL SetTitle(MainMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
 
 		'ƒTƒuƒ^ƒCƒgƒ‹•\¦
-		SIText.Print(1,3, "ÒÆ­°                ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		SIText.Print(1,3, "ƒƒjƒ…[            ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print(14, 3, g.strWorkUser$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 
 		'ƒ{ƒ^ƒ“•\¦
 		SIFont.Button
@@ -130,7 +152,8 @@ f' 
 		SIText.Print( 1,24, "M1:Šm’è             ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIFont.Reset
 		'ƒŠƒXƒg•\¦ & “ü—Í‘Ò‚¿
-		strInKey$ = strInKey$ + M1.KEY + ENT.KEY
+		strInKey$ = strInKey$ + M1.KEY + ENT.KEY + SFF1.KEY + SFF2.KEY
+		'strInKey$ = strInKey$ + M1.KEY + ENT.KEY
 		W$ = SIList$( 1, 6, 8, 20, strListData$, intListCnt%, strInKey$)
 
 		'ƒL[“ü—ÍŠm”F
@@ -192,11 +215,21 @@ f' 
 			CASE "7"  'İ’è
 				'[7000]İ’è
 				NextScreen.Set("7000")
-
 			CASE "9"  'I—¹
 				'[9999]I—¹
 				NextScreen.Set("9999")
 
+			'‰B‚µºÏİÄŞuSISET.PD4v‚ğ‹N“®
+			Case SFF1.KEY
+				If fRecCount&("SISET.PD4") <> -1 Then
+					CHAIN "SISET.PD4"
+				Endif
+
+			'‰B‚µºÏİÄŞuSIVerCtl.PD4v‚ğ‹N“®
+			Case SFF2.KEY
+				If fRecCount&("SIVerCtl.PD4") <> -1 Then
+					CHAIN "SIVerCtl.PD4"
+				Endif
 		END SELECT
 	WEND
 
@@ -237,7 +270,7 @@ f' 
 		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1,24, "M1:Šm’è      M2:ÒÆ­°", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 
 		SIFont.Reset
 
@@ -251,7 +284,12 @@ f' 
 			'----- QR“ü—Í -----
 			'’S“–ÒQR‚©ƒ`ƒFƒbƒN(Œ…”:7)
 			IF Len(strQR$) = 7 THEN
+				'’S“–ÒÁ‚·'
+				WUJskWk.Kill
 				g.strWorkUser$ = strQR$
+				g.WUJskWk.1$ = strQR$
+				'’S“–Ò“ü‚ê‚é'
+				WUJskWk.Put(0)
 				'ƒƒjƒ…[
 				NextScreen.Set("0000")
 			ELSE
@@ -276,7 +314,13 @@ f' 
 					'“ü—Íƒ`ƒFƒbƒN(Œ…”:7)
 					IF Len(strKEY$) = 7 THEN
 						'----- ƒ`ƒFƒbƒNOK -----
-						g.strWorkUser$ = strKEY$		'’S“–ÒNo
+						'g.strWorkUser$ = strKEY$		'’S“–ÒNo
+						'’S“–ÒÁ‚·'
+						WUJskWk.Kill
+						g.strWorkUser$ = strKEY$
+						g.WUJskWk.1$ = strKEY$
+						'’S“–Ò“ü‚ê‚é'
+						WUJskWk.Put(0)
 						'ƒƒjƒ…[
 						NextScreen.Set("0000")
 					ELSE
@@ -360,7 +404,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -555,7 +599,7 @@ f' 
 
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M1.KEY + M2.KEY
@@ -721,7 +765,7 @@ f' 
 		SIText.Print( 1,24, "M1:Œ‡•i      M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M1.KEY + M2.KEY
@@ -788,6 +832,8 @@ f' 
 						If iSrchCnt& < 1 Then
 							'Œ‡•iÀÑ‚Éƒf[ƒ^—L‚è'
 							If iSrchCnt2& < 1  Then
+								'‘JˆÚ”Ô†'
+								g.strStageNo2$ = "2010"
 								'w¦‘ÀÑ‚È‚µ'
 								g.intFlg& = 1
 								'---ƒgƒŒ[ƒX“Çæ----
@@ -845,8 +891,8 @@ f' 
 						END IF
 
 					CASE M2.KEY	'–ß‚é
-						'---‚©‚ñ‚Î‚ñw¦‘ì¬‰æ–Ê
-						NextScreen.Set("2000")
+						'---ƒƒjƒ…[
+						NextScreen.Set("0000")
 				END SELECT
 			END IF
 
@@ -916,7 +962,7 @@ f' 
 		SIText.Print( 1,24, "M1:Œ‡•i      M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M1.KEY + M2.KEY + F1.KEY + SFF4.KEY
@@ -951,7 +997,11 @@ f' 
 							'•ï‘•ƒ`ƒFƒbƒN'
 							If strHouso$ = g.SIJISK.2$ Then
 								'”—Êƒ`ƒFƒbƒN'
-								If strSuryo$ = Trim$(g.SIJISK.3$) Then
+								If VAL(strSuryo$) = VAL(g.SIJISK.3$) Then
+									'‘JˆÚ”Ô†'
+									g.strStageNo2$ = "2015"
+									'2021/05/12C³'
+									g.intFlg& = 0
 									'---ƒgƒŒ[ƒXƒJ[ƒh“Çæ‰æ–Ê----
 									NextScreen.Set("2020")
 								Else
@@ -1084,11 +1134,14 @@ f' 
 	intToo% = intMax% MOD 7
 
 	'ƒy[ƒW”Šm’è'
-	IF intMax% > 7 Then
+	IF intMax% >= 7 Then
 		IF intToo% > 0 Then
 			g.intMaxP& = g.intMaxP& + 1
 		ENDIF
+	Else
+		g.intMaxP& = g.intMaxP& + 1
 	ENDIF
+
 
 	'‰æ–Êˆ—
 	WHILE strSyoriHensu$ = "2016"
@@ -1122,15 +1175,18 @@ f' 
 
 		'--ŒÅ’è•”•ª
 		'ƒ^ƒCƒgƒ‹•\¦
-		CALL SetTitle(KeppinDelete.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
 		SIFont.Reset
 		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
 		SIText.Print( 1, 3, "ÀÑ:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 6, 3, ZeroUme$(intMax%,3) + "Œ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
-		SIText.Print( 12, 3, "<" + ZeroUme$(g.intPage& + 1,3) + "/" + ZeroUme$(g.intMaxP&,3) + ">", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
-
+		if intToo% = 0 then
+			SIText.Print( 12, 3, "<" + ZeroUme$(g.intPage& + 1,3) + "/" + ZeroUme$(g.intMaxP&,3) + ">", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		else
+			SIText.Print( 12, 3, "<" + ZeroUme$(g.intPage& + 1,3) + "/" + ZeroUme$(g.intMaxP&,3) + ">", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		END IF
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		'‰æ–Ê•\¦
 		SIFont.Reset
 		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
@@ -1268,7 +1324,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -1278,12 +1334,12 @@ f' 
 
 		If strQR$ <> "" Then
 			strKanbanSyurui$ = SIDensoQR.Decode$(strQR$,"100",2,1)
-			strRoke$ = SIDensoQR.Decode$(strQR$,"151",5,1)
+			'strRoke$ = SIDensoQR.Decode$(strQR$,"151",5,1)
 			strTraceID$ = SIDensoQR.Decode$(strQR$,"543",8,1)
 			strHakkouTime$ = SIDensoQR.Decode$(strQR$,"561",14,1)
 
 			'ƒgƒŒ[ƒXƒJ[ƒh‚ªƒ`ƒFƒbƒN
-			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND strRoke$ <> "" AND strTraceID$ <> "" AND strHakkouTime$ <> "" Then
+			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND strTraceID$ <> "" AND strHakkouTime$ <> "" Then
 				'ƒgƒŒ[ƒXƒJ[ƒhæ“¾'
 				TraceCardSplit(strQR$)
 				'd•¡ğŒ(W‰×ÀÑ)'
@@ -1308,7 +1364,8 @@ f' 
 						'•ï‘•ƒ`ƒFƒbƒN'
 						If strHouso$ = g.strHouso$ Then
 							'”—Êƒ`ƒFƒbƒN'
-							If Trim$(strSuryo$) = Trim$(g.strSyuyo$) Then
+							'2021/05/10C³‘O Trim$(strSuryo$) = Trim$(g.strSyuyo$) Replace$(strSuryo$," ","0") = Replace$(g.strSyuyo$," ","0")
+							If VAL(strSuryo$) = VAL(g.strSyuyo$) Then
 								'W‰×ÀÑOK‘‚«‚İ'
 								SyukaWrite("0","OK","")
 								'---W‰×Š®—¹‰æ–Ê
@@ -1383,7 +1440,7 @@ f' 
 			SELECT CASE W$
 				CASE M2.KEY	'–ß‚é
 					'---‚©‚ñ‚Î‚ñw¦‘ì¬‰æ–Ê
-					NextScreen.Set("2000")
+					NextScreen.Set(g.strStageNo2$)
 			END SELECT
 		END IF
 
@@ -1438,7 +1495,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -1621,7 +1678,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -1655,9 +1712,13 @@ f' 
 						If strHinban$ = g.SIJISK.1$ Then
 							'•ï‘•ƒ`ƒFƒbƒN'
 							If strHouso$ = g.SIJISK.2$ Then
+
 								'”—Êƒ`ƒFƒbƒN'
-								If strSuryo$ = Trim$(g.SIJISK.3$) Then
+								'2021/05/10C³‘O strSuryo$ = Trim$(g.SIJISK.3$)'
+								If VAL(strSuryo$) = VAL(g.SIJISK.3$) Then
 									g.strStageNo$ = "2035"
+									'2021/05/12C³'
+									g.intFlg& = 0
 									'---‚¯‚ñ‚Â‚Î“Çæ‰æ–Ê----
 									NextScreen.Set("2040")
 								Else
@@ -1815,7 +1876,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -1831,7 +1892,7 @@ f' 
 			strID543$ = SIDensoQR.Decode$(strQR$,"543",8,1)
 			strID561$ = SIDensoQR.Decode$(strQR$,"561",14,1)
 			'‚¯‚ñ‚Â‚Î‚©ƒ`ƒFƒbƒN
-			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND LEN(strTHinban$) <> 18 AND LEN(strTHinbanS$) <> 14 AND strID151$ = "" AND strID543$ = "" AND strID561$ = "" Then
+			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002" AND LEN(strQR$) <> 119 AND LEN(strQR$) <> 124 AND strKanbanSyurui$ = "00" AND LEN(strTHinban$) <> 18 AND LEN(strTHinbanS$) <> 14 AND strID151$ = "" AND strID543$ = "" AND strID561$ = "" Then
 				'‚¯‚ñ‚Â‚Îæ“¾'
 				KentsubaSplit(strQR$,VAL(Mid$(strQR$,28,2)),VAL(Mid$(strQR$,33,2)),VAL(Mid$(strQR$,48,2)))
 				strHinban$ = g.SYJISK.35$		'ƒfƒ“ƒ\[•i”Ô'
@@ -1848,7 +1909,9 @@ f' 
 							'W‰×ÀÑOK(Œ‡•i“o˜^)‘‚«‚İ'
 							SyukaWrite("2","OK","")
 							'Œ‡•iW‰×ÀÑ‘‚«‚İ'
-							KeppinWKWrite(g.SYJISK.35$,g.SYJISK.36$,g.SYJISK.37$,g.SYJISK.38$,g.SYJISK.40$)
+							KeppinWKWrite(g.SYJISK.35$,g.SYJISK.36$,g.strSyuyo$,g.SYJISK.38$,g.strSeiriNo$)
+							'Œ‡•iƒ`ƒFƒbƒN'
+							g.strKeppinCheck$ = "1"
 							'---W‰×Š®—¹‰æ–Ê
 							NextScreen.Set("2050")
 						Else
@@ -1949,7 +2012,12 @@ f' 
 
 		'--ŒÅ’è•”•ª
 		'ƒ^ƒCƒgƒ‹•\¦
-		CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+		if g.strKeppinCheck$ = "1" Then
+			CALL SetTitle(SyukaMenu.NAME$, Lc.Col.Black, Lc.Col.Yellow, 1, 1)
+			g.strKeppinCheck$ = "0"
+		Else
+			CALL SetTitle(SyukaMenu.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
+		EndIF
 
 		SIFont.Reset
 		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
@@ -1990,7 +2058,7 @@ f' 
 		SIText.Print( 1,24, "             M2:Ÿ‚Ö", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY + ENT.KEY
@@ -2004,17 +2072,23 @@ f' 
 			CASE M2.KEY	'Ÿ‚Ö
 			'w¦‘ì¬–³‚µ'
 			if g.intFlg& = 1 THEN
-				NextScreen.Set("2010")
+				'NextScreen.Set("2010")
+				NextScreen.Set("0000")
 			ELSE
-				if SIJISK.Cnt& > g.intRecSIJI& THEN
-					g.intRecSIJI& = g.intRecSIJI& + 1
+				'if SIJISK.Cnt& >= g.intRecSIJI& THEN
+				if SIJISK.Cnt& > 0 THEN
+					'g.intRecSIJI& = g.intRecSIJI& + 1
+					g.intRecSIJI& = 0
 					'---‚©‚ñ‚Î‚ñ“Çæw¦‘ÀÑ—L
 					NextScreen.Set("2015")
+
 				Else
 					g.intRecSIJI& = 0
 					SIJISK.Kill
 					'---‚©‚ñ‚Î‚ñ“Çæw¦‘
-					NextScreen.Set("2000")
+					'NextScreen.Set("2000")
+					'---ÒÆ­°‰æ–Ê
+					NextScreen.Set("0000")
 				ENDIF
 			ENDIF
 
@@ -2085,7 +2159,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -2138,11 +2212,11 @@ f' 
 						'ƒgƒŒ[ƒXƒJ[ƒhæ“¾'
 						TraceCardSplit(strQR$)
 						strKanbanSyurui$ = SIDensoQR.Decode$(strQR$,"100",2,1)
-						strRoke$ = SIDensoQR.Decode$(strQR$,"151",5,1)
+						'strRoke$ = SIDensoQR.Decode$(strQR$,"151",5,1)
 						strTraceID$ = SIDensoQR.Decode$(strQR$,"543",8,1)
 						strHakkouTime$ = SIDensoQR.Decode$(strQR$,"561",14,1)
 						'ƒgƒŒ[ƒXƒJ[ƒh‚ªƒ`ƒFƒbƒN
-						If  Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND strRoke$ <> "" AND strTraceID$ <> "" AND strHakkouTime$ <> "" Then
+						If  Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND strTraceID$ <> "" AND strHakkouTime$ <> "" Then
 
 							'd•¡ğŒ(W‰×ÀÑ)'
 							strWhere$(0) = .Equal+Chr$(24) + g.SYJISK.24$		'ƒfƒ“ƒ\[•i”Ô
@@ -2271,7 +2345,7 @@ f' 
 		SIText.Print( 1,24, "             M2:Ÿ‚Ö", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY + ENT.KEY
@@ -2342,7 +2416,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -2526,7 +2600,6 @@ f' 
 		SIText.Print( 8, 11, g.strKeppinKumitsukeku$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 8, 13, g.strKeppinSeiriNo$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
-
 		'‰æ–Ê•\¦
 		SIFont.Reset
 		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
@@ -2538,7 +2611,7 @@ f' 
 		SIText.Print( 1,24, "             M2:–ß‚é", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í§Œä
 		strInKey$ = M2.KEY
@@ -2547,70 +2620,44 @@ f' 
 		W$ = FunInpGet$(strInKey$, 1, "Q:")
 
 		If strQR$ <> "" Then
-		strKanbanSyurui$ = SIDensoQR.Decode$(strQR$,"100",2,1)
-		strRoke$ = SIDensoQR.Decode$(strQR$,"151",5,1)
-		strTraceID$ = SIDensoQR.Decode$(strQR$,"543",8,1)
-		strHakkouTime$ = SIDensoQR.Decode$(strQR$,"561",14,1)
+			strKanbanSyurui$ = SIDensoQR.Decode$(strQR$,"100",2,1)
+			'strRoke$ = SIDensoQR.Decode$(strQR$,"151",5,1)
+			strTraceID$ = SIDensoQR.Decode$(strQR$,"543",8,1)
+			strHakkouTime$ = SIDensoQR.Decode$(strQR$,"561",14,1)
 
 			'ƒgƒŒ[ƒXƒJ[ƒh‚ªƒ`ƒFƒbƒN
-			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND strRoke$ <> "" AND strTraceID$ <> "" AND strHakkouTime$ <> "" Then
+			If  Mid$(strQR$,1,4) = "JAMA" AND Mid$(strQR$,5,6) = "506002"  AND strKanbanSyurui$ = "00" AND strTraceID$ <> "" AND strHakkouTime$ <> "" Then
 				'ƒgƒŒ[ƒXƒJ[ƒhæ“¾'
 				TraceCardSplit(strQR$)
-				'd•¡ğŒ(W‰×ÀÑ)'
-				strWhere$(0) = .Equal+Chr$(3) + "3"		'ƒpƒ^[ƒ“
-				strWhere$(1) = .Equal+Chr$(24) + g.SYJISK.24$		'ƒfƒ“ƒ\[•i”Ô
-				strWhere$(2) = .Equal+Chr$(25) + g.SYJISK.25$		'•ï‘•‹æ•ª
-				strWhere$(3) = .Equal+Chr$(30) + g.SYJISK.30$		'®—No
-				strWhere$(4) = .Equal+Chr$(31) + g.SYJISK.31$		'ƒgƒŒ[ƒXID
-				strWhere$(5) = .Equal+Chr$(32) + g.SYJISK.32$		'”­s”NŒ“ú
-				strWhere$(6) = .Equal+Chr$(41) + "OK"		'Æ‡Œ‹‰Ê
-				'W‰×ÀÑƒtƒ@ƒCƒ‹ŒŸõ
-				iSrchCnt& = SYJISK.Srch&(.fcAndSrch, strWhere$, 7, 1, 0)
-				'd•¡ƒ`ƒFƒbƒN
-				If iSrchCnt& < 1 Then
 				strHinban$ = g.SYJISK.24$
 				strHouso$ = g.SYJISK.25$
 				strSuryo$ = g.SYJISK.26$
 
-				'ƒtƒ‰ƒOƒZƒbƒg'
-					flgLoop% = Lc.True
-					'•i”Ôƒ`ƒFƒbƒN'
-					If strHinban$ = g.strKeppinHinban$ Then
-						'•ï‘•ƒ`ƒFƒbƒN'
-						If strHouso$ = g.strKeppinHouso$ Then
-							'”—Êƒ`ƒFƒbƒN'
-							If Trim$(strSuryo$) = Trim$(g.strKeppinSyuyo$) Then
-								'W‰×ÀÑOK‘‚«‚İ'
-								SyukaWrite("3","OK","")
-								'‘ÎÛŒ‡•iW‰×ÀÑíœ'
-								KEJISK.Del(g.intKeppinNo&)
-								'---Œ‡•iW‰×Š®—¹‰æ–Ê
-								NextScreen.Set("4020")
-							Else
-								'W‰×ÀÑNG‘‚«‚İ'
-								SyukaWrite("3","NG","2")
-								Call NG.Beep
-								SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
-								iMsg.Text$(1) = "³F" + g.strKeppinSyuyo$
-								iMsg.Text$(2) = "ŒëF" + strSuryo$
-								WHILE flgLoop% = Lc.True
-									intRet% = Lc.True
-									pPopRET$ = SIMsgBox.PopUp$(7, "”—ÊƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
-									IF LEN(strQR$) = 10 THEN
-										flgLoop% = Lc.False
-									END IF
-								WEND
-							ENDIF
+			'ƒtƒ‰ƒOƒZƒbƒg'
+				flgLoop% = Lc.True
+				'•i”Ôƒ`ƒFƒbƒN'
+				If strHinban$ = g.strKeppinHinban$ Then
+					'•ï‘•ƒ`ƒFƒbƒN'
+					If strHouso$ = g.strKeppinHouso$ Then
+						'”—Êƒ`ƒFƒbƒN
+						'2021/05/10 C³‘OTrim$(strSuryo$) = Trim$(g.strKeppinSyuyo$)'
+						If VAL(strSuryo$) = VAL(g.strKeppinSyuyo$) Then
+							'W‰×ÀÑOK‘‚«‚İ'
+							SyukaWrite("3","OK","")
+							'‘ÎÛŒ‡•iW‰×ÀÑíœ'
+							KEJISK.Del(g.intKeppinNo&)
+							'---Œ‡•iW‰×Š®—¹‰æ–Ê
+							NextScreen.Set("4020")
 						Else
 							'W‰×ÀÑNG‘‚«‚İ'
-							SyukaWrite("3","NG","1")
+							SyukaWrite("3","NG","2")
 							Call NG.Beep
 							SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
-							iMsg.Text$(1) = "³F" + g.strKeppinHouso$
-							iMsg.Text$(2) = "ŒëF" + strHouso$
+							iMsg.Text$(1) = "³F" + g.strKeppinSyuyo$
+							iMsg.Text$(2) = "ŒëF" + strSuryo$
 							WHILE flgLoop% = Lc.True
 								intRet% = Lc.True
-								pPopRET$ = SIMsgBox.PopUp$(7, "•ï‘•ƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+								pPopRET$ = SIMsgBox.PopUp$(7, "”—ÊƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
 								IF LEN(strQR$) = 10 THEN
 									flgLoop% = Lc.False
 								END IF
@@ -2618,29 +2665,34 @@ f' 
 						ENDIF
 					Else
 						'W‰×ÀÑNG‘‚«‚İ'
-						SyukaWrite("3","NG","0")
-						'•i”ÔƒGƒ‰[
+						SyukaWrite("3","NG","1")
 						Call NG.Beep
 						SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
-						iMsg.Text$(1) = "³F" + g.strKeppinHinban$
-						iMsg.Text$(2) = "ŒëF" + strHinban$
+						iMsg.Text$(1) = "³F" + g.strKeppinHouso$
+						iMsg.Text$(2) = "ŒëF" + strHouso$
 						WHILE flgLoop% = Lc.True
 							intRet% = Lc.True
-							pPopRET$ = SIMsgBox.PopUp$(7, "•i”ÔƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+							pPopRET$ = SIMsgBox.PopUp$(7, "•ï‘•ƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
 							IF LEN(strQR$) = 10 THEN
 								flgLoop% = Lc.False
 							END IF
 						WEND
-					END IF
-
-				ELSE
-					'----ƒgƒŒ[ƒXƒJ[ƒh‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
+					ENDIF
+				Else
+					'W‰×ÀÑNG‘‚«‚İ'
+					SyukaWrite("3","NG","0")
+					'•i”ÔƒGƒ‰[
 					Call NG.Beep
 					SIMsgBox.SetColor(Lc.Col.White, Lc.Col.Red, Lc.Col.Black, Lc.Col.Pink, Lc.Col.Black, Lc.Col.20Gray)
-					iMsg.Text$(1) = "“ÇæÏ‚İ‚Ì"
-					iMsg.Text$(2) = "ÄÚ°½¶°ÄŞ‚Å‚·"
-					If SIMsgBox.PopUp$(7, "d•¡“ÇæƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.OKONLY) = M1.KEY Then
-					Endif
+					iMsg.Text$(1) = "³F" + g.strKeppinHinban$
+					iMsg.Text$(2) = "ŒëF" + strHinban$
+					WHILE flgLoop% = Lc.True
+						intRet% = Lc.True
+						pPopRET$ = SIMsgBox.PopUp$(7, "•i”ÔƒGƒ‰[", iMsg.Text$(), 2, Lc.MSG.QRREAD)
+						IF LEN(strQR$) = 10 THEN
+							flgLoop% = Lc.False
+						END IF
+					WEND
 				END IF
 			ELSE
 				'----ƒgƒŒ[ƒXƒJ[ƒh‚Å‚È‚¢ê‡‚ÍƒGƒ‰[
@@ -2713,24 +2765,21 @@ f' 
 		SIText.Print( 1,22, "            ENT:ÒÆ­°", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'“ü—Í§Œä
 		if KEJISK.Cnt& = 0 Then
-			SIText.Print( 1,24, "M1:‘—M      M2:Ÿ‚Ö", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
-			strInKey$ = M1.KEY + M2.KEY + ENT.KEY
-		ELSE
-
-			SIText.Print( 1,24, "M1:‘—M             ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+			SIText.Print( 1,24, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 			strInKey$ = M1.KEY + ENT.KEY
+		ELSE
+			SIText.Print( 1,24, "             M2:Ÿ‚Ö", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+			strInKey$ = M2.KEY + ENT.KEY
 		endif
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'“ü—Í‘Ò‚¿(M2)
 		W$ = FunInpGet$(strInKey$, 0, "")
 		SELECT CASE W$
-			CASE M1.KEY	'‘—M
-				'---‘—M
-				'NextScreen.Set("6000")
+
 			CASE M2.KEY	'Ÿ‚Ö
-				NextScreen.Set("3000")
+				NextScreen.Set("4000")
 			CASE ENT.KEY	'ÒÆ­°
 				'---ÒÆ­°‰æ–Ê
 				NextScreen.Set("0000")
@@ -2769,10 +2818,12 @@ f' 
 	intToo% = intMax% MOD 7
 
 	'ƒy[ƒW”Šm’è'
-	IF intMax% > 7 Then
+	IF intMax% >= 7 Then
 		IF intToo% > 0 Then
 			g.intMaxP& = g.intMaxP& + 1
 		ENDIF
+	Else
+		g.intMaxP& = g.intMaxP& + 1
 	ENDIF
 
 	'‰æ–Êˆ—
@@ -2813,15 +2864,18 @@ f' 
 		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Small.BackColor)
 		SIText.Print( 1, 3, "ÀÑ:", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 6, 3, ZeroUme$(intMax%,3) + "Œ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
-		if intToo% = 0 then
-			SIText.Print( 12, 3, "<" + ZeroUme$(g.intPage& + 1,3) + "/" + ZeroUme$(g.intMaxP&,3) + ">", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
-		else
-			SIText.Print( 12, 3, "<" + ZeroUme$(g.intPage& + 1,3) + "/" + ZeroUme$(g.intMaxP& + 1,3) + ">", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
-		END IF
-
+		IF KEJISK.Cnt& > 0 Then
+			if intToo% = 0 then
+				SIText.Print( 12, 3, "<" + ZeroUme$(g.intPage& + 1,3) + "/" + ZeroUme$(g.intMaxP&,3) + ">", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+			else
+				SIText.Print( 12, 3, "<" + ZeroUme$(g.intPage& + 1,3) + "/" + ZeroUme$(g.intMaxP&,3) + ">", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+			END IF
+		Else
+			SIText.Print( 12, 3, "<000/000>", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
+		ENDIF
 
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		'‰æ–Ê•\¦
 		SIFont.Reset
 		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
@@ -2929,7 +2983,7 @@ f' 
 		SIText.Print( 8, 13, g.KEJISK.6$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 8, 15, g.KEJISK.7$, Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		'‰æ–Ê•\¦
 		SIFont.Reset
 		SIFont.Set(Lc.WAT.NORMAL, Small.ForeColor, Lc.Col.Lavender)
@@ -2979,6 +3033,7 @@ f' 
 					'---íœŠ®—¹
 					KEJISK.Del(g.intDeleteNumber&)
 					NextScreen.Set("5011")
+
 				END IF
 
 			CASE M2.KEY	'–ß‚é
@@ -3022,7 +3077,7 @@ f' 
 		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1,24, "M1:Ÿ‚Ö             ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 
 
@@ -3031,8 +3086,15 @@ f' 
 
 		SELECT CASE W$
 			CASE M1.KEY
-				'---‰æ–Ê
-				NextScreen.Set("5000")
+				g.intPage& = 0
+				IF KEJISK.Cnt& > 0 THEN
+					'---‰æ–Ê
+					NextScreen.Set("5000")
+				ELSE
+					'---‰æ–Ê
+					NextScreen.Set("0000")
+				EndIF
+
 		END SELECT
 
 	WEND
@@ -3066,7 +3128,7 @@ f' 
 		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1,24, "M1:‘—M      M2:ÒÆ­°", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'---------------------------
 		'	“ü—Í‘Ò‚¿
@@ -3115,7 +3177,7 @@ f' 
 		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1,24, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 		'---------------------------
 		'	ÀÑ‘—Mˆ—
@@ -3125,15 +3187,13 @@ f' 
 		'ÀÑƒtƒ@ƒCƒ‹ƒtƒ@ƒCƒ‹–¼ì¬
 		strDate$ = Mid$(Sysdate$(""),1,14)
 
-		JskFileNmtmp$ = "FYVSYKJIS" + "_" + SISysSGet$(.syPrdctNo) + "_" + strDate$ + "." + "tmp"
-		JskFileNmDat$ = "FYVSYKJIS" + "_" + SISysSGet$(.syPrdctNo) + "_" + strDate$ + "." + "DAT"
+		JskFileNmtmp$ = "FYVSYJIS" + "_" + SISysSGet$(.syPrdctNo) + "_" + strDate$ + "." + "tmp"
+		JskFileNmDat$ = "FYVSYJIS" + "_" + SISysSGet$(.syPrdctNo) + "_" + strDate$ + "." + "DAT"
 
 		'‘—MŠ®—¹
 		IF YTP.Put%(SYJISK.FileNm$, JskFileNmtmp$, .ftCRLF, .ftUpSTOR, .ftDisp) = Lc.True THEN
 			'ƒtƒ@ƒCƒ‹ƒŠƒl[ƒ€
 			iRetRn% = YTP.Rename%(JskFileNmtmp$, JskFileNmDat$)
-			'Œ‡•iÀÑíœ'
-			KEJISK.Kill
 			'W‰×ÀÑíœ'
 			SYJISK.Kill
 			'w¦‘ÀÑíœ'
@@ -3173,7 +3233,7 @@ f' 
 		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1,24, "             M2:ÒÆ­°", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 
 		'“ü—Í‘Ò‚¿(M2)
@@ -3222,7 +3282,7 @@ f' 
 		SIText.Print( 1,22, "                    ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		SIText.Print( 1,24, "M1:Ä‘—M   M2:·¬İ¾Ù", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 		SIFont.Reset
 
 		'“ü—Í‘Ò‚¿(M1 or M2)
@@ -3274,7 +3334,7 @@ f' 
 		CALL SetTitle(Shokuban.NAME$, Hanyou.ForeColor, Hanyou.BackColor, 1, 1)
 		SIText.Print( 1, 7, "    w¦‘ì¬   ", Lc.RAT.NORMAL, Lc.BLD.NORMAL)
 		'ƒo[ƒWƒ‡ƒ“
-		SISystemStatus.Disp(1, BtFont.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, BtFont.BackColor)
+		SISystemStatus.Disp(1, HanyouB.BackColor, "Ver." + strVERSION, Lc.COL.BLUE, HanyouB.BackColor)
 
 		'ƒ{ƒ^ƒ“•\¦
 		SIFont.Button
@@ -3293,10 +3353,20 @@ f' 
 		END IF
 		SELECT W$
 			CASE "1"
+				'İ’è’lÁ‚·'
+				SEJskWk.Kill
+				g.SEJskWk.1$ = "1"
+				'İ’è’l“ü‚ê‚é'
+				SEJskWk.Put(0)
 				g.strSetting$ = "1"
 				'[0000]
 				NextScreen.Set("0000")
 			CASE "2"
+				'İ’è’lÁ‚·'
+				SEJskWk.Kill
+				g.SEJskWk.1$ = "2"
+				'İ’è’l“ü‚ê‚é'
+				SEJskWk.Put(0)
 				g.strSetting$ = "2"
 				'[0000]‚©‚ñ‚Î‚ñ“Çæ
 				NextScreen.Set("0000")

@@ -115,3 +115,9 @@
 
 	'遷移画面番号'
 	Public g.strStageNo$
+
+	'遷移画面番号2'
+	Public g.strStageNo2$
+
+	'欠品集荷チェック'
+	Public g.strKeppinCheck$

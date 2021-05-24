@@ -240,6 +240,24 @@
 	Private f.SIJISK.6$[8]		'納入日
 	Private f.SIJISK.7$[2]		'かんばん種類
 
+	'担当者実績WK
+	Const	WUJskWk.FNo = 5
+	Public WUJskWk.FileNm$	: WUJskWk.FileNm$ = "FYVWUJWK.DAT"
+	Public WUJskWk.Field$[100]	: WUJskWk.Field$ = "7"
+
+	Public  g.WUJskWk.1$[7]		'担当者
+
+	Private f.WUJskWk.1$[7]		'担当者
+
+	'設定値実績WK
+	Const	SEJskWk.FNo = 6
+	Public SEJskWk.FileNm$	: SEJskWk.FileNm$ = "FYVSEJWK.DAT"
+	Public SEJskWk.Field$[100]	: SEJskWk.Field$ = "1"
+
+	Public  g.SEJskWk.1$[1]		'設定値
+
+	Private f.SEJskWk.1$[1]		'設定値
+
 '********************************************************************************
 ' 関数名   : fRecCount&
 ' 処理内容 : 指定ファイル名のレコード数を返す
@@ -1428,6 +1446,358 @@
 	End Function
 
 '********************************************************************************
+' 関数名   : WUJskWk.Opn
+' 処理内容 : 担当者実績WKをオープンする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub WUJskWk.Opn
+		Open WUJskWk.FileNm$ As WUJskWk.FNo Record 10000
+		Field WUJskWk.FNo, _
+			7 AS f.WUJskWk.1$
+	End Sub
+
+'********************************************************************************
+' 関数名   : WUJskWk.Cls
+' 処理内容 : 担当者実績WKをクローズする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub WUJskWk.Cls
+		Close WUJskWk.FNo
+	End Sub
+
+'********************************************************************************
+' 関数名   : WUJskWk.Cnt
+' 処理内容 : 担当者実績WKのレコード数を求める
+' 引数     : なし
+' 戻り値   : 長整数
+'            -1    : ファイルなし
+'            0     : 0件
+'            以外  : レコード件数
+' 備考     :
+'********************************************************************************
+	Function WUJskWk.Cnt&
+		WUJskWk.Cnt& = fRecCount&( WUJskWk.FileNm$ )
+	End Function
+
+'********************************************************************************
+' 関数名   : WUJskWk.Get
+' 処理内容 : 担当者実績WKから指定レコード情報を取得する
+' 引数     : Rec& : 指定レコードの情報取得
+'                   0:最初のレコード
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub WUJskWk.Get(Rec&)
+
+		WUJskWk.Opn
+
+		If Rec& <> 0 Then
+			Get WUJskWk.FNo, Rec&
+			g.WUJskWk.1$		= f.WUJskWk.1$
+		Else
+			Get WUJskWk.FNo
+			g.WUJskWk.1$		= f.WUJskWk.1$
+		End If
+
+		WUJskWk.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : WUJskWk.Put
+' 処理内容 : 担当者実績WKから指定レコードへ情報を書き込む
+' 引数     : Rec& : 指定レコード
+'               0            : ファイル末尾へ追加
+'               1-2147483647 : 指定レコードへ追加
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub WUJskWk.Put(Rec&)
+
+		WUJskWk.Opn
+
+		If Rec& > 0 Then
+			If Rec& > 10000 Then
+				'NOOP
+			Else
+				f.WUJskWk.1$		= g.WUJskWk.1$
+				Put WUJskWk.FNo, Rec&
+			End If
+		Else
+			If Rec& = 0 Then
+				f.WUJskWk.1$		= g.WUJskWk.1$
+				Put WUJskWk.FNo
+			End If
+		End If
+
+		WUJskWk.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : WUJskWk.Del
+' 処理内容 : 担当者実績WKの指定レコードを削除する。
+' 引数     :  Rec& : 指定レコード
+'               0 : 最終レコードを削除
+'               1-2147483647 : 指定レコードを削除
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub WUJskWk.Del(Rec&)
+
+		Private FileNo%
+		FileNo% = WUJskWk.FNo
+
+		If Rec& = 0 Then
+			Rec& = WUJskWk.Cnt&
+		End If
+
+		WUJskWk.Opn
+
+		CALL "FILE.FN3" .fcRcDelete FileNo%, Rec&
+
+		WUJskWk.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : WUJskWk.Kill
+' 処理内容 : 担当者実績WKを削除する
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub WUJskWk.Kill
+
+		If fRecCount&( WUJskWk.FileNm$ ) <> -1 THEN
+			Kill WUJskWk.FileNm$
+		End If
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : WUJskWk.Srch&
+' 処理内容 : 担当者実績WKを検索するし一致したレコードを返す
+' 引数     : iComb%      複数フィールドの「AND」「OR」条件 (.fcAndSrch「AND」/.fcOrSrch「OR」/.fcAndSrchN「AND」件数/.fcOrSrchN「OR」件数)
+'            strWhere$() 検索条件
+'            lWhereCnt&  検索条件数
+'            lStart&     検索する最初のレコード
+'            lEnd&       検索する最終レコード  (0ならファイルの終わりまで)
+' 戻り値   : WUJskWk.Srch& 一致したレコードNo
+' 備考     : ファイルが無けれれば -1
+'********************************************************************************
+	Function WUJskWk.Srch&(iComb%, BYREF strWhere$(), lWhereCnt%, lStart&, lEnd&)
+
+		Private lRecCnt&
+		Private lRecord&
+
+		Private FileNo%
+		FileNo% = WUJskWk.FNo
+
+		lRecCnt& = WUJskWk.Cnt&
+
+		If lRecCnt& = -1 Then
+			WUJskWk.Srch& = -1
+			Exit Function
+		Else
+
+			If lEnd& > lRecCnt& OR lEnd& = 0 Then
+				lEnd& = lRecCnt&
+			End If
+
+			WUJskWk.Opn
+
+			Call "SEARCH.FN3" iComb% FileNo%, lStart&, lEnd&, lRecord&, strWhere$(), lWhereCnt%
+
+			WUJskWk.Cls
+
+		End If
+
+		WUJskWk.Srch& = lRecord&
+
+	End Function
+
+'********************************************************************************
+' 関数名   : SEJskWk.Opn
+' 処理内容 : 設定値実績WKをオープンする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SEJskWk.Opn
+		Open SEJskWk.FileNm$ As SEJskWk.FNo Record 10000
+		Field SEJskWk.FNo, _
+			1 AS f.SEJskWk.1$
+	End Sub
+
+'********************************************************************************
+' 関数名   : SEJskWk.Cls
+' 処理内容 : 設定値実績WKをクローズする
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SEJskWk.Cls
+		Close SEJskWk.FNo
+	End Sub
+
+'********************************************************************************
+' 関数名   : SEJskWk.Cnt
+' 処理内容 : 設定値実績WKのレコード数を求める
+' 引数     : なし
+' 戻り値   : 長整数
+'            -1    : ファイルなし
+'            0     : 0件
+'            以外  : レコード件数
+' 備考     :
+'********************************************************************************
+	Function SEJskWk.Cnt&
+		SEJskWk.Cnt& = fRecCount&( SEJskWk.FileNm$ )
+	End Function
+
+'********************************************************************************
+' 関数名   : SEJskWk.Get
+' 処理内容 : 設定値実績WKから指定レコード情報を取得する
+' 引数     : Rec& : 指定レコードの情報取得
+'                   0:最初のレコード
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SEJskWk.Get(Rec&)
+
+		SEJskWk.Opn
+
+		If Rec& <> 0 Then
+			Get SEJskWk.FNo, Rec&
+			g.SEJskWk.1$		= f.SEJskWk.1$
+		Else
+			Get SEJskWk.FNo
+			g.SEJskWk.1$		= f.SEJskWk.1$
+		End If
+
+		SEJskWk.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SEJskWk.Put
+' 処理内容 : 設定値実績WKから指定レコードへ情報を書き込む
+' 引数     : Rec& : 指定レコード
+'               0            : ファイル末尾へ追加
+'               1-2147483647 : 指定レコードへ追加
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SEJskWk.Put(Rec&)
+
+		SEJskWk.Opn
+
+		If Rec& > 0 Then
+			If Rec& > 10000 Then
+				'NOOP
+			Else
+				f.SEJskWk.1$		= g.SEJskWk.1$
+				Put SEJskWk.FNo, Rec&
+			End If
+		Else
+			If Rec& = 0 Then
+				f.SEJskWk.1$		= g.SEJskWk.1$
+				Put SEJskWk.FNo
+			End If
+		End If
+
+		SEJskWk.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SEJskWk.Del
+' 処理内容 : 設定値実績WKの指定レコードを削除する。
+' 引数     :  Rec& : 指定レコード
+'               0 : 最終レコードを削除
+'               1-2147483647 : 指定レコードを削除
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SEJskWk.Del(Rec&)
+
+		Private FileNo%
+		FileNo% = SEJskWk.FNo
+
+		If Rec& = 0 Then
+			Rec& = SEJskWk.Cnt&
+		End If
+
+		SEJskWk.Opn
+
+		CALL "FILE.FN3" .fcRcDelete FileNo%, Rec&
+
+		SEJskWk.Cls
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SEJskWk.Kill
+' 処理内容 : 設定値実績WKを削除する
+' 引数     : なし
+' 戻り値   : なし
+' 備考     :
+'********************************************************************************
+	Sub SEJskWk.Kill
+
+		If fRecCount&( SEJskWk.FileNm$ ) <> -1 THEN
+			Kill SEJskWk.FileNm$
+		End If
+
+	End Sub
+
+'********************************************************************************
+' 関数名   : SEJskWk.Srch&
+' 処理内容 : 設定値実績WKを検索するし一致したレコードを返す
+' 引数     : iComb%      複数フィールドの「AND」「OR」条件 (.fcAndSrch「AND」/.fcOrSrch「OR」/.fcAndSrchN「AND」件数/.fcOrSrchN「OR」件数)
+'            strWhere$() 検索条件
+'            lWhereCnt&  検索条件数
+'            lStart&     検索する最初のレコード
+'            lEnd&       検索する最終レコード  (0ならファイルの終わりまで)
+' 戻り値   : SEJskWk.Srch& 一致したレコードNo
+' 備考     : ファイルが無けれれば -1
+'********************************************************************************
+	Function SEJskWk.Srch&(iComb%, BYREF strWhere$(), lWhereCnt%, lStart&, lEnd&)
+
+		Private lRecCnt&
+		Private lRecord&
+
+		Private FileNo%
+		FileNo% = SEJskWk.FNo
+
+		lRecCnt& = SEJskWk.Cnt&
+
+		If lRecCnt& = -1 Then
+			SEJskWk.Srch& = -1
+			Exit Function
+		Else
+
+			If lEnd& > lRecCnt& OR lEnd& = 0 Then
+				lEnd& = lRecCnt&
+			End If
+
+			SEJskWk.Opn
+
+			Call "SEARCH.FN3" iComb% FileNo%, lStart&, lEnd&, lRecord&, strWhere$(), lWhereCnt%
+
+			SEJskWk.Cls
+
+		End If
+
+		SEJskWk.Srch& = lRecord&
+
+	End Function
+
+'********************************************************************************
 ' 関数名   : AllFile.Kill
 ' 処理内容 : 全ファイルを削除する
 ' 引数     : iIniKill% (Lc.True(-1):削除する, Lc.False(0):削除しない）
@@ -1455,6 +1825,16 @@
 		If iIniKill% = 0 AND RIGHT$(SIJISK.FileNm$, 4) = ".INI" Then
 		Else
 			SIJISK.Kill
+		End If
+
+		If iIniKill% = 0 AND RIGHT$(WUJskWk.FileNm$, 4) = ".INI" Then
+		Else
+			WUJskWk.Kill
+		End If
+
+		If iIniKill% = 0 AND RIGHT$(SEJskWk.FileNm$, 4) = ".INI" Then
+		Else
+			SEJskWk.Kill
 		End If
 
 	End Sub
